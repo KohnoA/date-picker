@@ -6,3 +6,7 @@ jest.config.ts
 cypress/*
 cypress.config.ts
 __mocks__
+package.json
+yarn.lock
+tsconfig.json
+.lintstagedrc.json
