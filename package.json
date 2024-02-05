@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/KohnoA/date-picker.git",
   "author": "KohnoA <san.kohno@yandex.ru>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
 }
