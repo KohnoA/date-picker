@@ -1,0 +1,8 @@
+{
+  "name": "date-picker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/KohnoA/date-picker.git",
+  "author": "KohnoA <san.kohno@yandex.ru>",
+  "license": "MIT"
+}
