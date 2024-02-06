@@ -3,7 +3,6 @@ node_modules/
 public/
 build/
 dist/
-jest.config.ts
 cypress/*
 cypress.config.ts
 __mocks__
