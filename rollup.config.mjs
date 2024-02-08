@@ -3,10 +3,12 @@ import commonjs from '@rollup/plugin-commonjs';
 import { dts } from 'rollup-plugin-dts';
 import terser from '@rollup/plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import typescript from '@rollup/plugin-typescript';
 import babel from '@rollup/plugin-babel';
 import svgr from '@svgr/rollup';
-import packageJson from './package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+
+const requireFile = createRequire(import.meta.url);
+const packageJson = requireFile('./package.json');
 
 export default [
   {
@@ -25,14 +27,17 @@ export default [
     ],
     plugins: [
       peerDepsExternal(),
-      resolve(),
+      resolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
       commonjs(),
       svgr(),
-      typescript({ tsconfig: './tsconfig.json' }),
-      babel({ babelHelpers: 'bundled' }),
+      babel({
+        babelHelpers: 'runtime',
+        exclude: 'node_modules/**',
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      }),
       terser(),
     ],
-    external: ['react', 'react-dom', 'styled-components'],
+    external: [/@babel\/runtime/, 'react', 'react-dom', 'styled-components'],
   },
   {
     input: 'src/index.ts',

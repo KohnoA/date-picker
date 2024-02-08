@@ -1,6 +1,4 @@
-import CalendarIcon from '@/assets/icons/calendar.svg';
-
-import { Container } from './styled';
+import { CalendarIcon, Container } from './styled';
 
 export const DatePicker = () => (
   <Container>
