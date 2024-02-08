@@ -1,0 +1,13 @@
+/**/node_modules/*
+node_modules/
+public/
+build/
+dist/
+cypress/*
+cypress.config.ts
+__mocks__
+package.json
+yarn.lock
+tsconfig.json
+.lintstagedrc.json
+rollup.config.mjs
