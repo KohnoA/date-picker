@@ -10,7 +10,7 @@ export const CalendarHeaderContainer = styled.div`
 export const RewindButton = styled.button`
   ${flex()}
 
-  padding: 5px;
+  padding: 8px 6px;
 
   border-radius: ${borderRadius.high};
   border: none;

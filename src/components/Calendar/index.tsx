@@ -1,5 +1,6 @@
 import { CalendarHeader } from './CalendarHeader';
 import { CalendarContainer } from './styled';
+import { WeekDaysName } from './WeekDaysName';
 
 export const Calendar = () => {
   const onClickNextHandler = () => {};
@@ -13,6 +14,7 @@ export const Calendar = () => {
         onClickNext={onClickNextHandler}
         onClickPrev={onClickPrevHandler}
       />
+      <WeekDaysName />
     </CalendarContainer>
   );
 };
