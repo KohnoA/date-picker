@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
+import { borderRadius, colors, fontSizes, margin, opacity } from '@/constants';
+import { flex } from '@/styles';
+
 export const Container = styled.div`
   position: relative;
 
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: ${margin.sm};
 
-  max-width: 250px; // TODO: Remove later
-  margin-bottom: 25px;
+  max-width: 250px;
+  margin-bottom: ${margin.lg};
 `;
 
 export const Label = styled.label`
-  color: #333333;
-  font-weight: 500;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
+  font-weight: 600;
 `;
 
 export const InputWrapper = styled.div`
@@ -24,21 +24,20 @@ export const InputWrapper = styled.div`
 
 export const Input = styled.input<{ $isInvalid?: boolean }>`
   width: 100%;
-  padding: 11px 39px;
+  padding: 12px 40px;
 
-  font-size: 15px;
+  font: inherit;
 
-  border-radius: 8px;
+  border-radius: ${borderRadius.high};
   border: 1px solid;
-  border-color: ${({ $isInvalid }) => ($isInvalid ? 'red' : '#dddddd')};
+  border-color: ${({ $isInvalid }) => ($isInvalid ? colors.red : colors.greyLight)};
   outline: none;
   transition: border 300ms;
+  background-color: ${colors.white};
 
   &::placeholder {
-    color: #bbbbbb;
+    color: ${colors.greyNormal};
   }
-
-  box-sizing: border-box; // TODO: Remove later
 `;
 
 export const Button = styled.button`
@@ -48,24 +47,22 @@ export const Button = styled.button`
 
   transform: translateY(-50%);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flex()}
 
   padding: 6px 7px;
 
   border: none;
-  border-radius: 4px;
+  border-radius: ${borderRadius.low};
   background-color: transparent;
   transition: opacity 300ms;
   cursor: pointer;
 
   &:hover {
-    opacity: 0.8;
+    opacity: ${opacity.low};
   }
 
   &:active {
-    opacity: 0.7;
+    opacity: ${opacity.high};
   }
 `;
 
@@ -84,9 +81,8 @@ export const Error = styled.p`
   bottom: -20px;
 
   width: 100%;
-  margin: 0; //TODO: Remove
 
   text-align: center;
-  font-size: 14px;
-  color: red;
+  color: ${colors.red};
+  font-size: ${fontSizes.sm};
 `;

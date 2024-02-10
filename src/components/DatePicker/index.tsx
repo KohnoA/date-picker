@@ -1,7 +1,10 @@
-import { CalendarIcon, Container } from './styled';
+import { GlobalStyles } from '@/styles';
+
+import { DateInput } from '../DateInput';
 
 export const DatePicker = () => (
-  <Container>
-    Hello world <CalendarIcon />
-  </Container>
+  <>
+    <GlobalStyles />
+    <DateInput />
+  </>
 );
