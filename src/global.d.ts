@@ -1,3 +1,5 @@
+declare module '*.woff';
+
 declare module '*.svg' {
   import React from 'react';
 
