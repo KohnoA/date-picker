@@ -8,6 +8,7 @@ export const Container = styled.div`
   gap: 8px;
 
   max-width: 250px; // TODO: Remove later
+  margin-bottom: 25px;
 `;
 
 export const Label = styled.label`
@@ -21,14 +22,15 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ $isInvalid?: boolean }>`
   width: 100%;
   padding: 11px 39px;
 
   font-size: 15px;
 
   border-radius: 8px;
-  border: 1px solid #dddddd;
+  border: 1px solid;
+  border-color: ${({ $isInvalid }) => ($isInvalid ? 'red' : '#dddddd')};
   outline: none;
   transition: border 300ms;
 
@@ -73,4 +75,18 @@ export const CalendarButton = styled(Button)`
 
 export const ClearButton = styled(Button)`
   right: 6px;
+`;
+
+export const Error = styled.p`
+  position: absolute;
+
+  left: 0;
+  bottom: -20px;
+
+  width: 100%;
+  margin: 0; //TODO: Remove
+
+  text-align: center;
+  font-size: 14px;
+  color: red;
 `;
