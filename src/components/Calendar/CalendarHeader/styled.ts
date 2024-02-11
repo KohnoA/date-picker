@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { borderRadius, opacity } from '@/constants';
+import { borderRadius, fontSizes, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const CalendarHeaderContainer = styled.div`
@@ -29,4 +29,5 @@ export const RewindButton = styled.button`
 
 export const YearAndMonth = styled.p`
   font-weight: 700;
+  font-size: ${fontSizes.md};
 `;

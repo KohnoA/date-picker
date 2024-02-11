@@ -1,6 +1,7 @@
 export const fontSizes = {
-  md: '15px',
-  sm: '14px',
+  lg: '15px',
+  md: '14px',
+  sm: '13px',
 };
 
 export const colors = {
@@ -9,7 +10,7 @@ export const colors = {
   red: 'red',
   greyLight: '#DDDDDD',
   greyNormal: '#BBBBBB',
-  greyNoramlAlt: '#F1F1F1',
+  greyNormalAlt: '#F1F1F1',
   greyDark: '#AAAAAA',
   black: '#333333',
   white: '#FFFFFF',
