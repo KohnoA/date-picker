@@ -5,6 +5,7 @@ import { generateCalendarData } from '@/utils';
 
 import { CalendarCell } from './CalendarCell';
 import { CalendarHeader } from './CalendarHeader';
+import { ClearButton } from './ClearButton';
 import { CalendarContainer, DaysList } from './styled';
 import { WeekDaysName } from './WeekDaysName';
 
@@ -16,6 +17,7 @@ export const Calendar = () => {
 
   const currentYear = currentDate.getFullYear();
   const currentMonth = MONTH_NAMES[currentDate.getMonth()];
+  const showClearButton = !!activeDay;
 
   const calendarData = useMemo(() => generateCalendarData(currentDate), [currentDate]);
 
@@ -31,8 +33,10 @@ export const Calendar = () => {
     setActiveDay(timestamp);
   };
 
+  const onClearCalendar = () => setActiveDay(null);
+
   return (
-    <CalendarContainer>
+    <CalendarContainer $showClearButton={showClearButton}>
       <CalendarHeader
         month={currentMonth}
         year={currentYear}
@@ -51,6 +55,8 @@ export const Calendar = () => {
           />
         ))}
       </DaysList>
+
+      {showClearButton && <ClearButton onClear={onClearCalendar} />}
     </CalendarContainer>
   );
 };
