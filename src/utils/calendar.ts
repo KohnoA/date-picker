@@ -49,7 +49,7 @@ export function generateCalendarData(currentDate: Date): DayType[] {
   const endOfPrevMonthData = generateDaysData(
     currentDate.getFullYear(),
     currentDate.getMonth() - 1,
-    countDaysInPrevMonth - (7 - firstWeekDayOfMonth),
+    countDaysInPrevMonth - (firstWeekDayOfMonth - 1),
     countDaysInPrevMonth,
   );
   const currentMonthData = generateDaysData(

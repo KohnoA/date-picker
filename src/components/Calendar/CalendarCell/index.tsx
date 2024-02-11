@@ -2,13 +2,21 @@ import { DayType } from '@/types';
 
 import { CalendarCellContainer } from './styled';
 
-type CalendarCallProps = DayType;
+interface CalendarCallProps extends DayType {
+  onClick: (timestamp: number) => void;
+}
 
 export const CalendarCell = (props: CalendarCallProps) => {
-  const { day, isCurrentMonth, isActive } = props;
+  const { day, timestamp, isCurrentMonth, isActive, onClick } = props;
+
+  const onClickHandler = () => onClick(timestamp);
 
   return (
-    <CalendarCellContainer $isCurrentMonth={isCurrentMonth} $isActive={isActive}>
+    <CalendarCellContainer
+      onClick={onClickHandler}
+      $isCurrentMonth={isCurrentMonth}
+      $isActive={isActive}
+    >
       {day}
     </CalendarCellContainer>
   );
