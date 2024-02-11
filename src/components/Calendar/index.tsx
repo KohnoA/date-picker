@@ -29,9 +29,9 @@ export const Calendar = () => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
   }, []);
 
-  const onClickCalendarCell = (timestamp: number) => {
+  const onClickCalendarCell = useCallback((timestamp: number) => {
     setActiveDay(timestamp);
-  };
+  }, []);
 
   const onClearCalendar = useCallback(() => setActiveDay(null), []);
 

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { DayType } from '@/types';
 
 import { CalendarCellContainer } from './styled';
@@ -7,7 +9,7 @@ interface CalendarCallProps extends DayType {
   onClick: (timestamp: number) => void;
 }
 
-export const CalendarCell = (props: CalendarCallProps) => {
+export const CalendarCell = memo((props: CalendarCallProps) => {
   const { day, timestamp, isCurrentMonth, isActive, onClick } = props;
 
   const onClickHandler = () => onClick(timestamp);
@@ -21,4 +23,4 @@ export const CalendarCell = (props: CalendarCallProps) => {
       {day}
     </CalendarCellContainer>
   );
-};
+});
