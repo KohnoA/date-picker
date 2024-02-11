@@ -25,7 +25,6 @@ export function generateCalendarData(currentDate: Date): DayType[] {
         todos: null,
         isWeekend,
         isHoliday: false,
-        isActive: false,
       };
     });
 

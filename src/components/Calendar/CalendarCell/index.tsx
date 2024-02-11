@@ -3,6 +3,7 @@ import { DayType } from '@/types';
 import { CalendarCellContainer } from './styled';
 
 interface CalendarCallProps extends DayType {
+  isActive: boolean;
   onClick: (timestamp: number) => void;
 }
 

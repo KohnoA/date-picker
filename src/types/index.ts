@@ -8,5 +8,4 @@ export interface DayType {
   isWeekend: boolean;
   isHoliday: boolean;
   isCurrentMonth: boolean;
-  isActive: boolean;
 }
