@@ -33,7 +33,7 @@ export const Calendar = () => {
     setActiveDay(timestamp);
   };
 
-  const onClearCalendar = () => setActiveDay(null);
+  const onClearCalendar = useCallback(() => setActiveDay(null), []);
 
   return (
     <CalendarContainer $showClearButton={showClearButton}>
