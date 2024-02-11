@@ -10,7 +10,6 @@ export const Container = styled.div`
   flex-direction: column;
   gap: ${margin.sm};
 
-  max-width: 250px;
   margin-bottom: ${margin.lg};
 `;
 
