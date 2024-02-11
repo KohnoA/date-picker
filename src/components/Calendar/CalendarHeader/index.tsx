@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { ICONS } from '@/constants';
 
 import { CalendarHeaderContainer, RewindButton, YearAndMonth } from './styled';
@@ -11,18 +13,20 @@ interface CalendarHeaderProps {
   onClickPrev: () => void;
 }
 
-export const CalendarHeader = ({ month, year, onClickNext, onClickPrev }: CalendarHeaderProps) => (
-  <CalendarHeaderContainer>
-    <RewindButton onClick={onClickPrev}>
-      <PrevIcon />
-    </RewindButton>
+export const CalendarHeader = memo(
+  ({ month, year, onClickNext, onClickPrev }: CalendarHeaderProps) => (
+    <CalendarHeaderContainer>
+      <RewindButton onClick={onClickPrev}>
+        <PrevIcon />
+      </RewindButton>
 
-    <YearAndMonth>
-      {month} {year}
-    </YearAndMonth>
+      <YearAndMonth>
+        {month} {year}
+      </YearAndMonth>
 
-    <RewindButton onClick={onClickNext}>
-      <NextIcon />
-    </RewindButton>
-  </CalendarHeaderContainer>
+      <RewindButton onClick={onClickNext}>
+        <NextIcon />
+      </RewindButton>
+    </CalendarHeaderContainer>
+  ),
 );

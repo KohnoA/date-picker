@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { MONTH_NAMES } from '@/constants';
 import { generateCalendarData } from '@/utils';
@@ -21,13 +21,13 @@ export const Calendar = () => {
 
   const calendarData = useMemo(() => generateCalendarData(currentDate), [currentDate]);
 
-  const onClickNextHandler = () => {
+  const onClickNextHandler = useCallback(() => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  };
+  }, []);
 
-  const onClickPrevHandler = () => {
+  const onClickPrevHandler = useCallback(() => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-  };
+  }, []);
 
   const onClickCalendarCell = (timestamp: number) => {
     setActiveDay(timestamp);
