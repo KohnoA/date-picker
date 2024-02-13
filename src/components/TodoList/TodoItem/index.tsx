@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 
 import { ICONS } from '@/constants';
 
@@ -13,19 +13,29 @@ import {
 const { CrossIcon } = ICONS;
 
 interface TodoItemProps {
+  id: number;
+  completed: boolean;
   children: ReactNode;
+  onToggle: (id: number) => void;
+  onRemove: (id: number) => void;
 }
 
-export const TodoItem = ({ children }: TodoItemProps) => (
-  <TodoItemContainer>
-    <TodoItemDescription>{children}</TodoItemDescription>
+export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: TodoItemProps) => {
+  const handleRemove = () => onRemove(id);
 
-    <TodoItemWrapper>
-      <TodoItemCheckbox type="checkbox" />
+  const handleToggle = () => onToggle(id);
 
-      <TodoItemRemoveButton aria-label="Remove todo item">
-        <CrossIcon width={18} height={18} />
-      </TodoItemRemoveButton>
-    </TodoItemWrapper>
-  </TodoItemContainer>
-);
+  return (
+    <TodoItemContainer>
+      <TodoItemDescription $completed={completed}>{children}</TodoItemDescription>
+
+      <TodoItemWrapper>
+        <TodoItemCheckbox type="checkbox" onChange={handleToggle} checked={completed} />
+
+        <TodoItemRemoveButton aria-label="Remove todo item" onClick={handleRemove}>
+          <CrossIcon width={18} height={18} />
+        </TodoItemRemoveButton>
+      </TodoItemWrapper>
+    </TodoItemContainer>
+  );
+});

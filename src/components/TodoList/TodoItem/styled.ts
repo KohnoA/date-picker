@@ -30,11 +30,12 @@ export const TodoItemContainer = styled.li`
   }
 `;
 
-export const TodoItemDescription = styled.span`
+export const TodoItemDescription = styled.span<{ $completed: boolean }>`
   flex-grow: 1;
 
   font-weight: 600;
   word-break: break-all;
+  text-decoration: ${({ $completed }) => ($completed ? 'line-through' : 'none')};
 `;
 
 export const TodoItemWrapper = styled.div`
@@ -52,6 +53,7 @@ export const TodoItemRemoveButton = styled.button`
 
   background-color: transparent;
   border: none;
+  transition: opacity 200ms;
   cursor: pointer;
 
   &:hover {
