@@ -1,18 +1,16 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { ICONS } from '@/constants';
 import { GlobalStyles } from '@/styles';
 
 import {
-  TodoListAddTodoButton,
   TodoListBackdrop,
   TodoListCloseButton,
   TodoListContent,
   TodoListDayDescription,
-  TodoListInput,
   TodoListOwn,
-  TodoListWrapper,
-} from './styles';
+} from './styled';
+import { TodoInput } from './TodoInput';
 import { TodoItem } from './TodoItem';
 
 const { CrossIcon } = ICONS;
@@ -24,22 +22,17 @@ const testData = [
 ];
 
 export const TodoList = () => {
-  const [newTodo, setNewTodo] = useState<string>('');
   const [todos, setTodos] = useState<typeof testData>(testData);
 
-  const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewTodo(event.target.value);
-  };
-
-  const handleAddNewTodo = () => {
-    setTodos((prev) => [...prev, { id: Date.now(), title: newTodo, completed: false }]);
-  };
-
-  const handleRemoveTodo = useCallback((id: number) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  const handleAddNewTodo = useCallback((value: string) => {
+    setTodos((prev) => [...prev, { id: Date.now(), title: value, completed: false }]);
   }, []);
 
-  const handleToggleTodo = useCallback((id: number) => {
+  const handleRemoveTodo = (id: number) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
+  const handleToggleTodo = (id: number) => {
     setTodos((prev) =>
       prev.map((todo) => {
         if (todo.id === id) {
@@ -49,7 +42,7 @@ export const TodoList = () => {
         return todo;
       }),
     );
-  }, []);
+  };
 
   return (
     <>
@@ -62,16 +55,7 @@ export const TodoList = () => {
 
           <TodoListDayDescription>Su 10.10.2020</TodoListDayDescription>
 
-          <TodoListWrapper>
-            <TodoListInput
-              type="text"
-              value={newTodo}
-              onChange={handleInput}
-              placeholder="Add your todo"
-              autoFocus
-            />
-            <TodoListAddTodoButton onClick={handleAddNewTodo}>Add</TodoListAddTodoButton>
-          </TodoListWrapper>
+          <TodoInput onAdd={handleAddNewTodo} />
 
           <TodoListOwn>
             {todos.map((todo, index) => (
