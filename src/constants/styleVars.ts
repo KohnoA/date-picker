@@ -14,6 +14,7 @@ export const colors = {
   greyDark: '#AAAAAA',
   black: '#333333',
   white: '#FFFFFF',
+  backdrop: '#00000033',
 };
 
 export const borderRadius = {
