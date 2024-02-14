@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 
 import { ICONS } from '@/constants';
-import { GlobalStyles } from '@/styles';
 
 import {
   TodoListBackdrop,
@@ -45,32 +44,29 @@ export const TodoList = () => {
   };
 
   return (
-    <>
-      <GlobalStyles /> {/* <= TODO: Remove later */}
-      <TodoListBackdrop>
-        <TodoListContent>
-          <TodoListCloseButton>
-            <CrossIcon />
-          </TodoListCloseButton>
+    <TodoListBackdrop>
+      <TodoListContent>
+        <TodoListCloseButton>
+          <CrossIcon />
+        </TodoListCloseButton>
 
-          <TodoListDayDescription>Su 10.10.2020</TodoListDayDescription>
+        <TodoListDayDescription>Su 10.10.2020</TodoListDayDescription>
 
-          <TodoInput onAdd={handleAddNewTodo} />
+        <TodoInput onAdd={handleAddNewTodo} />
 
-          <TodoListOwn>
-            {todos.map((todo, index) => (
-              <TodoItem
-                key={todo.id}
-                {...todo}
-                onRemove={handleRemoveTodo}
-                onToggle={handleToggleTodo}
-              >
-                {index + 1}. {todo.title}
-              </TodoItem>
-            ))}
-          </TodoListOwn>
-        </TodoListContent>
-      </TodoListBackdrop>
-    </>
+        <TodoListOwn>
+          {todos.map((todo, index) => (
+            <TodoItem
+              key={todo.id}
+              {...todo}
+              onRemove={handleRemoveTodo}
+              onToggle={handleToggleTodo}
+            >
+              {index + 1}. {todo.title}
+            </TodoItem>
+          ))}
+        </TodoListOwn>
+      </TodoListContent>
+    </TodoListBackdrop>
   );
 };
