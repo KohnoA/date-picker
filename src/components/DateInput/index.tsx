@@ -1,59 +1,44 @@
-import { ChangeEvent, useId, useState } from 'react';
+import { ChangeEvent, useId } from 'react';
 
 import { ICONS } from '@/constants';
-import { dateStringHasError, isValidDateInputValue } from '@/utils';
 
-import {
-  CalendarButton,
-  ClearButton,
-  Container,
-  Error,
-  Input,
-  InputWrapper,
-  Label,
-} from './styled';
+import { CalendarButton, ClearButton, Container, Input, InputWrapper, Label } from './styled';
 
 const { CalendarIcon, ClearIcon } = ICONS;
 
 const DEFAULT_LABEL = 'Date';
-const INITIAL_VALUE = '';
-const INITIAL_ERROR_STATUS = false;
+const DEFAULT_PLACEHOLDER = 'Choose Date';
 
 interface DateInputProps {
   label?: string;
+  value: string;
+  hasError?: boolean;
+  placeholder?: string;
   onToggleCalendar: () => void;
+  onChange: (value: string) => void;
+  onClear: () => void;
 }
 
-export const DateInput = ({ label = DEFAULT_LABEL, onToggleCalendar }: DateInputProps) => {
-  const [value, setValue] = useState<string>(INITIAL_VALUE);
-  const [hasError, setHasError] = useState<boolean>(INITIAL_ERROR_STATUS);
-  const dateInputId = useId();
-
+export const DateInput = (props: DateInputProps) => {
+  const { value, label, placeholder, hasError, onToggleCalendar, onChange, onClear } = props;
   const showClearButton = !!value.length;
 
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
+  const dateInputId = useId();
 
-    if (isValidDateInputValue(newValue)) {
-      setValue(newValue);
-      setHasError(dateStringHasError(newValue));
-    }
-  };
-  const clearHandler = () => {
-    setValue(INITIAL_VALUE);
-    setHasError(false);
+  const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange(event.target.value);
   };
 
   return (
     <Container>
-      <Label htmlFor={dateInputId}>{label}</Label>
+      <Label htmlFor={dateInputId}>{label ?? DEFAULT_LABEL}</Label>
       <InputWrapper>
         <Input
           id={dateInputId}
           type="text"
-          placeholder="Choose Date"
+          placeholder={placeholder ?? DEFAULT_PLACEHOLDER}
           value={value}
-          onChange={onChangeHandler}
+          onChange={handleInput}
           $isInvalid={hasError}
         />
 
@@ -62,12 +47,10 @@ export const DateInput = ({ label = DEFAULT_LABEL, onToggleCalendar }: DateInput
         </CalendarButton>
 
         {showClearButton && (
-          <ClearButton onClick={clearHandler}>
+          <ClearButton onClick={onClear}>
             <ClearIcon />
           </ClearButton>
         )}
-
-        {hasError && <Error>Invalid date, required MM/DD/YYYY</Error>}
       </InputWrapper>
     </Container>
   );

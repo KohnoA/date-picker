@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, fontSizes, margin, opacity } from '@/constants';
+import { borderRadius, colors, margin, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const Container = styled.div`
@@ -10,7 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: ${margin.sm};
 
-  margin-bottom: ${margin.lg};
+  margin-bottom: ${margin.sm};
 `;
 
 export const Label = styled.label`
@@ -71,17 +71,4 @@ export const CalendarButton = styled(Button)`
 
 export const ClearButton = styled(Button)`
   right: 6px;
-`;
-
-export const Error = styled.p`
-  position: absolute;
-
-  left: 0;
-  bottom: -20px;
-
-  width: 100%;
-
-  text-align: center;
-  color: ${colors.red};
-  font-size: ${fontSizes.sm};
 `;

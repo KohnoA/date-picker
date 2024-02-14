@@ -1,26 +1,51 @@
 import { useState } from 'react';
 
 import { GlobalStyles } from '@/styles';
+import { dateStringHasError, isValidDateInputValue } from '@/utils';
 
 import { Calendar } from '../Calendar';
 import { DateInput } from '../DateInput';
 
+import { errorMassage } from './config';
 // import { TodoList } from '../TodoList';
-import { Container } from './styled';
+import { Container, Error } from './styled';
 
-// const INITIAL_DATE = '';
-const INITIAL_STATE_CALENDAR = false;
+const INITIAL_DATE_VALUE = '';
+const INITIAL_CALENDAR_VISIBILITY = false;
+const INITIAL_ERROR_STATUS = false;
 
 export const DatePicker = () => {
-  // const [date, setDate] = useState<string>(INITIAL_DATE);
-  const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_STATE_CALENDAR);
+  const [date, setDate] = useState<string>(INITIAL_DATE_VALUE);
+  const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_CALENDAR_VISIBILITY);
+  const [hasError, setHasError] = useState<boolean>(INITIAL_ERROR_STATUS);
 
-  const toggleCalendarHandler = () => setShowCalendar((prev) => !prev);
+  const toggleCalendarVisibility = () => setShowCalendar((prev) => !prev);
+
+  const onChangeDateHandler = (value: string) => {
+    if (isValidDateInputValue(value)) {
+      setDate(value);
+      setHasError(dateStringHasError(value));
+    }
+  };
+
+  const clearDateInputHandler = () => {
+    setDate(INITIAL_DATE_VALUE);
+    setHasError(false);
+  };
 
   return (
     <Container>
       <GlobalStyles />
-      <DateInput onToggleCalendar={toggleCalendarHandler} />
+      <DateInput
+        value={date}
+        hasError={hasError}
+        onChange={onChangeDateHandler}
+        onClear={clearDateInputHandler}
+        onToggleCalendar={toggleCalendarVisibility}
+      />
+
+      {hasError && <Error>{errorMassage}</Error>}
+
       <Calendar showCalendar={showCalendar} />
       {/* <TodoList /> */}
     </Container>
