@@ -41,12 +41,7 @@ export const DatePicker = () => {
   const resetActiveDay = useCallback(() => {
     setActiveDay(INITIAL_ACTIVE_DAY_VALUE);
     setDateValue(INITIAL_DATE_VALUE);
-  }, []);
-
-  const clearDateInputHandler = useCallback(() => {
-    setDateValue(INITIAL_DATE_VALUE);
     setHasError(INITIAL_ERROR_STATUS);
-    resetActiveDay();
   }, []);
 
   const setActiveDayHandler = useCallback((timestamp: number) => {
@@ -61,7 +56,7 @@ export const DatePicker = () => {
         value={dateValue}
         hasError={hasError}
         onChange={onChangeDateHandler}
-        onClear={clearDateInputHandler}
+        onClear={resetActiveDay}
         onToggleCalendar={toggleCalendarVisibility}
       />
 

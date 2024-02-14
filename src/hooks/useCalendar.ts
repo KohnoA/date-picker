@@ -18,16 +18,17 @@ export function useCalendar(activeDay: number | null) {
 
   const year = currentDate.getFullYear();
   const month = MONTH_NAMES[currentDate.getMonth()];
+  const currentDateTimestamp = currentDate.getTime();
 
-  const data = useMemo(() => generateCalendarData(currentDate), [currentDate]);
+  const data = useMemo(() => generateCalendarData(currentDate), [currentDateTimestamp]);
 
   const next = useCallback(() => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  }, []);
+  }, [currentDateTimestamp]);
 
   const prev = useCallback(() => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-  }, []);
+  }, [currentDateTimestamp]);
 
   return { data, year, month, next, prev };
 }
