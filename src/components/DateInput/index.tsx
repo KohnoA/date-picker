@@ -1,4 +1,4 @@
-import { ChangeEvent, useId } from 'react';
+import { ChangeEvent, memo, useId } from 'react';
 
 import { ICONS } from '@/constants';
 
@@ -19,7 +19,7 @@ interface DateInputProps {
   onClear: () => void;
 }
 
-export const DateInput = (props: DateInputProps) => {
+export const DateInput = memo((props: DateInputProps) => {
   const { value, label, placeholder, hasError, onToggleCalendar, onChange, onClear } = props;
   const showClearButton = !!value.length;
 
@@ -54,4 +54,4 @@ export const DateInput = (props: DateInputProps) => {
       </InputWrapper>
     </Container>
   );
-};
+});

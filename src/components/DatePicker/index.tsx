@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { GlobalStyles } from '@/styles';
 import { dateStringHasError, isValidDateInputValue } from '@/utils';
@@ -19,19 +19,19 @@ export const DatePicker = () => {
   const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_CALENDAR_VISIBILITY);
   const [hasError, setHasError] = useState<boolean>(INITIAL_ERROR_STATUS);
 
-  const toggleCalendarVisibility = () => setShowCalendar((prev) => !prev);
+  const toggleCalendarVisibility = useCallback(() => setShowCalendar((prev) => !prev), []);
 
-  const onChangeDateHandler = (value: string) => {
+  const onChangeDateHandler = useCallback((value: string) => {
     if (isValidDateInputValue(value)) {
       setDate(value);
       setHasError(dateStringHasError(value));
     }
-  };
+  }, []);
 
-  const clearDateInputHandler = () => {
+  const clearDateInputHandler = useCallback(() => {
     setDate(INITIAL_DATE_VALUE);
     setHasError(false);
-  };
+  }, []);
 
   return (
     <Container>
