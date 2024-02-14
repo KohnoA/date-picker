@@ -12,6 +12,7 @@ export const CalendarCellContainer = styled.li<{ $isCurrentMonth: boolean; $isAc
 
   border-radius: ${borderRadius.high};
   transition: all 200ms;
+  user-select: none;
   cursor: pointer;
 
   ${({ $isActive }) =>

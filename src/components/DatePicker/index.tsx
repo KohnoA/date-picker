@@ -6,7 +6,6 @@ import { GlobalStyles } from '@/styles';
 import { dateStringHasError, isValidDateInputValue, timestampToDateFormat } from '@/utils';
 
 import { errorMassage } from './config';
-// import { TodoList } from '../TodoList';
 import { Container, Error } from './styled';
 
 const INITIAL_DATE_VALUE = '';
@@ -68,8 +67,6 @@ export const DatePicker = () => {
         setActiveDay={setActiveDayHandler}
         onClear={resetActiveDay}
       />
-
-      {/* <TodoList /> */}
     </Container>
   );
 };

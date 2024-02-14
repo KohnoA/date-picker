@@ -22,10 +22,10 @@ export const TodoListBackdrop = styled.div`
 
 export const TodoListContent = styled.div`
   position: relative;
-  max-width: 250px;
+  max-width: 300px;
 
   margin: auto;
-  padding: 15px;
+  padding: 20px;
 
   background-color: ${colors.white};
   border-radius: ${borderRadius.high};

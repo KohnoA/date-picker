@@ -1,6 +1,9 @@
-import { useCallback, useState } from 'react';
+import { MouseEvent } from 'react';
 
 import { ICONS } from '@/constants';
+import { useTodoList } from '@/hooks';
+import { DayType } from '@/types';
+import { timestampToDateFormat } from '@/utils';
 
 import {
   TodoListBackdrop,
@@ -14,54 +17,35 @@ import { TodoItem } from './TodoItem';
 
 const { CrossIcon } = ICONS;
 
-const testData = [
-  { id: 1, title: 'Learn React', completed: false },
-  { id: 2, title: 'Learn Redux', completed: true },
-  { id: 3, title: 'Learn Vue', completed: false },
-];
+interface TodoListProps {
+  dayData: DayType;
+  onClose: () => void;
+}
 
-export const TodoList = () => {
-  const [todos, setTodos] = useState<typeof testData>(testData);
+export const TodoList = ({ dayData, onClose }: TodoListProps) => {
+  const { weekDay, timestamp } = dayData;
+  const date = timestampToDateFormat(timestamp);
 
-  const handleAddNewTodo = useCallback((value: string) => {
-    setTodos((prev) => [...prev, { id: Date.now(), title: value, completed: false }]);
-  }, []);
+  const { todos, add, remove, toggle } = useTodoList();
 
-  const handleRemoveTodo = (id: number) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
-  };
-
-  const handleToggleTodo = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed;
-        }
-
-        return todo;
-      }),
-    );
-  };
+  const handleContentClick = (event: MouseEvent) => event.stopPropagation();
 
   return (
-    <TodoListBackdrop>
-      <TodoListContent>
-        <TodoListCloseButton>
+    <TodoListBackdrop onClick={onClose}>
+      <TodoListContent onClick={handleContentClick}>
+        <TodoListCloseButton onClick={onClose}>
           <CrossIcon />
         </TodoListCloseButton>
 
-        <TodoListDayDescription>Su 10.10.2020</TodoListDayDescription>
+        <TodoListDayDescription>
+          {weekDay} {date}
+        </TodoListDayDescription>
 
-        <TodoInput onAdd={handleAddNewTodo} />
+        <TodoInput onAdd={add} />
 
         <TodoListOwn>
           {todos.map((todo, index) => (
-            <TodoItem
-              key={todo.id}
-              {...todo}
-              onRemove={handleRemoveTodo}
-              onToggle={handleToggleTodo}
-            >
+            <TodoItem key={todo.id} {...todo} onRemove={remove} onToggle={toggle}>
               {index + 1}. {todo.title}
             </TodoItem>
           ))}
