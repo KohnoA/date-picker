@@ -11,7 +11,11 @@ import { WeekDaysName } from './WeekDaysName';
 
 const INITIAL_DATE = new Date(Date.now());
 
-export const Calendar = () => {
+interface CalendarProps {
+  showCalendar: boolean;
+}
+
+export const Calendar = ({ showCalendar }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState<Date>(INITIAL_DATE);
   const [activeDay, setActiveDay] = useState<number | null>(null);
 
@@ -36,7 +40,7 @@ export const Calendar = () => {
   const onClearCalendar = useCallback(() => setActiveDay(null), []);
 
   return (
-    <CalendarContainer $showClearButton={showClearButton}>
+    <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
       <CalendarHeader
         month={currentMonth}
         year={currentYear}

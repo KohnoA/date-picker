@@ -21,9 +21,10 @@ const INITIAL_ERROR_STATUS = false;
 
 interface DateInputProps {
   label?: string;
+  onToggleCalendar: () => void;
 }
 
-export const DateInput = ({ label = DEFAULT_LABEL }: DateInputProps) => {
+export const DateInput = ({ label = DEFAULT_LABEL, onToggleCalendar }: DateInputProps) => {
   const [value, setValue] = useState<string>(INITIAL_VALUE);
   const [hasError, setHasError] = useState<boolean>(INITIAL_ERROR_STATUS);
   const dateInputId = useId();
@@ -56,7 +57,7 @@ export const DateInput = ({ label = DEFAULT_LABEL }: DateInputProps) => {
           $isInvalid={hasError}
         />
 
-        <CalendarButton>
+        <CalendarButton onClick={onToggleCalendar}>
           <CalendarIcon />
         </CalendarButton>
 
