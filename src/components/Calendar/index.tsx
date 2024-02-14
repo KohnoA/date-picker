@@ -12,12 +12,22 @@ import { WeekDaysName } from './WeekDaysName';
 const INITIAL_DATE = new Date(Date.now());
 
 interface CalendarProps {
+  activeDay: number | null;
   showCalendar: boolean;
+  setActiveDay: (timestamp: number) => void;
+  onClear: () => void;
 }
 
-export const Calendar = ({ showCalendar }: CalendarProps) => {
-  const [currentDate, setCurrentDate] = useState<Date>(INITIAL_DATE);
-  const [activeDay, setActiveDay] = useState<number | null>(null);
+export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: CalendarProps) => {
+  const [currentDate, setCurrentDate] = useState<Date>(
+    activeDay ? new Date(activeDay) : INITIAL_DATE,
+  );
+  const [prevActiveDay, setPrevActiveDay] = useState<number | null>(null);
+
+  if (activeDay !== prevActiveDay) {
+    if (activeDay !== null) setCurrentDate(new Date(activeDay));
+    setPrevActiveDay(activeDay);
+  }
 
   const currentYear = currentDate.getFullYear();
   const currentMonth = MONTH_NAMES[currentDate.getMonth()];
@@ -37,8 +47,6 @@ export const Calendar = ({ showCalendar }: CalendarProps) => {
     setActiveDay(timestamp);
   }, []);
 
-  const onClearCalendar = useCallback(() => setActiveDay(null), []);
-
   return (
     <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
       <CalendarHeader
@@ -52,15 +60,15 @@ export const Calendar = ({ showCalendar }: CalendarProps) => {
       <DaysList>
         {calendarData.map((cellProps) => (
           <CalendarCell
-            key={cellProps.timestamp}
             {...cellProps}
+            key={cellProps.timestamp}
             isActive={activeDay === cellProps.timestamp}
             onClick={onClickCalendarCell}
           />
         ))}
       </DaysList>
 
-      {showClearButton && <ClearButton onClear={onClearCalendar} />}
+      {showClearButton && <ClearButton onClear={onClear} />}
     </CalendarContainer>
   );
 };
