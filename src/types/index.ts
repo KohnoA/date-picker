@@ -2,9 +2,9 @@ import { WEEK_DAYS_NAME } from '@/constants';
 
 export interface DayType {
   day: number;
-  weekDay: (typeof WEEK_DAYS_NAME)[number];
+  weekday: (typeof WEEK_DAYS_NAME)[number];
   timestamp: number;
-  todos: null | TodoType[];
+  todos: TodoType[];
   isWeekend: boolean;
   isHoliday: boolean;
   isCurrentMonth: boolean;
