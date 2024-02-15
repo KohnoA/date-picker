@@ -26,13 +26,13 @@ export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: Cal
     setActiveDay(timestamp);
   }, []);
 
-  const showTodoList = (timestamp: number) => {
+  const showTodoList = useCallback((timestamp: number) => {
     const dayData = data.find((day) => day.timestamp === timestamp);
 
     if (dayData) setDayTodos(dayData);
-  };
+  }, []);
 
-  const closeTodoList = () => setDayTodos(null);
+  const closeTodoList = useCallback(() => setDayTodos(null), []);
 
   return (
     <>

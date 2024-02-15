@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 
 import { ICONS } from '@/constants';
-import { useTodoList } from '@/hooks';
+import { useTodos } from '@/hooks';
 import { DayType } from '@/types';
 import { timestampToDateFormat } from '@/utils';
 
@@ -23,10 +23,10 @@ interface TodoListProps {
 }
 
 export const TodoList = ({ dayData, onClose }: TodoListProps) => {
-  const { weekDay, timestamp } = dayData;
+  const { weekday, timestamp } = dayData;
   const date = timestampToDateFormat(timestamp);
 
-  const { todos, add, remove, toggle } = useTodoList();
+  const { todos, add, remove, toggle } = useTodos(dayData?.todos);
 
   const handleContentClick = (event: MouseEvent) => event.stopPropagation();
 
@@ -38,7 +38,7 @@ export const TodoList = ({ dayData, onClose }: TodoListProps) => {
         </TodoListCloseButton>
 
         <TodoListDayDescription>
-          {weekDay} {date}
+          {weekday} {date}
         </TodoListDayDescription>
 
         <TodoInput onAdd={add} />

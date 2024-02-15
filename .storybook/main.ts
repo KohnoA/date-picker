@@ -38,12 +38,12 @@ const config: StorybookConfig = {
       };
     }
 
-    // const fileLoaderRule = config.module?.rules?.find(
-    //   (rule) => rule !== '...' && rule && rule.test instanceof RegExp && rule.test.test('.svg'),
-    // );
-    // if (fileLoaderRule && fileLoaderRule !== '...') {
-    //   fileLoaderRule.exclude = /\.svg$/;
-    // }
+    const fileLoaderRule = config.module?.rules?.find(
+      (rule) => rule !== '...' && rule && rule.test instanceof RegExp && rule.test.test('.svg'),
+    );
+    if (fileLoaderRule && fileLoaderRule !== '...') {
+      fileLoaderRule.exclude = /\.svg$/;
+    }
     config.module?.rules?.push({
       test: /\.svg$/,
       enforce: 'pre',
