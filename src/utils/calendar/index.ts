@@ -1,0 +1,1 @@
+export { generateCalendarData } from './generateCalendarData';
