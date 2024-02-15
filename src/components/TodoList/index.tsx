@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect } from 'react';
+import { MouseEvent } from 'react';
 
 import { ICONS } from '@/constants';
 import { useTodos } from '@/hooks';
@@ -30,12 +30,15 @@ export const TodoList = ({ day, onClose }: TodoListProps) => {
 
   const handleContentClick = (event: MouseEvent) => event.stopPropagation();
 
-  useEffect(() => () => day.update(todos), [todos]);
+  const handleCloseTodoList = () => {
+    day.update(todos);
+    onClose();
+  };
 
   return (
-    <TodoListBackdrop onClick={onClose}>
+    <TodoListBackdrop onClick={handleCloseTodoList}>
       <TodoListContent onClick={handleContentClick}>
-        <TodoListCloseButton onClick={onClose}>
+        <TodoListCloseButton onClick={handleCloseTodoList}>
           <CrossIcon />
         </TodoListCloseButton>
 

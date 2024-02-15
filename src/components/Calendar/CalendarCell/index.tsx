@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { DayType } from '@/types';
 
-import { CalendarCellContainer } from './styled';
+import { CalendarCellContainer, TodosIndicator } from './styled';
 
 interface CalendarCallProps extends DayType {
   isActive: boolean;
@@ -11,7 +11,8 @@ interface CalendarCallProps extends DayType {
 }
 
 export const CalendarCell = memo((props: CalendarCallProps) => {
-  const { day, timestamp, isCurrentMonth, isActive, onClick, onDoubleClick } = props;
+  const { day, timestamp, isCurrentMonth, isActive, todos, onClick, onDoubleClick } = props;
+  const hasTodos = !!todos.length;
 
   const onClickHandler = () => onClick(timestamp);
 
@@ -24,6 +25,7 @@ export const CalendarCell = memo((props: CalendarCallProps) => {
       $isCurrentMonth={isCurrentMonth}
       $isActive={isActive}
     >
+      <TodosIndicator $hasTodos={hasTodos} />
       {day}
     </CalendarCellContainer>
   );

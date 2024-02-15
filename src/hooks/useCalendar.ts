@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { MONTH_NAMES } from '@/constants';
 import { generateCalendarData } from '@/utils';
@@ -20,7 +20,7 @@ export function useCalendar(activeDay: number | null) {
   const month = MONTH_NAMES[currentDate.getMonth()];
   const currentDateTimestamp = currentDate.getTime();
 
-  const days = useMemo(() => generateCalendarData(currentDate), [currentDateTimestamp]);
+  const days = generateCalendarData(currentDate);
 
   const next = useCallback(() => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
