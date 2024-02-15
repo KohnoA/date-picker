@@ -1,8 +1,8 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 
 import { ICONS } from '@/constants';
 import { useTodos } from '@/hooks';
-import { DayType } from '@/types';
+import { type DayWithTodoControls } from '@/types';
 import { timestampToDateFormat } from '@/utils';
 
 import {
@@ -18,17 +18,19 @@ import { TodoItem } from './TodoItem';
 const { CrossIcon } = ICONS;
 
 interface TodoListProps {
-  dayData: DayType;
+  day: DayWithTodoControls;
   onClose: () => void;
 }
 
-export const TodoList = ({ dayData, onClose }: TodoListProps) => {
-  const { weekday, timestamp } = dayData;
+export const TodoList = ({ day, onClose }: TodoListProps) => {
+  const { weekday, timestamp, todos: initialTodos } = day.data;
   const date = timestampToDateFormat(timestamp);
 
-  const { todos, add, remove, toggle } = useTodos(dayData?.todos);
+  const { todos, add, remove, toggle } = useTodos(initialTodos);
 
   const handleContentClick = (event: MouseEvent) => event.stopPropagation();
+
+  useEffect(() => () => day.update(todos), [todos]);
 
   return (
     <TodoListBackdrop onClick={onClose}>

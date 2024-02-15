@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { TodosDecorator } from '@/services';
 import { TodoType } from '@/types';
 
-export function useTodos(dayTodoData?: TodosDecorator | null) {
-  const [todos, setTodos] = useState<TodoType[]>(dayTodoData?.list ?? []);
+const DEFAULT_VALUE: TodoType[] = [];
+
+export function useTodos(initialTodos?: TodoType[]) {
+  const [todos, setTodos] = useState<TodoType[]>(initialTodos ?? DEFAULT_VALUE);
 
   const add = (value: string) => {
     setTodos((prev) => [...prev, { id: Date.now(), title: value, completed: false }]);
@@ -25,8 +26,6 @@ export function useTodos(dayTodoData?: TodosDecorator | null) {
       }),
     );
   };
-
-  useEffect(() => () => dayTodoData?.update(todos), [todos]);
 
   return { todos, add, remove, toggle };
 }

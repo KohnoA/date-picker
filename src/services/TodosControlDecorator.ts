@@ -1,6 +1,6 @@
-import { DayType, TodoType } from '@/types';
+import { DayType, DayWithTodoControls, TodoType } from '@/types';
 
-export class TodosControlDecorator {
+export class TodosControlDecorator implements DayWithTodoControls {
   private key: string;
   public data: DayType;
 

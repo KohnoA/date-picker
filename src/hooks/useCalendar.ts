@@ -20,7 +20,7 @@ export function useCalendar(activeDay: number | null) {
   const month = MONTH_NAMES[currentDate.getMonth()];
   const currentDateTimestamp = currentDate.getTime();
 
-  const data = useMemo(() => generateCalendarData(currentDate), [currentDateTimestamp]);
+  const days = useMemo(() => generateCalendarData(currentDate), [currentDateTimestamp]);
 
   const next = useCallback(() => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
@@ -30,5 +30,5 @@ export function useCalendar(activeDay: number | null) {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
   }, [currentDateTimestamp]);
 
-  return { data, year, month, next, prev };
+  return { days, year, month, next, prev };
 }

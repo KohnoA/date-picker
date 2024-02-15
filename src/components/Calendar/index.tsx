@@ -2,13 +2,15 @@ import { useCallback, useState } from 'react';
 
 import { TodoList } from '@/components/TodoList';
 import { useCalendar } from '@/hooks';
-import { DayType } from '@/types';
+import { type DayWithTodoControls } from '@/types';
 
 import { CalendarCell } from './CalendarCell';
 import { CalendarHeader } from './CalendarHeader';
 import { ClearButton } from './ClearButton';
 import { CalendarContainer, DaysList } from './styled';
 import { WeekDaysName } from './WeekDaysName';
+
+const INITIAL_DAY_DATA = null;
 
 interface CalendarProps {
   activeDay: number | null;
@@ -18,8 +20,10 @@ interface CalendarProps {
 }
 
 export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: CalendarProps) => {
-  const { year, month, data, next, prev } = useCalendar(activeDay);
-  const [dayTodos, setDayTodos] = useState<DayType | null>(null);
+  const { year, month, days, next, prev } = useCalendar(activeDay);
+  const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
+    INITIAL_DAY_DATA,
+  );
   const showClearButton = !!activeDay;
 
   const setActiveDayHandler = useCallback((timestamp: number) => {
@@ -27,12 +31,12 @@ export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: Cal
   }, []);
 
   const showTodoList = useCallback((timestamp: number) => {
-    const dayData = data.find((day) => day.timestamp === timestamp);
+    const day = days.find(({ data }) => data.timestamp === timestamp) ?? INITIAL_DAY_DATA;
 
-    if (dayData) setDayTodos(dayData);
+    setShowTodosOfDay(day);
   }, []);
 
-  const closeTodoList = useCallback(() => setDayTodos(null), []);
+  const closeTodoList = useCallback(() => setShowTodosOfDay(INITIAL_DAY_DATA), []);
 
   return (
     <>
@@ -41,11 +45,11 @@ export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: Cal
         <WeekDaysName />
 
         <DaysList>
-          {data.map((cellProps) => (
+          {days.map(({ data }) => (
             <CalendarCell
-              {...cellProps}
-              key={cellProps.timestamp}
-              isActive={activeDay === cellProps.timestamp}
+              {...data}
+              key={data.timestamp}
+              isActive={activeDay === data.timestamp}
               onClick={setActiveDayHandler}
               onDoubleClick={showTodoList}
             />
@@ -55,7 +59,7 @@ export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: Cal
         {showClearButton && <ClearButton onClear={onClear} />}
       </CalendarContainer>
 
-      {dayTodos && <TodoList dayData={dayTodos} onClose={closeTodoList} />}
+      {showTodosOfDay && <TodoList day={showTodosOfDay} onClose={closeTodoList} />}
     </>
   );
 };

@@ -2,7 +2,7 @@ import { DayType } from '@/types';
 
 class HolidayDataBase {
   private holidays: number[];
-  private static instance: HolidayDataBase;
+  private static instance: HolidayDataBase | null = null;
 
   private constructor() {
     this.holidays = [
@@ -14,7 +14,7 @@ class HolidayDataBase {
 
   public static getInstance() {
     if (HolidayDataBase.instance === null) {
-      this.instance = new HolidayDataBase();
+      HolidayDataBase.instance = new HolidayDataBase();
     }
 
     return HolidayDataBase.instance;
