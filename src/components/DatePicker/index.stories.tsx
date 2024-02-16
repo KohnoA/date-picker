@@ -11,14 +11,14 @@ const meta: Meta<typeof DatePicker> = {
       control: { type: 'text' },
     },
     view: {
-      options: CalendarView,
+      options: [CalendarView.MONTH, CalendarView.WEEK, CalendarView.YEAR],
       control: 'select',
     },
     initialDate: {
       control: 'date',
     },
     weekStart: {
-      options: CalendarWeekStart,
+      options: [CalendarWeekStart.MONDAY, CalendarWeekStart.SUNDAY],
       control: 'select',
     },
     min: {
