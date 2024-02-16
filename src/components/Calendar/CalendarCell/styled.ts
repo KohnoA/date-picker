@@ -7,10 +7,16 @@ export const CalendarCellContainer = styled.li<{
   $isCurrentMonth: boolean;
   $isActive: boolean;
   $isHoliday: boolean;
+  $hidden: boolean;
 }>`
-  position: relative;
+  ${({ $hidden }) =>
+    $hidden
+      ? `
+        display: none;
+  `
+      : flex()};
 
-  ${flex()};
+  position: relative;
 
   font-size: ${fontSizes.sm};
   font-weight: 600;
@@ -25,11 +31,11 @@ export const CalendarCellContainer = styled.li<{
   ${({ $isCurrentMonth }) =>
     $isCurrentMonth
       ? `
-    pointer-events: all;
+        pointer-events: all;
   `
       : `
-    opacity: ${opacity.high};
-    pointer-events: none;
+        opacity: ${opacity.high};
+        pointer-events: none;
   `}
 
   ${({ $isActive }) =>
@@ -37,12 +43,12 @@ export const CalendarCellContainer = styled.li<{
       ? `
         color: ${colors.white};
         background-color: ${colors.blue};
-      `
+  `
       : `
         &:hover {
           color: ${colors.black};
           background-color: ${colors.greyNormalAlt};
-      }`}
+  `}
 `;
 
 export const TodosIndicator = styled.span<{ $hasTodos: boolean }>`

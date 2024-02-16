@@ -23,7 +23,7 @@ interface CalendarProps {
 export const Calendar = (props: CalendarProps) => {
   const { activeDay, showCalendar, setActiveDay, onClear } = props;
 
-  const { weekStart } = useContext(ConfigContext);
+  const { weekStart, showWeekends } = useContext(ConfigContext);
   const { year, month, days, next, prev } = useCalendar(activeDay, weekStart);
   const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
     INITIAL_DAY_DATA,
@@ -48,7 +48,7 @@ export const Calendar = (props: CalendarProps) => {
         <CalendarHeader month={month} year={year} onClickNext={next} onClickPrev={prev} />
         <WeekDaysName />
 
-        <DaysList>
+        <DaysList $showWeekends={!!showWeekends}>
           {days.map(({ data }) => (
             <CalendarCell
               {...data}

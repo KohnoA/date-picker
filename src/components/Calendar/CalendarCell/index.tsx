@@ -12,10 +12,19 @@ interface CalendarCallProps extends DayType {
 }
 
 export const CalendarCell = memo((props: CalendarCallProps) => {
-  const { day, timestamp, isCurrentMonth, isActive, isHoliday, todos, onClick, onDoubleClick } =
-    props;
+  const {
+    day,
+    timestamp,
+    isCurrentMonth,
+    isActive,
+    isHoliday,
+    isWeekend,
+    todos,
+    onClick,
+    onDoubleClick,
+  } = props;
 
-  const { showHolidays } = useContext(ConfigContext);
+  const { showHolidays, showWeekends } = useContext(ConfigContext);
 
   const hasTodos = !!todos.length;
 
@@ -30,6 +39,7 @@ export const CalendarCell = memo((props: CalendarCallProps) => {
       $isCurrentMonth={isCurrentMonth}
       $isActive={isActive}
       $isHoliday={!!(isHoliday && showHolidays)}
+      $hidden={!!(!showWeekends && isWeekend)}
     >
       <TodosIndicator $hasTodos={hasTodos} />
       {day}

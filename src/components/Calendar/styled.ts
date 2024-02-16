@@ -44,8 +44,8 @@ export const CalendarContainer = styled.section<{
   `}
 `;
 
-export const DaysList = styled.ul`
-  ${calendarGrid()}
+export const DaysList = styled.ul<{ $showWeekends: boolean }>`
+  ${({ $showWeekends }) => ($showWeekends ? calendarGrid(7) : calendarGrid(5, '44px'))}
 
   list-style: none;
 `;
