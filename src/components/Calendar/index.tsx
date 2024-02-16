@@ -19,7 +19,8 @@ interface CalendarProps {
   onClear: () => void;
 }
 
-export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: CalendarProps) => {
+export const Calendar = (props: CalendarProps) => {
+  const { activeDay, showCalendar, setActiveDay, onClear } = props;
   const { year, month, days, next, prev } = useCalendar(activeDay);
   const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
     INITIAL_DAY_DATA,
@@ -30,13 +31,13 @@ export const Calendar = ({ activeDay, showCalendar, setActiveDay, onClear }: Cal
     setActiveDay(timestamp);
   }, []);
 
-  const showTodoList = useCallback((timestamp: number) => {
+  const showTodoList = (timestamp: number) => {
     const day = days.find(({ data }) => data.timestamp === timestamp) ?? INITIAL_DAY_DATA;
 
     setShowTodosOfDay(day);
-  }, []);
+  };
 
-  const closeTodoList = useCallback(() => setShowTodosOfDay(INITIAL_DAY_DATA), []);
+  const closeTodoList = () => setShowTodosOfDay(INITIAL_DAY_DATA);
 
   return (
     <>

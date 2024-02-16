@@ -9,7 +9,7 @@ export class TodosControlDecorator implements DayWithTodoControls {
     this.key = String(this.data.timestamp);
   }
 
-  public load() {
+  public loadTodos() {
     const todosInCache = localStorage.getItem(this.key);
 
     if (todosInCache) {
@@ -17,21 +17,21 @@ export class TodosControlDecorator implements DayWithTodoControls {
     }
   }
 
-  public removeAll() {
+  public removeTodos() {
     this.data.todos = [];
     localStorage.removeItem(this.key);
   }
 
-  public save(todos: TodoType[]) {
+  public saveTodos(todos: TodoType[]) {
     this.data.todos = todos;
     localStorage.setItem(this.key, JSON.stringify(todos));
   }
 
-  public update(todos: TodoType[]) {
+  public updateTodos(todos: TodoType[]) {
     if (!todos.length) {
-      this.removeAll();
+      this.removeTodos();
     } else {
-      this.save(todos);
+      this.saveTodos(todos);
     }
   }
 }

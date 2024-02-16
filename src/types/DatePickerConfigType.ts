@@ -8,6 +8,6 @@ export interface DatePickerConfigType {
   view?: CalendarView;
   min?: Date;
   max?: Date;
-  weekStart: CalendarWeekStart;
+  weekStart?: CalendarWeekStart;
   colorOptions?: ColorOptionsType;
 }

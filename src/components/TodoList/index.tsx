@@ -31,7 +31,7 @@ export const TodoList = ({ day, onClose }: TodoListProps) => {
   const handleContentClick = (event: MouseEvent) => event.stopPropagation();
 
   const handleCloseTodoList = () => {
-    day.update(todos);
+    day.updateTodos(todos);
     onClose();
   };
 

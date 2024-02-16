@@ -1,3 +1,4 @@
+import { HOLIDAYS } from '@/constants/holidays';
 import { DayType } from '@/types';
 
 class HolidayDataBase {
@@ -5,11 +6,7 @@ class HolidayDataBase {
   private static instance: HolidayDataBase | null = null;
 
   private constructor() {
-    this.holidays = [
-      new Date(2024, 3, 15).getTime(),
-      new Date(2024, 3, 2).getTime(),
-      new Date(2024, 1, 1).getTime(),
-    ];
+    this.holidays = HOLIDAYS;
   }
 
   public static getInstance() {

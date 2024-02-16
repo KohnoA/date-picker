@@ -2,7 +2,10 @@ import { useCallback, useState } from 'react';
 
 import { Calendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
+import { ConfigContext } from '@/context';
+// import { ConfigurationDecorator } from '@/services';
 import { GlobalStyles } from '@/styles';
+import { DatePickerConfigType } from '@/types';
 import { dateStringHasError, isValidDateInputValue, timestampToDateFormat } from '@/utils';
 
 import { errorMassage } from './config';
@@ -14,9 +17,22 @@ const INITIAL_ERROR_STATUS = false;
 const INITIAL_ACTIVE_DAY_VALUE = null;
 const FULL_DATE_LENGTH = 10;
 
-export const DatePicker = () => {
-  const [dateValue, setDateValue] = useState<string>(INITIAL_DATE_VALUE);
-  const [activeDay, setActiveDay] = useState<number | null>(INITIAL_ACTIVE_DAY_VALUE);
+interface DatePickerProps extends DatePickerConfigType {
+  label?: string;
+  initialDate?: Date;
+}
+
+export const DatePicker = (props: DatePickerProps) => {
+  const { label, initialDate, ...config } = props;
+  const initialDateTimestamp = initialDate?.getTime();
+  // const datePicker = new ConfigurationDecorator(config);
+
+  const [dateValue, setDateValue] = useState<string>(
+    initialDateTimestamp ? timestampToDateFormat(initialDateTimestamp) : INITIAL_DATE_VALUE,
+  );
+  const [activeDay, setActiveDay] = useState<number | null>(
+    initialDateTimestamp ?? INITIAL_ACTIVE_DAY_VALUE,
+  );
   const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_CALENDAR_VISIBILITY);
   const [hasError, setHasError] = useState<boolean>(INITIAL_ERROR_STATUS);
 
@@ -49,24 +65,27 @@ export const DatePicker = () => {
   }, []);
 
   return (
-    <Container>
-      <GlobalStyles />
-      <DateInput
-        value={dateValue}
-        hasError={hasError}
-        onChange={onChangeDateHandler}
-        onClear={resetActiveDay}
-        onToggleCalendar={toggleCalendarVisibility}
-      />
+    <ConfigContext.Provider value={config}>
+      <Container>
+        <GlobalStyles />
 
-      {hasError && <Error>{errorMassage}</Error>}
+        <DateInput
+          value={dateValue}
+          hasError={hasError}
+          onChange={onChangeDateHandler}
+          onClear={resetActiveDay}
+          onToggleCalendar={toggleCalendarVisibility}
+        />
 
-      <Calendar
-        activeDay={activeDay}
-        showCalendar={showCalendar}
-        setActiveDay={setActiveDayHandler}
-        onClear={resetActiveDay}
-      />
-    </Container>
+        {hasError && <Error>{errorMassage}</Error>}
+
+        <Calendar
+          activeDay={activeDay}
+          showCalendar={showCalendar}
+          setActiveDay={setActiveDayHandler}
+          onClear={resetActiveDay}
+        />
+      </Container>
+    </ConfigContext.Provider>
   );
 };

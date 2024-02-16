@@ -12,7 +12,7 @@ export function generateDaysData(
     const day = new DayFactory(date, options?.isCurrentMonth);
 
     const dayWithTodoControls = new TodosControlDecorator(holidays.checkDay(day));
-    dayWithTodoControls.load();
+    dayWithTodoControls.loadTodos();
 
     return dayWithTodoControls;
   });

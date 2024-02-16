@@ -4,7 +4,7 @@
     "es2021": true
   },
   "extends": ["airbnb", "airbnb-typescript", "plugin:react/jsx-runtime", "prettier", "plugin:storybook/recommended"],
-  "plugins": ["react", "@typescript-eslint", "simple-import-sort", "import"],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "simple-import-sort", "import"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": "latest",

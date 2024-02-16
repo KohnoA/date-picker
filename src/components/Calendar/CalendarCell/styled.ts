@@ -1,21 +1,36 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, fontSizes } from '@/constants';
+import { borderRadius, colors, fontSizes, opacity } from '@/constants';
 import { flex } from '@/styles';
 
-export const CalendarCellContainer = styled.li<{ $isCurrentMonth: boolean; $isActive: boolean }>`
+export const CalendarCellContainer = styled.li<{
+  $isCurrentMonth: boolean;
+  $isActive: boolean;
+  $isHoliday: boolean;
+}>`
   position: relative;
 
   ${flex()};
 
   font-size: ${fontSizes.sm};
   font-weight: 600;
-  color: ${({ $isCurrentMonth }) => ($isCurrentMonth ? colors.black : colors.greyDark)};
 
   border-radius: ${borderRadius.high};
   transition: all 200ms;
   user-select: none;
   cursor: pointer;
+
+  color: ${({ $isHoliday }) => ($isHoliday ? colors.red : colors.black)};
+
+  ${({ $isCurrentMonth }) =>
+    $isCurrentMonth
+      ? `
+    pointer-events: all;
+  `
+      : `
+    opacity: ${opacity.high};
+    pointer-events: none;
+  `}
 
   ${({ $isActive }) =>
     $isActive

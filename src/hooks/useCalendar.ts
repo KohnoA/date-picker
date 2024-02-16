@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { MONTH_NAMES } from '@/constants';
 import { generateCalendarData } from '@/utils';
@@ -18,17 +18,16 @@ export function useCalendar(activeDay: number | null) {
 
   const year = currentDate.getFullYear();
   const month = MONTH_NAMES[currentDate.getMonth()];
-  const currentDateTimestamp = currentDate.getTime();
 
   const days = generateCalendarData(currentDate);
 
-  const next = useCallback(() => {
+  const next = () => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  }, [currentDateTimestamp]);
+  };
 
-  const prev = useCallback(() => {
+  const prev = () => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-  }, [currentDateTimestamp]);
+  };
 
   return { days, year, month, next, prev };
 }
