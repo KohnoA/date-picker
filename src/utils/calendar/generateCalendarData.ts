@@ -1,6 +1,8 @@
+import { CalendarWeekStart } from '@/constants';
+
 import { generateDaysData } from './generateDaysData';
 
-export function generateCalendarData(date: Date) {
+export function generateCalendarData(date: Date, weekStart?: CalendarWeekStart) {
   const NUMBER_OF_CALENDAR_ITEMS = 42;
   const currentDate = new Date(date.getTime());
 
@@ -12,7 +14,9 @@ export function generateCalendarData(date: Date) {
   const countDaysInPrevMonth = currentDate.getDate();
 
   currentDate.setDate(currentDate.getDate() + 1);
-  const startOfVisiblePrevMonth = countDaysInPrevMonth - (currentDate.getDay() - 1);
+  const startOfVisiblePrevMonth =
+    countDaysInPrevMonth -
+    (currentDate.getDay() - (weekStart === CalendarWeekStart.MONDAY ? 2 : 1));
 
   const endOfPrevMonthData = generateDaysData(
     currentDate.getFullYear(),

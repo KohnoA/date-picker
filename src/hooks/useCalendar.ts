@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { MONTH_NAMES } from '@/constants';
+import { CalendarWeekStart, MONTH_NAMES } from '@/constants';
 import { generateCalendarData } from '@/utils';
 
 const INITIAL_DATE = new Date(Date.now());
 
-export function useCalendar(activeDay: number | null) {
+export function useCalendar(activeDay: number | null, weekStart?: CalendarWeekStart) {
   const [prevActiveDay, setPrevActiveDay] = useState<number | null>(null);
   const [currentDate, setCurrentDate] = useState<Date>(
     activeDay ? new Date(activeDay) : INITIAL_DATE,
@@ -19,7 +19,7 @@ export function useCalendar(activeDay: number | null) {
   const year = currentDate.getFullYear();
   const month = MONTH_NAMES[currentDate.getMonth()];
 
-  const days = generateCalendarData(currentDate);
+  const days = generateCalendarData(currentDate, weekStart);
 
   const next = () => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));

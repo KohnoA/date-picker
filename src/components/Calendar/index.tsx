@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import { TodoList } from '@/components/TodoList';
+import { ConfigContext } from '@/context';
 import { useCalendar } from '@/hooks';
 import { type DayWithTodoControls } from '@/types';
 
@@ -21,7 +22,9 @@ interface CalendarProps {
 
 export const Calendar = (props: CalendarProps) => {
   const { activeDay, showCalendar, setActiveDay, onClear } = props;
-  const { year, month, days, next, prev } = useCalendar(activeDay);
+
+  const { weekStart } = useContext(ConfigContext);
+  const { year, month, days, next, prev } = useCalendar(activeDay, weekStart);
   const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
     INITIAL_DAY_DATA,
   );

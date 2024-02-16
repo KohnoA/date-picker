@@ -70,6 +70,7 @@ export const DatePicker = (props: DatePickerProps) => {
         <GlobalStyles />
 
         <DateInput
+          label={label}
           value={dateValue}
           hasError={hasError}
           onChange={onChangeDateHandler}
