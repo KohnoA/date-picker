@@ -43,5 +43,11 @@ export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
 export const Default: Story = {
-  render: () => <DatePicker />,
+  render: (args) => <DatePicker {...args} />,
+  args: {
+    label: 'Date',
+    showWeekends: true,
+    showHolidays: true,
+    weekStart: CalendarWeekStart.SUNDAY,
+  },
 };
