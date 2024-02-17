@@ -1,33 +1,43 @@
-import { useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
-import { CalendarWeekStart, MONTH_NAMES } from '@/constants';
-import { generateCalendarData } from '@/utils';
+import { CalendarWeekStart } from '@/constants';
+import { canRewindNext, canRewindPrev, generateCalendarData } from '@/utils';
 
-const INITIAL_DATE = new Date(Date.now());
+const DEFAULT_INITIAL_DATE = new Date(Date.now());
 
-export function useCalendar(activeDay: number | null, weekStart?: CalendarWeekStart) {
-  const [prevActiveDay, setPrevActiveDay] = useState<number | null>(null);
+export function useCalendar(
+  activeDay: number | null,
+  weekStart?: CalendarWeekStart,
+  min?: Date,
+  max?: Date,
+) {
+  const prevActiveDayRef = useRef<number | null>(null);
   const [currentDate, setCurrentDate] = useState<Date>(
-    activeDay ? new Date(activeDay) : INITIAL_DATE,
+    activeDay ? new Date(activeDay) : DEFAULT_INITIAL_DATE,
   );
 
-  if (activeDay !== prevActiveDay) {
-    if (activeDay !== null) setCurrentDate(new Date(activeDay));
-    setPrevActiveDay(activeDay);
+  if (prevActiveDayRef.current !== activeDay) {
+    if (activeDay) setCurrentDate(new Date(activeDay));
+    prevActiveDayRef.current = activeDay;
   }
 
-  const year = currentDate.getFullYear();
-  const month = MONTH_NAMES[currentDate.getMonth()];
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
 
-  const days = generateCalendarData(currentDate, weekStart);
+  const days = useMemo(
+    () => generateCalendarData(currentDate, weekStart),
+    [currentMonth, currentYear, weekStart],
+  );
 
   const next = () => {
+    if (!canRewindNext(currentDate, max)) return;
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
   };
 
   const prev = () => {
+    if (!canRewindPrev(currentDate, min)) return;
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
   };
 
-  return { days, year, month, next, prev };
+  return { currentDate, days, next, prev };
 }

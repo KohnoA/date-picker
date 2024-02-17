@@ -4,7 +4,7 @@ import { borderRadius, colors, fontSizes, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const CalendarCellContainer = styled.li<{
-  $isCurrentMonth: boolean;
+  $canSelect: boolean;
   $isActive: boolean;
   $isHoliday: boolean;
   $hidden: boolean;
@@ -28,8 +28,8 @@ export const CalendarCellContainer = styled.li<{
 
   color: ${({ $isHoliday }) => ($isHoliday ? colors.red : colors.black)};
 
-  ${({ $isCurrentMonth }) =>
-    $isCurrentMonth
+  ${({ $canSelect }) =>
+    $canSelect
       ? `
         pointer-events: all;
   `
@@ -38,7 +38,7 @@ export const CalendarCellContainer = styled.li<{
         pointer-events: none;
   `}
 
-  ${({ $isActive }) =>
+  ${({ $isActive, $isHoliday }) =>
     $isActive
       ? `
         color: ${colors.white};
@@ -46,7 +46,7 @@ export const CalendarCellContainer = styled.li<{
   `
       : `
         &:hover {
-          color: ${colors.black};
+          color: ${$isHoliday ? colors.red : colors.black};
           background-color: ${colors.greyNormalAlt};
   `}
 `;

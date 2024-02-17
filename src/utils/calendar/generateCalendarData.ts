@@ -4,7 +4,7 @@ import { generateDaysData } from './generateDaysData';
 
 export function generateCalendarData(date: Date, weekStart?: CalendarWeekStart) {
   const NUMBER_OF_CALENDAR_ITEMS = 42;
-  const currentDate = new Date(date.getTime());
+  const currentDate = new Date(date.getFullYear(), date.getMonth(), 1);
 
   currentDate.setMonth(currentDate.getMonth() + 1);
   currentDate.setDate(0);

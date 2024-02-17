@@ -24,7 +24,7 @@ export const Calendar = (props: CalendarProps) => {
   const { activeDay, showCalendar, setActiveDay, onClear } = props;
 
   const { weekStart, showWeekends } = useContext(ConfigContext);
-  const { year, month, days, next, prev } = useCalendar(activeDay, weekStart);
+  const { currentDate, days, next, prev } = useCalendar(activeDay, weekStart);
   const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
     INITIAL_DAY_DATA,
   );
@@ -34,18 +34,21 @@ export const Calendar = (props: CalendarProps) => {
     setActiveDay(timestamp);
   }, []);
 
-  const showTodoList = (timestamp: number) => {
-    const day = days.find(({ data }) => data.timestamp === timestamp) ?? INITIAL_DAY_DATA;
+  const showTodoList = useCallback(
+    (timestamp: number) => {
+      const day = days.find(({ data }) => data.timestamp === timestamp) ?? INITIAL_DAY_DATA;
 
-    setShowTodosOfDay(day);
-  };
+      setShowTodosOfDay(day);
+    },
+    [days],
+  );
 
   const closeTodoList = () => setShowTodosOfDay(INITIAL_DAY_DATA);
 
   return (
     <>
       <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
-        <CalendarHeader month={month} year={year} onClickNext={next} onClickPrev={prev} />
+        <CalendarHeader date={currentDate} onClickNext={next} onClickPrev={prev} />
         <WeekDaysName />
 
         <DaysList $showWeekends={!!showWeekends}>

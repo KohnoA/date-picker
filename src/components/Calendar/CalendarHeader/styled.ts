@@ -25,6 +25,11 @@ export const RewindButton = styled.button`
   &:active {
     opacity: ${opacity.high};
   }
+
+  &:disabled {
+    opacity: ${opacity.high};
+    pointer-events: none;
+  }
 `;
 
 export const YearAndMonth = styled.p`

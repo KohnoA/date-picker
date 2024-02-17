@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, margin, opacity } from '@/constants';
+import { borderRadius, colors, fontSizes, margin, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const Container = styled.div`
@@ -71,4 +71,12 @@ export const CalendarButton = styled(Button)`
 
 export const ClearButton = styled(Button)`
   right: 6px;
+`;
+
+export const Error = styled.p`
+  width: 100%;
+
+  text-align: center;
+  color: ${colors.red};
+  font-size: ${fontSizes.sm};
 `;

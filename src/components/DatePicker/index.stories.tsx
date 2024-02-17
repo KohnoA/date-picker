@@ -43,11 +43,21 @@ export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
 export const Default: Story = {
-  render: (args) => <DatePicker {...args} />,
+  render: (args) => {
+    const { initialDate, min, max } = args;
+
+    args.initialDate = initialDate && new Date(initialDate);
+    args.min = min && new Date(min);
+    args.max = max && new Date(max);
+
+    return <DatePicker {...args} />;
+  },
   args: {
     label: 'Date',
     showWeekends: true,
     showHolidays: true,
     weekStart: CalendarWeekStart.SUNDAY,
+    min: new Date(2024, 1, 1),
+    max: new Date(2024, 3, 1),
   },
 };

@@ -24,9 +24,12 @@ export const CalendarCell = memo((props: CalendarCallProps) => {
     onDoubleClick,
   } = props;
 
-  const { showHolidays, showWeekends } = useContext(ConfigContext);
+  const { showHolidays, showWeekends, min, max } = useContext(ConfigContext);
 
   const hasTodos = !!todos.length;
+  const isLessMinDate = min ? timestamp < min.getTime() : false;
+  const isMoreMaxDate = max ? timestamp > max.getTime() : false;
+  const canSelectCell = isCurrentMonth && !isLessMinDate && !isMoreMaxDate;
 
   const onClickHandler = () => onClick(timestamp);
 
@@ -36,10 +39,10 @@ export const CalendarCell = memo((props: CalendarCallProps) => {
     <CalendarCellContainer
       onClick={onClickHandler}
       onDoubleClick={onDoubleClickHanlder}
-      $isCurrentMonth={isCurrentMonth}
+      $canSelect={canSelectCell}
       $isActive={isActive}
       $isHoliday={!!(isHoliday && showHolidays)}
-      $hidden={!!(!showWeekends && isWeekend)}
+      $hidden={!!(isWeekend && !showWeekends)}
     >
       <TodosIndicator $hasTodos={hasTodos} />
       {day}
