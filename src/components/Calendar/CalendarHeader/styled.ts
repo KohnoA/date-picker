@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import { borderRadius, fontSizes, opacity } from '@/constants';
 import { flex } from '@/styles';
 
-export const CalendarHeaderContainer = styled.div`
+export const CalendarHeaderContainer = styled.div<{ $smallButtonPadding: boolean }>`
   ${flex('space-between')}
+
+  & button {
+    padding: ${({ $smallButtonPadding }) => ($smallButtonPadding ? '8px 3px' : '8px 6px')};
+  }
+`;
+
+export const RewindButtonsContainer = styled.div`
+  ${flex()}
 `;
 
 export const RewindButton = styled.button`
   ${flex()}
-
-  padding: 8px 6px;
 
   border-radius: ${borderRadius.high};
   border: none;
@@ -33,6 +39,9 @@ export const RewindButton = styled.button`
 `;
 
 export const YearAndMonth = styled.p`
+  flex-grow: 1;
+
+  text-align: center;
   font-weight: 700;
   font-size: ${fontSizes.md};
 `;

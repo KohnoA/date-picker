@@ -1,2 +1,7 @@
-export { canRewindNext, canRewindPrev } from './canRewind';
+export {
+  canRewindNextMonth,
+  canRewindNextYear,
+  canRewindPrevMonth,
+  canRewindPrevYear,
+} from './canRewind';
 export { generateCalendarData } from './generateCalendarData';

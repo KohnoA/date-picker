@@ -24,9 +24,12 @@ export const Calendar = (props: CalendarProps) => {
   const { activeDay, showCalendar, setActiveDay, onClear } = props;
 
   const { weekStart, showWeekends } = useContext(ConfigContext);
-  const { currentDate, days, next, prev } = useCalendar(activeDay, weekStart);
   const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
     INITIAL_DAY_DATA,
+  );
+  const { year, month, days, nextMonth, prevMonth, nextYear, prevYear } = useCalendar(
+    activeDay,
+    weekStart,
   );
   const showClearButton = !!activeDay;
 
@@ -48,7 +51,14 @@ export const Calendar = (props: CalendarProps) => {
   return (
     <>
       <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
-        <CalendarHeader date={currentDate} onClickNext={next} onClickPrev={prev} />
+        <CalendarHeader
+          year={year}
+          month={month}
+          setNextMonth={nextMonth}
+          setPrevMonth={prevMonth}
+          setNextYear={nextYear}
+          setPrevYear={prevYear}
+        />
         <WeekDaysName />
 
         <DaysList $showWeekends={!!showWeekends}>
