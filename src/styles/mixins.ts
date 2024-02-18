@@ -6,8 +6,8 @@ export const flex = (justify?: string, items?: string) => css`
   align-items: ${items ?? 'center'};
 `;
 
-export const calendarGrid = (cols = 7) => css`
+export const calendarGrid = (cols = 7, rowHeight = '32px') => css`
   display: grid;
   grid-template-columns: repeat(${cols}, 1fr);
-  grid-auto-rows: 32px;
+  grid-auto-rows: ${rowHeight};
 `;

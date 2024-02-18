@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const TodoInputContainer = styled.div`
@@ -15,28 +14,28 @@ export const NewTodoInput = styled.input`
 
   padding: 8px 10px;
 
-  border-radius: ${borderRadius.high};
-  border: 1px solid ${colors.greyLight};
+  border-radius: ${({ theme }) => theme.borderRadius.high};
+  border: 1px solid ${({ theme }) => theme.colors.greyLight};
   outline: none;
 `;
 
 export const AddTodoButton = styled.button`
   padding: 8px 10px;
 
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
   font-weight: 600;
 
-  background-color: ${colors.blue};
+  background-color: ${({ theme }) => theme.colors.blue};
   border: none;
-  border-radius: ${borderRadius.high};
-  transition: opacity 200ms;
+  border-radius: ${({ theme }) => theme.borderRadius.high};
+  transition: opacity ${({ theme }) => theme.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${opacity.low};
+    opacity: ${({ theme }) => theme.opacity.low};
   }
 
   &:active {
-    opacity: ${opacity.high};
+    opacity: ${({ theme }) => theme.opacity.high};
   }
 `;

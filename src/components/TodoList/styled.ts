@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const TodoListBackdrop = styled.div`
@@ -11,24 +10,22 @@ export const TodoListBackdrop = styled.div`
   right: 0;
   bottom: 0;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flex()}
 
   padding: 5px;
 
-  background-color: ${colors.backdrop};
+  background-color: ${({ theme }) => theme.colors.backdrop};
 `;
 
 export const TodoListContent = styled.div`
   position: relative;
-  max-width: 250px;
+  max-width: 300px;
 
   margin: auto;
-  padding: 15px;
+  padding: 20px;
 
-  background-color: ${colors.white};
-  border-radius: ${borderRadius.high};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.high};
 `;
 
 export const TodoListCloseButton = styled.button`
@@ -41,15 +38,15 @@ export const TodoListCloseButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity 200ms;
+  transition: opacity ${({ theme }) => theme.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${opacity.low};
+    opacity: ${({ theme }) => theme.opacity.low};
   }
 
   &:active {
-    opacity: ${opacity.high};
+    opacity: ${({ theme }) => theme.opacity.high};
   }
 `;
 

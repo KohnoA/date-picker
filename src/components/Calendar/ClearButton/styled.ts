@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, fontSizes } from '@/constants';
-
 export const ClearButtonContainer = styled.div`
   position: absolute;
   left: -1px;
@@ -9,9 +7,9 @@ export const ClearButtonContainer = styled.div`
 
   width: 100%;
 
-  border: 1px solid ${colors.greyLight};
-  border-bottom-left-radius: ${borderRadius.high};
-  border-bottom-right-radius: ${borderRadius.high};
+  border: 1px solid ${({ theme }) => theme.colors.greyLight};
+  border-bottom-left-radius: ${({ theme }) => theme.borderRadius.high};
+  border-bottom-right-radius: ${({ theme }) => theme.borderRadius.high};
   overflow: hidden;
   box-sizing: content-box;
 `;
@@ -21,19 +19,19 @@ export const ClearButtonOwnButton = styled.button`
   padding: 10px 0;
 
   font-weight: 600;
-  font-size: ${fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 
   border: none;
   outline: none;
-  background-color: ${colors.white};
-  transition: background 200ms;
+  background-color: ${({ theme }) => theme.colors.white};
+  transition: background ${({ theme }) => theme.duration};
   cursor: pointer;
 
   &:hover {
-    background-color: ${colors.greyNormalAlt};
+    background-color: ${({ theme }) => theme.colors.greyNormalAlt};
   }
 
   &:active {
-    background-color: ${colors.greyLight};
+    background-color: ${({ theme }) => theme.colors.greyLight};
   }
 `;

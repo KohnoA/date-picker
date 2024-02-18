@@ -1,7 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
-import { MONTH_NAMES } from '@/constants';
-import { generateCalendarData } from '@/utils';
+import { TodoList } from '@/components/TodoList';
+import { ConfigContext } from '@/context';
+import { useCalendar } from '@/hooks';
+import { type DayWithTodoControls } from '@/types';
 
 import { CalendarCell } from './CalendarCell';
 import { CalendarHeader } from './CalendarHeader';
@@ -9,54 +11,76 @@ import { ClearButton } from './ClearButton';
 import { CalendarContainer, DaysList } from './styled';
 import { WeekDaysName } from './WeekDaysName';
 
-const INITIAL_DATE = new Date(Date.now());
+const INITIAL_DAY_DATA = null;
 
-export const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState<Date>(INITIAL_DATE);
-  const [activeDay, setActiveDay] = useState<number | null>(null);
+interface CalendarProps {
+  activeDay: number | null;
+  showCalendar: boolean;
+  setActiveDay: (timestamp: number) => void;
+  onClear: () => void;
+}
 
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = MONTH_NAMES[currentDate.getMonth()];
+export const Calendar = (props: CalendarProps) => {
+  const { activeDay, showCalendar, setActiveDay, onClear } = props;
+
+  const { weekStart, showWeekends, min, max, view } = useContext(ConfigContext);
+  const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
+    INITIAL_DAY_DATA,
+  );
+  const { year, month, week, days, next, prev, nextYear, prevYear } = useCalendar({
+    activeDay,
+    weekStart,
+    min,
+    max,
+    view,
+  });
   const showClearButton = !!activeDay;
 
-  const calendarData = useMemo(() => generateCalendarData(currentDate), [currentDate]);
-
-  const onClickNextHandler = useCallback(() => {
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  }, []);
-
-  const onClickPrevHandler = useCallback(() => {
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-  }, []);
-
-  const onClickCalendarCell = useCallback((timestamp: number) => {
+  const setActiveDayHandler = useCallback((timestamp: number) => {
     setActiveDay(timestamp);
   }, []);
 
-  const onClearCalendar = useCallback(() => setActiveDay(null), []);
+  const showTodoList = useCallback(
+    (timestamp: number) => {
+      const day = days.find(({ data }) => data.timestamp === timestamp) ?? INITIAL_DAY_DATA;
+
+      setShowTodosOfDay(day);
+    },
+    [year, month, week],
+  );
+
+  const closeTodoList = () => setShowTodosOfDay(INITIAL_DAY_DATA);
 
   return (
-    <CalendarContainer $showClearButton={showClearButton}>
-      <CalendarHeader
-        month={currentMonth}
-        year={currentYear}
-        onClickNext={onClickNextHandler}
-        onClickPrev={onClickPrevHandler}
-      />
-      <WeekDaysName />
+    <>
+      <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
+        <CalendarHeader
+          year={year}
+          month={month}
+          week={week}
+          setNext={next}
+          setPrev={prev}
+          setNextYear={nextYear}
+          setPrevYear={prevYear}
+        />
+        <WeekDaysName />
 
-      <DaysList>
-        {calendarData.map((cellProps) => (
-          <CalendarCell
-            key={cellProps.timestamp}
-            {...cellProps}
-            isActive={activeDay === cellProps.timestamp}
-            onClick={onClickCalendarCell}
-          />
-        ))}
-      </DaysList>
+        <DaysList $showWeekends={!!showWeekends}>
+          {days.map(({ data }) => (
+            <CalendarCell
+              {...data}
+              key={data.timestamp}
+              isActive={activeDay === data.timestamp}
+              onClick={setActiveDayHandler}
+              onDoubleClick={showTodoList}
+            />
+          ))}
+        </DaysList>
 
-      {showClearButton && <ClearButton onClear={onClearCalendar} />}
-    </CalendarContainer>
+        {showClearButton && <ClearButton onClear={onClear} />}
+      </CalendarContainer>
+
+      {showTodosOfDay && <TodoList day={showTodosOfDay} onClose={closeTodoList} />}
+    </>
   );
 };
