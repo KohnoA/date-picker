@@ -43,7 +43,7 @@ export const DatePicker = (props: DatePickerProps) => {
       <ThemeProvider theme={currentTheme}>
         <GlobalStyles />
 
-        <Container>
+        <Container data-testid="date-picker">
           <DateInput
             activeDay={activeDay}
             setActiveDay={setActiveDayHandler}
