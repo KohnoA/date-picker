@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { colors, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const TodoItemContainer = styled.li`
@@ -14,12 +13,12 @@ export const TodoItemContainer = styled.li`
   padding-top: 0;
   margin-bottom: 10px;
 
-  border-bottom: 1px solid ${colors.greyLight};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.greyLight};
 
   &:first-child {
     padding-top: 10px;
 
-    border-top: 1px solid ${colors.greyLight};
+    border-top: 1px solid ${({ theme }) => theme.colors.greyLight};
   }
 
   &:last-child {
@@ -53,14 +52,14 @@ export const TodoItemRemoveButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity 200ms;
+  transition: opacity ${({ theme }) => theme.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${opacity.low};
+    opacity: ${({ theme }) => theme.opacity.low};
   }
 
   &:active {
-    opacity: ${opacity.high};
+    opacity: ${({ theme }) => theme.opacity.high};
   }
 `;

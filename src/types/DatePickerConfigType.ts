@@ -1,6 +1,6 @@
 import { CalendarView, CalendarWeekStart } from '@/constants';
 
-import { ColorOptionsType } from './ColorOptionsType';
+import { ThemeType } from './ThemeType';
 
 export interface DatePickerConfigType {
   showHolidays?: boolean;
@@ -9,5 +9,5 @@ export interface DatePickerConfigType {
   min?: Date;
   max?: Date;
   weekStart?: CalendarWeekStart;
-  colorOptions?: ColorOptionsType;
+  customTheme?: Partial<ThemeType>;
 }

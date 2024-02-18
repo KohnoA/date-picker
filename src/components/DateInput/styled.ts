@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, fontSizes, margin, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const Container = styled.div`
@@ -8,9 +7,9 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: ${margin.sm};
+  gap: ${({ theme }) => theme.margin.sm};
 
-  margin-bottom: ${margin.sm};
+  margin-bottom: ${({ theme }) => theme.margin.sm};
 `;
 
 export const Label = styled.label`
@@ -27,15 +26,16 @@ export const Input = styled.input<{ $isInvalid?: boolean }>`
 
   font: inherit;
 
-  border-radius: ${borderRadius.high};
+  border-radius: ${({ theme }) => theme.borderRadius.high};
   border: 1px solid;
-  border-color: ${({ $isInvalid }) => ($isInvalid ? colors.red : colors.greyLight)};
+  border-color: ${({ theme, $isInvalid }) =>
+    $isInvalid ? theme.colors.red : theme.colors.greyLight};
   outline: none;
-  transition: border 300ms;
-  background-color: ${colors.white};
+  transition: border ${({ theme }) => theme.duration};
+  background-color: ${({ theme }) => theme.colors.white};
 
   &::placeholder {
-    color: ${colors.greyNormal};
+    color: ${({ theme }) => theme.colors.greyNormal};
   }
 `;
 
@@ -51,17 +51,17 @@ export const Button = styled.button`
   padding: 6px 7px;
 
   border: none;
-  border-radius: ${borderRadius.low};
+  border-radius: ${({ theme }) => theme.borderRadius.low};
   background-color: transparent;
-  transition: opacity 300ms;
+  transition: opacity ${({ theme }) => theme.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${opacity.low};
+    opacity: ${({ theme }) => theme.opacity.low};
   }
 
   &:active {
-    opacity: ${opacity.high};
+    opacity: ${({ theme }) => theme.opacity.high};
   }
 `;
 
@@ -77,6 +77,6 @@ export const Error = styled.p`
   width: 100%;
 
   text-align: center;
-  color: ${colors.red};
-  font-size: ${fontSizes.sm};
+  color: ${({ theme }) => theme.colors.red};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 `;

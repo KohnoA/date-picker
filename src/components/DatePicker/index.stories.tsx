@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { CalendarView, CalendarWeekStart } from '@/constants';
+import { theme } from '@/styles';
 
 import { DatePicker } from './index';
 
@@ -33,7 +34,7 @@ const meta: Meta<typeof DatePicker> = {
     showWeekends: {
       control: 'boolean',
     },
-    colorOptions: {
+    customTheme: {
       control: 'object',
     },
   },
@@ -59,5 +60,6 @@ export const Default: Story = {
     weekStart: CalendarWeekStart.SUNDAY,
     min: new Date(2024, 0, 31),
     max: new Date(2024, 3, 1),
+    customTheme: theme,
   },
 };

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { borderRadius, colors, fontSizes, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const CalendarCellContainer = styled.li<{
@@ -18,36 +17,36 @@ export const CalendarCellContainer = styled.li<{
 
   position: relative;
 
-  font-size: ${fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 600;
 
-  border-radius: ${borderRadius.high};
-  transition: all 200ms;
+  border-radius: ${({ theme }) => theme.borderRadius.high};
+  transition: all ${({ theme }) => theme.duration};
   user-select: none;
   cursor: pointer;
 
-  color: ${({ $isHoliday }) => ($isHoliday ? colors.red : colors.black)};
+  color: ${({ $isHoliday, theme }) => ($isHoliday ? theme.colors.red : theme.colors.black)};
 
-  ${({ $canSelect }) =>
+  ${({ $canSelect, theme }) =>
     $canSelect
       ? `
         pointer-events: all;
   `
       : `
-        opacity: ${opacity.high};
+        opacity: ${theme.opacity.high};
         pointer-events: none;
   `}
 
-  ${({ $isActive, $isHoliday }) =>
+  ${({ $isActive, $isHoliday, theme }) =>
     $isActive
       ? `
-        color: ${colors.white};
-        background-color: ${colors.blue};
+        color: ${theme.colors.white};
+        background-color: ${theme.colors.blue};
   `
       : `
         &:hover {
-          color: ${$isHoliday ? colors.red : colors.black};
-          background-color: ${colors.greyNormalAlt};
+          color: ${$isHoliday ? theme.colors.red : theme.colors.black};
+          background-color: ${theme.colors.greyNormalAlt};
   `}
 `;
 
@@ -61,6 +60,6 @@ export const TodosIndicator = styled.span<{ $hasTodos: boolean }>`
   width: 5px;
   height: 5px;
 
-  background-color: ${colors.red};
+  background-color: ${({ theme }) => theme.colors.red};
   border-radius: 100%;
 `;

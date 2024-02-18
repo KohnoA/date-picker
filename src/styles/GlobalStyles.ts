@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 import openSansBold from '@/assets/fonts/OpenSans-Bold.woff';
 import openSansRegular from '@/assets/fonts/OpenSans-Regular.woff';
 import openSansSemibold from '@/assets/fonts/OpenSans-SemiBold.woff';
-import { colors, fontSizes } from '@/constants';
 
 export const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -31,7 +30,7 @@ export const GlobalStyles = createGlobalStyle`
 
     font-family: 'Open-Sans', sans-serif;
     font-weight: 400;
-    font-size: ${fontSizes.md};
-    color: ${colors.black};
+    font-size: ${({ theme }) => theme.fontSizes.md};
+    color: ${({ theme }) => theme.colors.black};
   }
 `;

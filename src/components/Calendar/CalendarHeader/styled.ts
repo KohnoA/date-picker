@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { borderRadius, fontSizes, opacity } from '@/constants';
 import { flex } from '@/styles';
 
 export const CalendarHeaderContainer = styled.div<{ $smallButtonPadding: boolean }>`
@@ -18,22 +17,22 @@ export const RewindButtonsContainer = styled.div`
 export const RewindButton = styled.button`
   ${flex()}
 
-  border-radius: ${borderRadius.high};
+  border-radius: ${({ theme }) => theme.borderRadius.high};
   border: none;
   background-color: transparent;
-  transition: opacity 300ms;
+  transition: opacity ${({ theme }) => theme.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${opacity.low};
+    opacity: ${({ theme }) => theme.opacity.low};
   }
 
   &:active {
-    opacity: ${opacity.high};
+    opacity: ${({ theme }) => theme.opacity.high};
   }
 
   &:disabled {
-    opacity: ${opacity.high};
+    opacity: ${({ theme }) => theme.opacity.high};
     pointer-events: none;
   }
 `;
@@ -43,5 +42,5 @@ export const YearAndMonth = styled.p<{ $showWeek: boolean }>`
 
   text-align: center;
   font-weight: 700;
-  font-size: ${({ $showWeek }) => ($showWeek ? fontSizes.sm : fontSizes.md)};
+  font-size: ${({ $showWeek, theme }) => ($showWeek ? theme.fontSizes.sm : theme.fontSizes.md)};
 `;
