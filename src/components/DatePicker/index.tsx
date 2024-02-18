@@ -14,9 +14,7 @@ interface DatePickerProps extends DatePickerConfigType {
   initialDate?: Date;
 }
 
-export const DatePicker = (props: DatePickerProps) => {
-  const { initialDate, ...config } = props;
-
+export const DatePicker = ({ initialDate, ...config }: DatePickerProps) => {
   const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_CALENDAR_VISIBILITY);
   const [activeDay, setActiveDay] = useState<number | null>(
     initialDate ? initialDate.getTime() : INITIAL_ACTIVE_DAY_VALUE,
