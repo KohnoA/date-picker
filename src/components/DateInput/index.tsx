@@ -2,9 +2,8 @@ import { ChangeEvent, memo, useContext, useId, useRef, useState } from 'react';
 
 import { ICONS } from '@/constants';
 import { ConfigContext } from '@/context';
-import { dateStringHasError, isValidDateInputValue, timestampToDateFormat } from '@/utils';
+import { checkDateValidation, isValidDateInputValue, timestampToDateFormat } from '@/utils';
 
-import { errorInvalidDate, errorLessMinDate, errorMoreMaxDate } from './config';
 import {
   CalendarButton,
   ClearButton,
@@ -21,7 +20,6 @@ const DEFAULT_LABEL = 'Date';
 const DEFAULT_PLACEHOLDER = 'Choose Date';
 const INITIAL_DATE_VALUE = '';
 const INITIAL_ERROR_VALUE = null;
-const FULL_DATE_VALUE_LENGTH = 10;
 
 interface DateInputProps {
   label?: string;
@@ -53,21 +51,12 @@ export const DateInput = memo((props: DateInputProps) => {
     const { value } = event.target;
 
     if (!isValidDateInputValue(value)) return;
-    const isIncorrectDate = dateStringHasError(value);
-    const isFullDateEntered = value.length === FULL_DATE_VALUE_LENGTH;
-    const isLessMinDate = min ? new Date(value).getTime() < min.getTime() : false;
-    const isMoreMaxDate = max ? new Date(value).getTime() > max.getTime() : false;
+    const { canSetValue, errorMessage } = checkDateValidation(value, min, max);
 
     setDateValue(value);
-    setError(() => {
-      if (isLessMinDate) return errorLessMinDate;
-      if (isMoreMaxDate) return errorMoreMaxDate;
-      if (isIncorrectDate) return errorInvalidDate;
+    setError(errorMessage);
 
-      return INITIAL_ERROR_VALUE;
-    });
-
-    if (isFullDateEntered && !isIncorrectDate && !isLessMinDate && !isMoreMaxDate) {
+    if (canSetValue) {
       setActiveDay(new Date(value).getTime());
     } else {
       resetActiveDay();
