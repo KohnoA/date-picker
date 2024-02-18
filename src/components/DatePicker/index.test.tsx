@@ -8,6 +8,6 @@ describe('Testing DatePicker component', () => {
   it('Test', () => {
     render(<DatePicker />);
 
-    expect(screen.getByText(/Hello world/)).toBeInTheDocument();
+    expect(screen.getByTestId('date-picker')).toBeInTheDocument();
   });
 });
