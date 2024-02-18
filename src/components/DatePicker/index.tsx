@@ -1,12 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { useCallback, useState } from 'react';
 
 import { Calendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
-import { ConfigContext } from '@/context';
-import { GlobalStyles, theme } from '@/styles';
+import { DatePickerProvider } from '@/components/DatePickerProvider';
 import { DatePickerConfigType } from '@/types';
-import { mergeThemes } from '@/utils';
 
 import { Container } from './styled';
 
@@ -14,19 +11,16 @@ const INITIAL_CALENDAR_VISIBILITY = false;
 const INITIAL_ACTIVE_DAY_VALUE = null;
 
 interface DatePickerProps extends DatePickerConfigType {
-  label?: string;
   initialDate?: Date;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
-  const { initialDate, customTheme, ...config } = props;
+  const { initialDate, ...config } = props;
 
   const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_CALENDAR_VISIBILITY);
   const [activeDay, setActiveDay] = useState<number | null>(
     initialDate ? initialDate.getTime() : INITIAL_ACTIVE_DAY_VALUE,
   );
-
-  const currentTheme = useMemo(() => mergeThemes(theme, customTheme), [customTheme]);
 
   const toggleCalendarVisibility = useCallback(() => setShowCalendar((prev) => !prev), []);
 
@@ -39,26 +33,22 @@ export const DatePicker = (props: DatePickerProps) => {
   }, []);
 
   return (
-    <ConfigContext.Provider value={config}>
-      <ThemeProvider theme={currentTheme}>
-        <GlobalStyles />
+    <DatePickerProvider config={config}>
+      <Container data-testid="date-picker">
+        <DateInput
+          activeDay={activeDay}
+          setActiveDay={setActiveDayHandler}
+          resetActiveDay={resetActiveDayHandler}
+          toggleCalendar={toggleCalendarVisibility}
+        />
 
-        <Container data-testid="date-picker">
-          <DateInput
-            activeDay={activeDay}
-            setActiveDay={setActiveDayHandler}
-            resetActiveDay={resetActiveDayHandler}
-            toggleCalendar={toggleCalendarVisibility}
-          />
-
-          <Calendar
-            activeDay={activeDay}
-            showCalendar={showCalendar}
-            setActiveDay={setActiveDayHandler}
-            onClear={resetActiveDayHandler}
-          />
-        </Container>
-      </ThemeProvider>
-    </ConfigContext.Provider>
+        <Calendar
+          activeDay={activeDay}
+          showCalendar={showCalendar}
+          setActiveDay={setActiveDayHandler}
+          onClear={resetActiveDayHandler}
+        />
+      </Container>
+    </DatePickerProvider>
   );
 };
