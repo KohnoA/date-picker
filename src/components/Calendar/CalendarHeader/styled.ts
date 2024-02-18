@@ -38,10 +38,10 @@ export const RewindButton = styled.button`
   }
 `;
 
-export const YearAndMonth = styled.p`
+export const YearAndMonth = styled.p<{ $showWeek: boolean }>`
   flex-grow: 1;
 
   text-align: center;
   font-weight: 700;
-  font-size: ${fontSizes.md};
+  font-size: ${({ $showWeek }) => ($showWeek ? fontSizes.sm : fontSizes.md)};
 `;

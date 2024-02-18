@@ -57,7 +57,7 @@ export const Default: Story = {
     showWeekends: true,
     showHolidays: true,
     weekStart: CalendarWeekStart.SUNDAY,
-    min: new Date(2024, 1, 1),
+    min: new Date(2024, 0, 31),
     max: new Date(2024, 3, 1),
   },
 };

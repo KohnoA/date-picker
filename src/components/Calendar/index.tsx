@@ -23,14 +23,17 @@ interface CalendarProps {
 export const Calendar = (props: CalendarProps) => {
   const { activeDay, showCalendar, setActiveDay, onClear } = props;
 
-  const { weekStart, showWeekends } = useContext(ConfigContext);
+  const { weekStart, showWeekends, min, max, view } = useContext(ConfigContext);
   const [showTodosOfDay, setShowTodosOfDay] = useState<DayWithTodoControls | null>(
     INITIAL_DAY_DATA,
   );
-  const { year, month, days, nextMonth, prevMonth, nextYear, prevYear } = useCalendar(
+  const { year, month, week, days, next, prev, nextYear, prevYear } = useCalendar({
     activeDay,
     weekStart,
-  );
+    min,
+    max,
+    view,
+  });
   const showClearButton = !!activeDay;
 
   const setActiveDayHandler = useCallback((timestamp: number) => {
@@ -43,7 +46,7 @@ export const Calendar = (props: CalendarProps) => {
 
       setShowTodosOfDay(day);
     },
-    [days],
+    [year, month, week],
   );
 
   const closeTodoList = () => setShowTodosOfDay(INITIAL_DAY_DATA);
@@ -54,8 +57,9 @@ export const Calendar = (props: CalendarProps) => {
         <CalendarHeader
           year={year}
           month={month}
-          setNextMonth={nextMonth}
-          setPrevMonth={prevMonth}
+          week={week}
+          setNext={next}
+          setPrev={prev}
           setNextYear={nextYear}
           setPrevYear={prevYear}
         />

@@ -1,13 +1,8 @@
-import { memo, useContext } from 'react';
+import { memo, useContext, useMemo } from 'react';
 
 import { CalendarView, ICONS, MONTH_NAMES } from '@/constants';
 import { ConfigContext } from '@/context';
-import {
-  canRewindNextMonth,
-  canRewindNextYear,
-  canRewindPrevMonth,
-  canRewindPrevYear,
-} from '@/utils';
+import { checkDisableStatus } from '@/utils';
 
 import {
   CalendarHeaderContainer,
@@ -21,44 +16,53 @@ const { PrevIcon, NextIcon, OneArrowNextIcon, OneArrowPrevIcon } = ICONS;
 interface CalendarHeaderProps {
   year: number;
   month: number;
-  setNextMonth: () => void;
-  setPrevMonth: () => void;
+  week: number;
+  setNext: () => void;
+  setPrev: () => void;
   setNextYear: () => void;
   setPrevYear: () => void;
 }
 
 export const CalendarHeader = memo((props: CalendarHeaderProps) => {
-  const { year, month, setNextMonth, setPrevMonth, setNextYear, setPrevYear } = props;
+  const { year, month, week, setNext, setPrev, setNextYear, setPrevYear } = props;
 
-  const { min, max, view } = useContext(ConfigContext);
+  const { min, max, view, weekStart } = useContext(ConfigContext);
   const showRewindYearButtons = view === CalendarView.YEAR;
+  const isWeekView = view === CalendarView.WEEK;
+
+  const { disableNextButton, disableNextYearButton, disablePrevButton, disablePrevYearButton } =
+    useMemo(
+      () => checkDisableStatus(isWeekView, year, month, week, weekStart, max, min),
+      [year, month, week, weekStart, min, max],
+    );
 
   return (
     <CalendarHeaderContainer $smallButtonPadding={showRewindYearButtons}>
       <RewindButtonsContainer>
-        <RewindButton onClick={setPrevMonth} disabled={!canRewindPrevMonth(year, month, min)}>
+        <RewindButton onClick={setPrev} disabled={disablePrevButton}>
           <PrevIcon />
         </RewindButton>
 
         {showRewindYearButtons && (
-          <RewindButton onClick={setPrevYear} disabled={!canRewindPrevYear(year, month, min)}>
+          <RewindButton onClick={setPrevYear} disabled={disablePrevYearButton}>
             <OneArrowPrevIcon />
           </RewindButton>
         )}
       </RewindButtonsContainer>
 
-      <YearAndMonth>
+      <YearAndMonth $showWeek={isWeekView}>
+        {isWeekView && `${week} week of `}
         {MONTH_NAMES[month]} {year}
       </YearAndMonth>
 
       <RewindButtonsContainer>
         {showRewindYearButtons && (
-          <RewindButton onClick={setNextYear} disabled={!canRewindNextYear(year, month, max)}>
+          <RewindButton onClick={setNextYear} disabled={disableNextYearButton}>
             <OneArrowNextIcon />
           </RewindButton>
         )}
 
-        <RewindButton onClick={setNextMonth} disabled={!canRewindNextMonth(year, month, max)}>
+        <RewindButton onClick={setNext} disabled={disableNextButton}>
           <NextIcon />
         </RewindButton>
       </RewindButtonsContainer>

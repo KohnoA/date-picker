@@ -1,25 +1,28 @@
 import { useMemo, useRef, useState } from 'react';
 
-import { CalendarWeekStart } from '@/constants';
+import { CalendarView } from '@/constants';
+import { UseCalendarOptionsType } from '@/types';
 import {
   canRewindNextMonth,
   canRewindNextYear,
   canRewindPrevMonth,
   canRewindPrevYear,
+  countWeeksInMonth,
   generateCalendarData,
 } from '@/utils';
+import { canRewindNextWeek, canRewindPrevWeek } from '@/utils/calendar/canRewind';
 
-const DEFAULT_INITIAL_DATE = new Date(Date.now());
+const INITIAL_DATE = new Date(Date.now());
+const INITIAL_WEEK_VALUE = 1;
+const NUMBER_DAYS_IN_WEEK = 7;
 
-export function useCalendar(
-  activeDay: number | null,
-  weekStart?: CalendarWeekStart,
-  min?: Date,
-  max?: Date,
-) {
+export function useCalendar(options: UseCalendarOptionsType) {
+  const { activeDay, view, weekStart, min, max } = options;
+
   const prevActiveDayRef = useRef<number | null>(null);
+  const [week, setWeek] = useState<number>(INITIAL_WEEK_VALUE);
   const [currentDate, setCurrentDate] = useState<Date>(
-    activeDay ? new Date(activeDay) : DEFAULT_INITIAL_DATE,
+    activeDay ? new Date(activeDay) : INITIAL_DATE,
   );
 
   if (prevActiveDayRef.current !== activeDay) {
@@ -29,19 +32,43 @@ export function useCalendar(
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
+  const viewOnWeeks = view === CalendarView.WEEK;
 
   const days = useMemo(
     () => generateCalendarData(currentDate, weekStart),
     [month, year, weekStart],
   );
 
-  const nextMonth = () => {
-    if (!canRewindNextMonth(year, month, max)) return;
+  const next = () => {
+    if (viewOnWeeks) {
+      if (!canRewindNextWeek(year, month, week, weekStart, max)) return;
+
+      const maxWeeksInMonth = countWeeksInMonth(currentDate, weekStart);
+      const newWeekValue = week === maxWeeksInMonth ? INITIAL_WEEK_VALUE : week + 1;
+
+      setWeek(newWeekValue);
+
+      if (newWeekValue !== INITIAL_WEEK_VALUE) return;
+    } else if (!canRewindNextMonth(year, month, max)) return;
+
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
   };
 
-  const prevMonth = () => {
-    if (!canRewindPrevMonth(year, month, min)) return;
+  const prev = () => {
+    if (viewOnWeeks) {
+      if (!canRewindPrevWeek(year, month, week, weekStart, min)) return;
+
+      const maxWeeksInMonth = countWeeksInMonth(
+        new Date(currentDate.getFullYear(), currentDate.getMonth() - 1),
+        weekStart,
+      );
+      const newWeekValue = week === INITIAL_WEEK_VALUE ? maxWeeksInMonth : week - 1;
+
+      setWeek(newWeekValue);
+
+      if (newWeekValue !== maxWeeksInMonth) return;
+    } else if (!canRewindPrevMonth(year, month, min)) return;
+
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
   };
 
@@ -55,5 +82,16 @@ export function useCalendar(
     setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)));
   };
 
-  return { year, month, days, nextMonth, prevMonth, nextYear, prevYear };
+  return {
+    days: viewOnWeeks
+      ? days.slice(NUMBER_DAYS_IN_WEEK * week - NUMBER_DAYS_IN_WEEK, NUMBER_DAYS_IN_WEEK * week)
+      : days,
+    year,
+    month,
+    week,
+    next,
+    prev,
+    nextYear,
+    prevYear,
+  };
 }
