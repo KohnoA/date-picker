@@ -1,30 +1,61 @@
+import { LOCAL_STORAGE_KEY_TODOS } from '@/constants';
 import { DayType, DayWithTodoControls, TodoType } from '@/types';
 
+interface TodoItemStorageType {
+  dayKey: string;
+  todos: TodoType[];
+}
+
 export class TodosControlDecorator implements DayWithTodoControls {
-  private key: string;
+  private static localStorageKey = LOCAL_STORAGE_KEY_TODOS;
+  private dayKey: string;
   public data: DayType;
 
   constructor(data: DayType) {
     this.data = data;
-    this.key = String(this.data.timestamp);
+    this.dayKey = String(this.data.timestamp);
+  }
+
+  public static getAllTodos() {
+    const todosInCache: TodoItemStorageType[] = JSON.parse(
+      localStorage.getItem(TodosControlDecorator.localStorageKey) ?? '[]',
+    );
+
+    return todosInCache;
   }
 
   public loadTodos() {
-    const todosInCache = localStorage.getItem(this.key);
+    const todosInCache = TodosControlDecorator.getAllTodos();
+    const todosForDay = todosInCache.find((day) => day.dayKey === this.dayKey);
 
-    if (todosInCache) {
-      this.data.todos = JSON.parse(todosInCache);
+    if (todosForDay) {
+      this.data.todos = todosForDay.todos;
     }
   }
 
   public removeTodos() {
+    const todosInCache = TodosControlDecorator.getAllTodos();
+    const filteredTodos = todosInCache.filter((day) => day.dayKey !== this.dayKey);
+
     this.data.todos = [];
-    localStorage.removeItem(this.key);
+    localStorage.setItem(TodosControlDecorator.localStorageKey, JSON.stringify(filteredTodos));
   }
 
   public saveTodos(todos: TodoType[]) {
+    const todosInCache = TodosControlDecorator.getAllTodos();
+    const filteredTodos = todosInCache.filter((day) => day.dayKey !== this.dayKey);
+
     this.data.todos = todos;
-    localStorage.setItem(this.key, JSON.stringify(todos));
+    localStorage.setItem(
+      TodosControlDecorator.localStorageKey,
+      JSON.stringify([
+        ...filteredTodos,
+        {
+          dayKey: this.dayKey,
+          todos,
+        },
+      ]),
+    );
   }
 
   public updateTodos(todos: TodoType[]) {
