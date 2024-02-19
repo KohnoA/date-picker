@@ -1,9 +1,7 @@
 import { MouseEvent } from 'react';
 
 import { ICONS } from '@/constants';
-import { useTodos } from '@/hooks';
-import { type DayWithTodoControls } from '@/types';
-import { timestampToDateFormat } from '@/utils';
+import { TodoType } from '@/types';
 
 import {
   TodoListBackdrop,
@@ -18,27 +16,24 @@ import { TodoItem } from './TodoItem';
 const { CrossIcon } = ICONS;
 
 interface TodoListProps {
-  day: DayWithTodoControls;
+  weekday: string;
+  date: string;
+  todos: TodoType[];
   onClose: () => void;
+  onAdd: (value: string) => void;
+  onRemove: (id: number) => void;
+  onToggle: (id: number) => void;
 }
 
-export const TodoList = ({ day, onClose }: TodoListProps) => {
-  const { weekday, timestamp, todos: initialTodos } = day.data;
-  const date = timestampToDateFormat(timestamp);
-
-  const { todos, add, remove, toggle } = useTodos(initialTodos);
+export const TodoList = (props: TodoListProps) => {
+  const { weekday, date, todos, onClose, onAdd, onRemove, onToggle } = props;
 
   const handleContentClick = (event: MouseEvent) => event.stopPropagation();
 
-  const handleCloseTodoList = () => {
-    day.updateTodos(todos);
-    onClose();
-  };
-
   return (
-    <TodoListBackdrop onClick={handleCloseTodoList}>
+    <TodoListBackdrop onClick={onClose}>
       <TodoListContent onClick={handleContentClick}>
-        <TodoListCloseButton onClick={handleCloseTodoList}>
+        <TodoListCloseButton onClick={onClose}>
           <CrossIcon />
         </TodoListCloseButton>
 
@@ -46,11 +41,11 @@ export const TodoList = ({ day, onClose }: TodoListProps) => {
           {weekday} {date}
         </TodoListDayDescription>
 
-        <TodoInput onAdd={add} />
+        <TodoInput onAdd={onAdd} />
 
         <TodoListOwn>
           {todos.map((todo, index) => (
-            <TodoItem key={todo.id} {...todo} onRemove={remove} onToggle={toggle}>
+            <TodoItem key={todo.id} {...todo} onRemove={onRemove} onToggle={onToggle}>
               {index + 1}. {todo.title}
             </TodoItem>
           ))}

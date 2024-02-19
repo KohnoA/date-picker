@@ -11,7 +11,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
+    "react/function-component-definition": ["error", { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }],
     "no-restricted-exports": ["error", { "restrictDefaultExports": { "namedFrom": false } }],
     "no-param-reassign": ["error", { "ignorePropertyModificationsFor": ["state"] }],
     "no-console": ["error", { "allow": ["error"] }],

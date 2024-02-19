@@ -1,39 +1,30 @@
 import { memo, useContext } from 'react';
 
-import { ConfigContext } from '@/context';
-import { DayType } from '@/types';
+import { ActiveDayContext, ConfigContext, TodosContext } from '@/context';
+import { DayWithTodoControls } from '@/types';
 
 import { CalendarCellContainer, TodosIndicator } from './styled';
 
-interface CalendarCallProps extends DayType {
-  isActive: boolean;
-  onClick: (timestamp: number) => void;
-  onDoubleClick: (timestamp: number) => void;
+interface CalendarCallProps {
+  dayData: DayWithTodoControls;
 }
 
-export const CalendarCell = memo((props: CalendarCallProps) => {
-  const {
-    day,
-    timestamp,
-    isCurrentMonth,
-    isActive,
-    isHoliday,
-    isWeekend,
-    todos,
-    onClick,
-    onDoubleClick,
-  } = props;
+export const CalendarCell = memo(({ dayData }: CalendarCallProps) => {
+  const { day, timestamp, isCurrentMonth, isHoliday, isWeekend, todos } = dayData.data;
 
+  const { activeDay, setActiveDay } = useContext(ActiveDayContext);
   const { showHolidays, showWeekends, min, max } = useContext(ConfigContext);
+  const { openTodos } = useContext(TodosContext);
 
-  const hasTodos = !!todos.length;
   const isLessMinDate = min ? timestamp < min.getTime() : false;
   const isMoreMaxDate = max ? timestamp > max.getTime() : false;
   const canSelectCell = isCurrentMonth && !isLessMinDate && !isMoreMaxDate;
+  const isActive = activeDay === timestamp;
+  const hasTodos = !!todos.length;
 
-  const onClickHandler = () => onClick(timestamp);
+  const onClickHandler = () => setActiveDay(timestamp);
 
-  const onDoubleClickHanlder = () => onDoubleClick(timestamp);
+  const onDoubleClickHanlder = () => openTodos(dayData);
 
   return (
     <CalendarCellContainer

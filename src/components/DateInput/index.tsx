@@ -1,8 +1,7 @@
-import { ChangeEvent, memo, useContext, useId, useRef, useState } from 'react';
+import { ChangeEvent, memo, useContext, useId } from 'react';
 
 import { ICONS } from '@/constants';
 import { ConfigContext } from '@/context';
-import { checkDateValidation, isValidDateInputValue, timestampToDateFormat } from '@/utils';
 
 import {
   CalendarButton,
@@ -17,56 +16,21 @@ import {
 const { CalendarIcon, ClearIcon } = ICONS;
 
 const DEFAULT_LABEL = 'Date';
-const DEFAULT_PLACEHOLDER = 'Choose Date';
-const INITIAL_DATE_VALUE = '';
-const INITIAL_ERROR_VALUE = null;
 
 interface DateInputProps {
-  label?: string;
-  placeholder?: string;
-  activeDay: number | null;
+  value: string;
+  error?: string | null;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClear: () => void;
   toggleCalendar: () => void;
-  setActiveDay: (timestamp: number) => void;
-  resetActiveDay: () => void;
 }
 
 export const DateInput = memo((props: DateInputProps) => {
-  const { label, placeholder, activeDay, toggleCalendar, setActiveDay, resetActiveDay } = props;
-
-  const prevActiveDayRef = useRef<number | null>(null);
-  const [dateValue, setDateValue] = useState<string>(INITIAL_DATE_VALUE);
-
-  if (prevActiveDayRef.current !== activeDay) {
-    if (activeDay) setDateValue(timestampToDateFormat(activeDay));
-    prevActiveDayRef.current = activeDay;
-  }
-
-  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
-  const { min, max } = useContext(ConfigContext);
+  const { value, error, onChange, onClear, toggleCalendar } = props;
+  const { label } = useContext(ConfigContext);
   const dateInputId = useId();
 
-  const showClearButton = !!dateValue.length;
-
-  const handleInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    if (!isValidDateInputValue(value)) return;
-    const { canSetValue, errorMessage } = checkDateValidation(value, min, max);
-
-    setDateValue(value);
-    setError(errorMessage);
-
-    if (canSetValue) {
-      setActiveDay(new Date(value).getTime());
-    } else {
-      resetActiveDay();
-    }
-  };
-
-  const handleClearInput = () => {
-    setDateValue(INITIAL_DATE_VALUE);
-    resetActiveDay();
-  };
+  const showClearButton = !!value.length;
 
   return (
     <Container>
@@ -76,9 +40,9 @@ export const DateInput = memo((props: DateInputProps) => {
         <Input
           id={dateInputId}
           type="text"
-          placeholder={placeholder ?? DEFAULT_PLACEHOLDER}
-          value={dateValue}
-          onChange={handleInputValue}
+          placeholder="Choose Date"
+          value={value}
+          onChange={onChange}
           $isInvalid={!!error}
         />
 
@@ -87,7 +51,7 @@ export const DateInput = memo((props: DateInputProps) => {
         </CalendarButton>
 
         {showClearButton && (
-          <ClearButton onClick={handleClearInput}>
+          <ClearButton onClick={onClear}>
             <ClearIcon />
           </ClearButton>
         )}
