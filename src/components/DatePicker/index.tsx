@@ -13,7 +13,7 @@ interface DatePickerProps extends DatePickerConfigType {
 
 export const DatePicker = ({ initialDate, ...config }: DatePickerProps) => {
   const [activeDay, setActiveDay] = useState<number | null>(
-    initialDate ? initialDate.getTime() : INITIAL_ACTIVE_DAY_VALUE,
+    initialDate?.getTime() ?? INITIAL_ACTIVE_DAY_VALUE,
   );
 
   const activeDayContextObj = useMemo(() => ({ activeDay, setActiveDay }), [activeDay]);

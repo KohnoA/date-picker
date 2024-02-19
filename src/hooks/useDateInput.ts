@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useRef, useState } from 'react';
 
 import { ActiveDayContext, ConfigContext } from '@/context';
-import { checkDateValidation, isValidDateInputValue, timestampToDateFormat } from '@/utils';
+import { checkDateValidation, isValidSimpleDateValue, timestampToDateFormat } from '@/utils';
 
 const INITIAL_VALUE = '';
 const INITIAL_ERROR_VALUE = null;
@@ -14,27 +14,30 @@ export function useDateInput() {
   const prevActiveDayRef = useRef<number | null>(null);
 
   if (prevActiveDayRef.current !== activeDay) {
-    if (activeDay) setDateValue(timestampToDateFormat(activeDay));
+    if (activeDay) {
+      setDateValue(timestampToDateFormat(activeDay));
+      setError(INITIAL_ERROR_VALUE);
+    }
+
     prevActiveDayRef.current = activeDay;
   }
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
-    if (!isValidDateInputValue(value)) return;
+    if (!isValidSimpleDateValue(value)) return;
     const { canSetValue, errorMessage } = checkDateValidation(value, min, max);
 
     setDateValue(value);
     setError(errorMessage);
 
-    if (canSetValue) {
-      setActiveDay(new Date(value).getTime());
-    }
+    if (canSetValue) setActiveDay(new Date(value).getTime());
   };
 
   const onClear = () => {
     setDateValue(INITIAL_VALUE);
     setActiveDay(null);
+    setError(INITIAL_ERROR_VALUE);
   };
 
   return { dateValue, error, onChange, onClear };
