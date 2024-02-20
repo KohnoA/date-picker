@@ -35,11 +35,13 @@ export const CalendarContainer = styled.section<{
       opacity: 1;
       transform: translateY(10px) scale(1);
       pointer-events: all;
+      visibility: visible;
   `
       : `
       opacity: 0;
       transform: translateY(10px) scale(0.95);
       pointer-events: none;
+      visibility: hidden;
   `}
 `;
 

@@ -7,14 +7,10 @@ export const CalendarCellContainer = styled.li<{
   $isActive: boolean;
   $isHoliday: boolean;
   $hidden: boolean;
+  $isRangeStart: boolean;
+  $isRangeMiddle: boolean;
+  $isRangeEnd: boolean;
 }>`
-  ${({ $hidden }) =>
-    $hidden
-      ? `
-        display: none;
-  `
-      : flex()};
-
   position: relative;
 
   font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -27,6 +23,13 @@ export const CalendarCellContainer = styled.li<{
 
   color: ${({ $isHoliday, theme }) => ($isHoliday ? theme.colors.red : theme.colors.black)};
 
+  ${({ $hidden }) =>
+    $hidden
+      ? `
+        display: none;
+  `
+      : flex()};
+
   ${({ $canSelect, theme }) =>
     $canSelect
       ? `
@@ -37,16 +40,48 @@ export const CalendarCellContainer = styled.li<{
         pointer-events: none;
   `}
 
-  ${({ $isActive, $isHoliday, theme }) =>
-    $isActive
-      ? `
+  ${({ $isRangeMiddle, theme }) =>
+    $isRangeMiddle &&
+    `
+    color: ${theme.colors.blue};
+    background-color: ${theme.colors.blueTransparent};
+    border-radius: 0;
+  `}
+
+  ${({ $isRangeEnd, theme }) =>
+    $isRangeEnd &&
+    `
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.blue};
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  `}
+
+  ${({ $isActive, theme }) =>
+    $isActive &&
+    `
         color: ${theme.colors.white};
         background-color: ${theme.colors.blue};
-  `
-      : `
-        &:hover {
-          color: ${$isHoliday ? theme.colors.red : theme.colors.black};
-          background-color: ${theme.colors.greyNormalAlt};
+      `}
+
+  ${({ $isRangeStart, theme }) =>
+    $isRangeStart &&
+    `
+    opacity: ${theme.opacity.low};
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  `}
+
+  ${({ $isActive, $isRangeStart, $isRangeMiddle, $isRangeEnd, $isHoliday, theme }) =>
+    !$isActive &&
+    !$isRangeStart &&
+    !$isRangeMiddle &&
+    !$isRangeEnd &&
+    `
+    &:hover {
+      color: ${$isHoliday ? theme.colors.red : theme.colors.black};
+      background-color: ${theme.colors.greyNormalAlt};
+    }
   `}
 `;
 

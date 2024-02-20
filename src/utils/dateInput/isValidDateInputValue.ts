@@ -1,12 +1,25 @@
-import { REGEX_VALID_DATE_CHARACTERS } from '@/constants';
+import {
+  MAX_DATE_VALUE_LENGTH,
+  MAX_RANGE_DATE_VALUE_LENGTH,
+  REGEX_VALID_DATE_CHARACTERS,
+  REGEX_VALID_RANGE_DATE_CHARACTERS,
+} from '@/constants';
 
-export function isValidDateInputValue(value: string) {
-  const MIN_VALUE_LENGTH = 0;
-  const MAX_VALUE_LENGTH = 10;
+function isValidDateValue(maxLength: number, regex: RegExp) {
+  return (value: string) => {
+    const containsOnlyValidCharacters = regex.test(value);
+    const isLessMaxLength = value.length <= maxLength;
 
-  const containsOnlyValidCharacters =
-    REGEX_VALID_DATE_CHARACTERS.test(value) || value.length === MIN_VALUE_LENGTH;
-  const isLessMaxLength = value.length <= MAX_VALUE_LENGTH;
-
-  return containsOnlyValidCharacters && isLessMaxLength;
+    return containsOnlyValidCharacters && isLessMaxLength;
+  };
 }
+
+export const isValidSimpleDateValue = isValidDateValue(
+  MAX_DATE_VALUE_LENGTH,
+  REGEX_VALID_DATE_CHARACTERS,
+);
+
+export const isValidRangeDateValue = isValidDateValue(
+  MAX_RANGE_DATE_VALUE_LENGTH,
+  REGEX_VALID_RANGE_DATE_CHARACTERS,
+);

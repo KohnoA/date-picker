@@ -1,48 +1,49 @@
 import { memo, useContext } from 'react';
 
-import { ConfigContext } from '@/context';
-import { DayType } from '@/types';
+import { TodosContext } from '@/context';
+import { useCalendarCell } from '@/hooks';
+import { DayWithTodoControls } from '@/types';
 
 import { CalendarCellContainer, TodosIndicator } from './styled';
 
-interface CalendarCallProps extends DayType {
-  isActive: boolean;
+interface CalendarCellProps {
+  dayData: DayWithTodoControls;
+  activeDay: number | null;
+  rangeEndDay?: number | null;
   onClick: (timestamp: number) => void;
-  onDoubleClick: (timestamp: number) => void;
 }
 
-export const CalendarCell = memo((props: CalendarCallProps) => {
+export const CalendarCell = memo((props: CalendarCellProps) => {
+  const { dayData, activeDay, rangeEndDay, onClick } = props;
+  const { day, timestamp } = dayData.data;
+
+  const { openTodos } = useContext(TodosContext);
   const {
-    day,
-    timestamp,
-    isCurrentMonth,
+    canSelectCell,
     isActive,
-    isHoliday,
-    isWeekend,
-    todos,
-    onClick,
-    onDoubleClick,
-  } = props;
-
-  const { showHolidays, showWeekends, min, max } = useContext(ConfigContext);
-
-  const hasTodos = !!todos.length;
-  const isLessMinDate = min ? timestamp < min.getTime() : false;
-  const isMoreMaxDate = max ? timestamp > max.getTime() : false;
-  const canSelectCell = isCurrentMonth && !isLessMinDate && !isMoreMaxDate;
+    isRangeStart,
+    isRangeMiddle,
+    isRangeEnd,
+    showHoliday,
+    isHidden,
+    hasTodos,
+  } = useCalendarCell(dayData.data, activeDay, rangeEndDay);
 
   const onClickHandler = () => onClick(timestamp);
 
-  const onDoubleClickHanlder = () => onDoubleClick(timestamp);
+  const onDoubleClickHandler = () => openTodos(dayData);
 
   return (
     <CalendarCellContainer
       onClick={onClickHandler}
-      onDoubleClick={onDoubleClickHanlder}
+      onDoubleClick={onDoubleClickHandler}
       $canSelect={canSelectCell}
       $isActive={isActive}
-      $isHoliday={!!(isHoliday && showHolidays)}
-      $hidden={!!(isWeekend && !showWeekends)}
+      $isRangeStart={isRangeStart}
+      $isRangeMiddle={isRangeMiddle}
+      $isRangeEnd={isRangeEnd}
+      $isHoliday={showHoliday}
+      $hidden={isHidden}
     >
       <TodosIndicator $hasTodos={hasTodos} />
       {day}

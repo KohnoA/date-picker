@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import openSansBold from '@/assets/fonts/OpenSans-Bold.woff';
 import openSansRegular from '@/assets/fonts/OpenSans-Regular.woff';
@@ -33,4 +33,10 @@ export const GlobalStyles = createGlobalStyle`
     font-size: ${({ theme }) => theme.fontSizes.md};
     color: ${({ theme }) => theme.colors.black};
   }
+`;
+
+export const DatePickerContainer = styled.div`
+  position: relative;
+
+  max-width: ${({ theme }) => theme.datePickerMaxWidth};
 `;

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { CalendarView } from '@/constants';
 import { UseCalendarOptionsType } from '@/types';
@@ -39,7 +39,7 @@ export function useCalendar(options: UseCalendarOptionsType) {
     [month, year, weekStart],
   );
 
-  const next = () => {
+  const next = useCallback(() => {
     if (viewOnWeeks) {
       if (!canRewindNextWeek(year, month, week, weekStart, max)) return;
 
@@ -52,9 +52,9 @@ export function useCalendar(options: UseCalendarOptionsType) {
     } else if (!canRewindNextMonth(year, month, max)) return;
 
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  };
+  }, [viewOnWeeks, year, month, week, weekStart, max]);
 
-  const prev = () => {
+  const prev = useCallback(() => {
     if (viewOnWeeks) {
       if (!canRewindPrevWeek(year, month, week, weekStart, min)) return;
 
@@ -70,17 +70,17 @@ export function useCalendar(options: UseCalendarOptionsType) {
     } else if (!canRewindPrevMonth(year, month, min)) return;
 
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-  };
+  }, [viewOnWeeks, year, month, week, weekStart, min]);
 
-  const nextYear = () => {
+  const nextYear = useCallback(() => {
     if (!canRewindNextYear(year, month, max)) return;
     setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() + 1)));
-  };
+  }, [year, month, max]);
 
-  const prevYear = () => {
+  const prevYear = useCallback(() => {
     if (!canRewindPrevYear(year, month, min)) return;
     setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)));
-  };
+  }, [year, month, max]);
 
   return {
     days: viewOnWeeks

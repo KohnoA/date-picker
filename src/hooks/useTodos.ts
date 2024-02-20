@@ -1,31 +1,68 @@
 import { useState } from 'react';
 
-import { TodoType } from '@/types';
+import { DayWithTodoControls, TodoType } from '@/types';
 
-const DEFAULT_VALUE: TodoType[] = [];
+const INITIAL_DAY = null;
+const INITIAL_TODOS: TodoType[] = [];
 
-export function useTodos(initialTodos?: TodoType[]) {
-  const [todos, setTodos] = useState<TodoType[]>(initialTodos ?? DEFAULT_VALUE);
+interface TodosStateType {
+  day: DayWithTodoControls | null;
+  todos: TodoType[];
+}
+
+const initialTodosState = {
+  day: INITIAL_DAY,
+  todos: INITIAL_TODOS,
+};
+
+export function useTodos() {
+  const [todosState, setTodosState] = useState<TodosStateType>(initialTodosState);
+
+  const openTodos = (day: DayWithTodoControls) => {
+    setTodosState({ day, todos: day.data.todos });
+  };
+
+  const closeTodos = () => {
+    const { day, todos } = todosState;
+
+    day!.updateTodos(todos);
+    setTodosState(initialTodosState);
+  };
 
   const add = (value: string) => {
-    setTodos((prev) => [...prev, { id: Date.now(), title: value, completed: false }]);
+    setTodosState(({ day, todos }) => ({
+      day,
+      todos: [...todos, { id: Date.now(), title: value, completed: false }],
+    }));
   };
 
   const remove = (id: number) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    setTodosState(({ day, todos }) => ({
+      day,
+      todos: todos.filter((todo) => todo.id !== id),
+    }));
   };
 
   const toggle = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) => {
+    setTodosState(({ day, todos }) => ({
+      day,
+      todos: todos.map((todo) => {
         if (todo.id === id) {
           todo.completed = !todo.completed;
         }
 
         return todo;
       }),
-    );
+    }));
   };
 
-  return { todos, add, remove, toggle };
+  return {
+    day: todosState.day,
+    todos: todosState.todos,
+    openTodos,
+    closeTodos,
+    add,
+    remove,
+    toggle,
+  };
 }
