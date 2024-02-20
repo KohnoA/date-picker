@@ -7,7 +7,7 @@ const INITIAL_VALUE = '';
 const INITIAL_ERROR_VALUE = null;
 
 export function useDateInput() {
-  const { activeDay, setActiveDay } = useContext(ActiveDayContext);
+  const { activeDay, setActiveDay, resetActiveDay } = useContext(ActiveDayContext);
   const { min, max } = useContext(ConfigContext);
   const [dateValue, setDateValue] = useState<string>(INITIAL_VALUE);
   const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
@@ -36,7 +36,7 @@ export function useDateInput() {
 
   const onClear = () => {
     setDateValue(INITIAL_VALUE);
-    setActiveDay(null);
+    resetActiveDay();
     setError(INITIAL_ERROR_VALUE);
   };
 

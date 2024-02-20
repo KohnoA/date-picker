@@ -1,18 +1,21 @@
 import { memo, useContext } from 'react';
 
-import { ActiveDayContext, ConfigContext, TodosContext } from '@/context';
+import { ConfigContext, TodosContext } from '@/context';
 import { DayWithTodoControls } from '@/types';
 
 import { CalendarCellContainer, TodosIndicator } from './styled';
 
-interface CalendarCallProps {
+interface CalendarCellProps {
   dayData: DayWithTodoControls;
+  activeDay: number | null;
+  rangeEndDay?: number | null;
+  onClick: (timestamp: number) => void;
 }
 
-export const CalendarCell = memo(({ dayData }: CalendarCallProps) => {
+export const CalendarCell = memo((props: CalendarCellProps) => {
+  const { dayData, activeDay, rangeEndDay, onClick } = props;
   const { day, timestamp, isCurrentMonth, isHoliday, isWeekend, todos } = dayData.data;
 
-  const { activeDay, setActiveDay } = useContext(ActiveDayContext);
   const { showHolidays, showWeekends, min, max } = useContext(ConfigContext);
   const { openTodos } = useContext(TodosContext);
 
@@ -22,16 +25,21 @@ export const CalendarCell = memo(({ dayData }: CalendarCallProps) => {
   const isActive = activeDay === timestamp;
   const hasTodos = !!todos.length;
 
-  const onClickHandler = () => setActiveDay(timestamp);
+  const onClickHandler = () => onClick(timestamp);
 
-  const onDoubleClickHanlder = () => openTodos(dayData);
+  const onDoubleClickHandler = () => openTodos(dayData);
 
   return (
     <CalendarCellContainer
       onClick={onClickHandler}
-      onDoubleClick={onDoubleClickHanlder}
+      onDoubleClick={onDoubleClickHandler}
       $canSelect={canSelectCell}
       $isActive={isActive}
+      $isRangeStart={isActive && !!rangeEndDay}
+      $isRangeMiddle={
+        !!activeDay && !!rangeEndDay && timestamp > activeDay && timestamp < rangeEndDay
+      }
+      $isRangeEnd={timestamp === rangeEndDay}
       $isHoliday={!!(isHoliday && showHolidays)}
       $hidden={!!(isWeekend && !showWeekends)}
     >

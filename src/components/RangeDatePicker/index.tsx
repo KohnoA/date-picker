@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { Calendar } from '@/components/Calendar';
+import { RangeCalendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
 import { DatePickerProvider } from '@/components/DatePickerProvider';
 import { ActiveRangeContext } from '@/context';
@@ -33,7 +33,7 @@ const OwnRangeDatePicker = () => {
         toggleCalendar={toggleCalendarVisibility}
       />
 
-      <Calendar showCalendar={showCalendar} />
+      <RangeCalendar showCalendar={showCalendar} />
     </Container>
   );
 };

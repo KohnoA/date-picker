@@ -16,7 +16,12 @@ export const DatePicker = ({ initialDate, ...config }: DatePickerProps) => {
     initialDate?.getTime() ?? INITIAL_ACTIVE_DAY_VALUE,
   );
 
-  const activeDayContextObj = useMemo(() => ({ activeDay, setActiveDay }), [activeDay]);
+  const resetActiveDay = () => setActiveDay(INITIAL_ACTIVE_DAY_VALUE);
+
+  const activeDayContextObj = useMemo(
+    () => ({ activeDay, setActiveDay, resetActiveDay }),
+    [activeDay],
+  );
 
   return (
     <DatePickerProvider config={config}>

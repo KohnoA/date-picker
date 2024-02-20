@@ -1,7 +1,7 @@
-import { memo, useContext } from 'react';
+import { useContext } from 'react';
 
-import { ActiveDayContext, ConfigContext } from '@/context';
-import { withTodos } from '@/hocs';
+import { ConfigContext } from '@/context';
+import { withRangeCalendar, withSimpleCalendar, withTodos } from '@/hocs';
 import { useCalendar } from '@/hooks';
 
 import { CalendarCell } from './CalendarCell';
@@ -12,46 +12,56 @@ import { WeekDaysName } from './WeekDaysName';
 
 interface CalendarProps {
   showCalendar: boolean;
+  showClearButton: boolean;
+  activeDay: number | null;
+  rangeEndDay?: number | null;
+  onClear: () => void;
+  onClickCell: (timestamp: number) => void;
 }
 
-export const Calendar = memo(
-  withTodos((props: CalendarProps) => {
-    const { showCalendar } = props;
+const Calendar = (props: CalendarProps) => {
+  const { showCalendar, activeDay, rangeEndDay, showClearButton, onClear, onClickCell } = props;
 
-    const { activeDay, setActiveDay } = useContext(ActiveDayContext);
-    const { weekStart, showWeekends, min, max, view } = useContext(ConfigContext);
-    const { year, month, week, days, next, prev, nextYear, prevYear } = useCalendar({
-      activeDay,
-      weekStart,
-      min,
-      max,
-      view,
-    });
-    const showClearButton = !!activeDay;
+  const { weekStart, showWeekends, min, max, view } = useContext(ConfigContext);
+  const { year, month, week, days, next, prev, nextYear, prevYear } = useCalendar({
+    activeDay,
+    weekStart,
+    min,
+    max,
+    view,
+  });
 
-    const clearCalendar = () => setActiveDay(null);
+  return (
+    <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
+      <CalendarHeader
+        year={year}
+        month={month}
+        week={week}
+        setNext={next}
+        setPrev={prev}
+        setNextYear={nextYear}
+        setPrevYear={prevYear}
+      />
+      <WeekDaysName />
 
-    return (
-      <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
-        <CalendarHeader
-          year={year}
-          month={month}
-          week={week}
-          setNext={next}
-          setPrev={prev}
-          setNextYear={nextYear}
-          setPrevYear={prevYear}
-        />
-        <WeekDaysName />
+      <DaysList $showWeekends={!!showWeekends}>
+        {days.map((day) => (
+          <CalendarCell
+            key={day.data.timestamp}
+            dayData={day}
+            activeDay={activeDay}
+            rangeEndDay={rangeEndDay}
+            onClick={onClickCell}
+          />
+        ))}
+      </DaysList>
 
-        <DaysList $showWeekends={!!showWeekends}>
-          {days.map((day) => (
-            <CalendarCell key={day.data.timestamp} dayData={day} />
-          ))}
-        </DaysList>
+      {showClearButton && <ClearButton onClear={onClear} />}
+    </CalendarContainer>
+  );
+};
 
-        {showClearButton && <ClearButton onClear={clearCalendar} />}
-      </CalendarContainer>
-    );
-  }),
-);
+export type CalendarType = typeof Calendar;
+
+export const RangeCalendar = withRangeCalendar(withTodos(Calendar));
+export const SimpleCalendar = withSimpleCalendar(withTodos(Calendar));

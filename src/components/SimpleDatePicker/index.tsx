@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Calendar } from '@/components/Calendar';
+import { SimpleCalendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
 import { useDateInput } from '@/hooks';
 
@@ -24,7 +24,7 @@ export const SimpleDatePicker = () => {
         toggleCalendar={toggleCalendarVisibility}
       />
 
-      <Calendar showCalendar={showCalendar} />
+      <SimpleCalendar showCalendar={showCalendar} />
     </Container>
   );
 };
