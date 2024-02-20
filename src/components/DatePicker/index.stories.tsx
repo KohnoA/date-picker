@@ -37,13 +37,16 @@ const meta: Meta<typeof DatePicker> = {
     customTheme: {
       control: 'object',
     },
+    range: {
+      control: 'boolean',
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
-export const Default: Story = {
+export const Simple: Story = {
   render: (args) => {
     const { initialDate, min, max } = args;
 
@@ -61,5 +64,28 @@ export const Default: Story = {
     min: new Date(2024, 0, 31),
     max: new Date(2024, 3, 1),
     customTheme: theme,
+  },
+};
+
+export const Range: Story = {
+  render: (args) => {
+    const { initialStartDate, initialEndDate, min, max } = args;
+
+    args.initialStartDate = initialStartDate && new Date(initialStartDate);
+    args.initialEndDate = initialEndDate && new Date(initialEndDate);
+    args.min = min && new Date(min);
+    args.max = max && new Date(max);
+
+    return <DatePicker {...args} />;
+  },
+  args: {
+    label: 'Date',
+    showWeekends: true,
+    showHolidays: true,
+    weekStart: CalendarWeekStart.SUNDAY,
+    min: new Date(2024, 0, 31),
+    max: new Date(2024, 3, 1),
+    customTheme: theme,
+    range: true,
   },
 };

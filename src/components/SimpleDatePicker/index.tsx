@@ -1,30 +1,23 @@
-import { useCallback, useState } from 'react';
-
 import { SimpleCalendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
-import { useDateInput } from '@/hooks';
-
-import { Container } from './styled';
-
-const INITIAL_CALENDAR_VISIBILITY = false;
+import { useCalendarToggle, useDateInput } from '@/hooks';
+import { DatePickerContainer } from '@/styles';
 
 export const SimpleDatePicker = () => {
-  const [showCalendar, setShowCalendar] = useState<boolean>(INITIAL_CALENDAR_VISIBILITY);
   const { dateValue, error, onChange, onClear } = useDateInput();
-
-  const toggleCalendarVisibility = useCallback(() => setShowCalendar((prev) => !prev), []);
+  const { showCalendar, toggleVisibility } = useCalendarToggle();
 
   return (
-    <Container data-testid="date-picker">
+    <DatePickerContainer data-testid="date-picker">
       <DateInput
         value={dateValue}
         error={error}
         onChange={onChange}
         onClear={onClear}
-        toggleCalendar={toggleCalendarVisibility}
+        toggleCalendar={toggleVisibility}
       />
 
       <SimpleCalendar showCalendar={showCalendar} />
-    </Container>
+    </DatePickerContainer>
   );
 };
