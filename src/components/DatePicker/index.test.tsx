@@ -3,6 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   CalendarView,
   CalendarWeekStart,
+  ERROR_INCORRECT_RANGE,
+  ERROR_INVALID_RANGE_DATE,
   ERROR_INVALID_SIMPLE_DATE,
   ERROR_VALUE_LESS_MIN,
   ERROR_VALUE_MORE_MAX,
@@ -380,5 +382,112 @@ describe('Testing SimpleDatePicker component', () => {
     fireEvent.click(activeDayCallendarCell);
 
     expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024');
+  });
+});
+
+describe('Testing RangeDatePicker component', () => {
+  it('An error message should be displayed if the value is invalid range date', () => {
+    render(<DatePicker range />);
+
+    const invalidDate = '45/45/3481';
+
+    const dateInput = screen.getByTestId('date-input-field');
+    fireEvent.change(dateInput, { target: { value: invalidDate } });
+
+    const errorMessage = screen.getByTestId('date-input-error');
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveTextContent(ERROR_INVALID_RANGE_DATE);
+  });
+
+  it('An error message should be displayed if the start date value is greater than the end date', () => {
+    render(<DatePicker range />);
+
+    const dateMoreThanMax = '02/02/2023 - 01/02/2023';
+
+    const dateInput = screen.getByTestId('date-input-field');
+    fireEvent.change(dateInput, { target: { value: dateMoreThanMax } });
+
+    const errorMessage = screen.getByTestId('date-input-error');
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveTextContent(ERROR_INCORRECT_RANGE);
+  });
+
+  it('The selected range should clear when you click on the clear button', () => {
+    const activeStartDay = new Date(2024, 0, 1);
+    const activeMiddleDay = new Date(2024, 0, 2);
+    const activeEndDay = new Date(2024, 0, 3);
+
+    render(
+      <DatePicker
+        range
+        showWeekends
+        initialStartDate={activeStartDay}
+        initialEndDate={activeEndDay}
+      />,
+    );
+
+    const activeStartCalendarCell = screen.getByTestId(`calendar-cell-${activeStartDay.getTime()}`);
+    const activeMiddleCalendarCell = screen.getByTestId(
+      `calendar-cell-${activeMiddleDay.getTime()}`,
+    );
+    const activeEndCalendarCell = screen.getByTestId(`calendar-cell-${activeEndDay.getTime()}`);
+
+    expect(activeStartCalendarCell).toHaveStyle(activeRangeStartStyles);
+    expect(activeMiddleCalendarCell).toHaveStyle(activeRangeMiddleStyles);
+    expect(activeEndCalendarCell).toHaveStyle(activeRangeEndStyles);
+
+    fireEvent.click(screen.getByTestId('calendar-clear-button'));
+
+    expect(activeStartCalendarCell).not.toHaveStyle(activeRangeStartStyles);
+    expect(activeMiddleCalendarCell).not.toHaveStyle(activeRangeMiddleStyles);
+    expect(activeEndCalendarCell).not.toHaveStyle(activeRangeEndStyles);
+  });
+
+  it('Setting the date range in the date input should be displayed on the calendar', () => {
+    const activeStartDay = new Date(2024, 0, 1);
+    const activeMiddleDay = new Date(2024, 0, 2);
+    const activeEndDay = new Date(2024, 0, 3);
+
+    render(<DatePicker range showWeekends />);
+
+    fireEvent.click(screen.getByTestId('toggle-calendar-button'));
+    fireEvent.change(screen.getByTestId('date-input-field'), {
+      target: { value: '01/01/2024 - 01/03/2024' },
+    });
+
+    const activeStartCalendarCell = screen.getByTestId(`calendar-cell-${activeStartDay.getTime()}`);
+    const activeMiddleCalendarCell = screen.getByTestId(
+      `calendar-cell-${activeMiddleDay.getTime()}`,
+    );
+    const activeEndCalendarCell = screen.getByTestId(`calendar-cell-${activeEndDay.getTime()}`);
+
+    expect(activeStartCalendarCell).toHaveStyle(activeRangeStartStyles);
+    expect(activeMiddleCalendarCell).toHaveStyle(activeRangeMiddleStyles);
+    expect(activeEndCalendarCell).toHaveStyle(activeRangeEndStyles);
+  });
+
+  it('Setting a calendar date range should appear in date input', () => {
+    const activeStartDay = new Date(2024, 0, 1);
+    const activeEndDay = new Date(2024, 0, 3);
+
+    render(
+      <DatePicker
+        range
+        showWeekends
+        initialStartDate={activeStartDay}
+        initialEndDate={activeEndDay}
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId('toggle-calendar-button'));
+    fireEvent.click(screen.getByTestId('calendar-clear-button'));
+
+    const activeStartCalendarCell = screen.getByTestId(`calendar-cell-${activeStartDay.getTime()}`);
+    const activeEndCalendarCell = screen.getByTestId(`calendar-cell-${activeEndDay.getTime()}`);
+
+    fireEvent.click(activeStartCalendarCell);
+    fireEvent.click(activeEndCalendarCell);
+
+    expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024 - 01/03/2024');
   });
 });
