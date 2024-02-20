@@ -7,11 +7,13 @@ const INITIAL_VALUE = '';
 const INITIAL_ERROR_VALUE = null;
 
 export function useDateInput() {
-  const { activeDay, setActiveDay, resetActiveDay } = useContext(ActiveDayContext);
-  const { min, max } = useContext(ConfigContext);
-  const [dateValue, setDateValue] = useState<string>(INITIAL_VALUE);
-  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
   const prevActiveDayRef = useRef<number | null>(null);
+  const { activeDay, setActiveDay, resetActiveDay } = useContext(ActiveDayContext);
+  const { initialDate, min, max } = useContext(ConfigContext);
+  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
+  const [dateValue, setDateValue] = useState<string>(
+    initialDate ? timestampToDateFormat(initialDate.getTime()) : INITIAL_VALUE,
+  );
 
   if (prevActiveDayRef.current !== activeDay) {
     if (activeDay) {

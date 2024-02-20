@@ -12,10 +12,14 @@ export function useRangeDateInput() {
     useContext(ActiveRangeContext);
   const activeRangeString = convertDateRangeToString(activeStartDay, activeEndDay);
 
-  const { min, max } = useContext(ConfigContext);
-  const [rangeValue, setRangeValue] = useState<string>(INITIAL_RANGE_VALUE);
-  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
   const prevRangeValueRef = useRef<string | null>(activeRangeString);
+  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
+  const { initialStartDate, initialEndDate, min, max } = useContext(ConfigContext);
+  const [rangeValue, setRangeValue] = useState<string>(
+    initialStartDate || initialEndDate
+      ? convertDateRangeToString(initialStartDate?.getTime(), initialEndDate?.getTime())
+      : INITIAL_RANGE_VALUE,
+  );
 
   if (prevRangeValueRef.current !== activeRangeString) {
     if (activeStartDay && activeEndDay) setRangeValue(activeRangeString);

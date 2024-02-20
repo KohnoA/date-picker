@@ -8,7 +8,7 @@ export const SimpleDatePicker = () => {
   const { showCalendar, toggleVisibility } = useCalendarToggle();
 
   return (
-    <DatePickerContainer data-testid="date-picker">
+    <DatePickerContainer data-testid="simple-date-picker">
       <DateInput
         value={dateValue}
         error={error}

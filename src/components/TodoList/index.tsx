@@ -31,9 +31,9 @@ export const TodoList = (props: TodoListProps) => {
   const handleContentClick = (event: MouseEvent) => event.stopPropagation();
 
   return (
-    <TodoListBackdrop onClick={onClose}>
-      <TodoListContent onClick={handleContentClick}>
-        <TodoListCloseButton onClick={onClose}>
+    <TodoListBackdrop data-testid="todo-list-backdrop" onClick={onClose}>
+      <TodoListContent data-testid="todo-list" onClick={handleContentClick}>
+        <TodoListCloseButton data-testid="todo-list-close-button" onClick={onClose}>
           <CrossIcon />
         </TodoListCloseButton>
 

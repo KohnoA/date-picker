@@ -35,6 +35,7 @@ export const CalendarCell = memo((props: CalendarCellProps) => {
 
   return (
     <CalendarCellContainer
+      data-testid={`calendar-cell-${timestamp}`}
       onClick={onClickHandler}
       onDoubleClick={onDoubleClickHandler}
       $canSelect={canSelectCell}

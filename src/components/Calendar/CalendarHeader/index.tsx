@@ -39,30 +39,46 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
   return (
     <CalendarHeaderContainer $smallButtonPadding={showRewindYearButtons}>
       <RewindButtonsContainer>
-        <RewindButton onClick={setPrev} disabled={disablePrevButton}>
+        <RewindButton
+          data-testid="rewind-week-month-button"
+          onClick={setPrev}
+          disabled={disablePrevButton}
+        >
           <PrevIcon />
         </RewindButton>
 
         {showRewindYearButtons && (
-          <RewindButton onClick={setPrevYear} disabled={disablePrevYearButton}>
+          <RewindButton
+            data-testid="rewind-year-button"
+            onClick={setPrevYear}
+            disabled={disablePrevYearButton}
+          >
             <OneArrowPrevIcon />
           </RewindButton>
         )}
       </RewindButtonsContainer>
 
-      <YearAndMonth $showWeek={isWeekView}>
+      <YearAndMonth data-testid="week-month-year" $showWeek={isWeekView}>
         {isWeekView && `${week} week of `}
         {MONTH_NAMES[month]} {year}
       </YearAndMonth>
 
       <RewindButtonsContainer>
         {showRewindYearButtons && (
-          <RewindButton onClick={setNextYear} disabled={disableNextYearButton}>
+          <RewindButton
+            data-testid="rewind-year-button"
+            onClick={setNextYear}
+            disabled={disableNextYearButton}
+          >
             <OneArrowNextIcon />
           </RewindButton>
         )}
 
-        <RewindButton onClick={setNext} disabled={disableNextButton}>
+        <RewindButton
+          data-testid="rewind-week-month-button"
+          onClick={setNext}
+          disabled={disableNextButton}
+        >
           <NextIcon />
         </RewindButton>
       </RewindButtonsContainer>

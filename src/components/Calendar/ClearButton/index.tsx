@@ -8,6 +8,8 @@ interface ClearButtonProps {
 
 export const ClearButton = memo(({ onClear }: ClearButtonProps) => (
   <ClearButtonContainer>
-    <ClearButtonOwnButton onClick={onClear}>Clear</ClearButtonOwnButton>
+    <ClearButtonOwnButton data-testid="calendar-clear-button" onClick={onClear}>
+      Clear
+    </ClearButtonOwnButton>
   </ClearButtonContainer>
 ));
