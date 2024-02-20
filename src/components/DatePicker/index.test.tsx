@@ -274,3 +274,57 @@ describe('General tests for DatePicker component', () => {
     expect(screen.getByTestId('week-month-year')).toHaveTextContent(`${MONTH_NAMES[0]} 2024`);
   });
 });
+
+describe('Testing TodoList component', () => {
+  beforeEach(() => render(<DatePicker />));
+
+  beforeEach(() => {
+    fireEvent.click(screen.getByTestId('toggle-calendar-button'));
+    fireEvent.dblClick(screen.getAllByTestId(/calendar-cell-\d+/)[0]);
+  });
+
+  it('When you double-click on a day, the todo list should open', () => {
+    expect(screen.getByTestId('todo-list')).toBeInTheDocument();
+  });
+
+  it('Todo list should close when clicking on background or cross', () => {
+    expect(screen.getByTestId('todo-list')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('todo-list-backdrop'));
+    expect(screen.queryByTestId('todo-list')).not.toBeInTheDocument();
+
+    fireEvent.dblClick(screen.getAllByTestId(/calendar-cell-\d+/)[0]);
+    fireEvent.click(screen.getByTestId('todo-list-close-button'));
+    expect(screen.queryByTestId('todo-list')).not.toBeInTheDocument();
+  });
+
+  it('Todo item should be added', () => {
+    fireEvent.change(screen.getByTestId('todo-input'), { target: { value: 'Learn React' } });
+    fireEvent.click(screen.getByTestId('todo-list-add-button'));
+
+    const addedItem = screen.getByTestId('todo-item');
+    expect(addedItem).toHaveTextContent('Learn React');
+    expect(addedItem).toBeInTheDocument();
+  });
+
+  it('Todo item should be toggled', () => {
+    fireEvent.change(screen.getByTestId('todo-input'), { target: { value: 'Learn React' } });
+    fireEvent.click(screen.getByTestId('todo-list-add-button'));
+
+    const todoChechbox = screen.getByTestId('todo-item-checkbox');
+
+    fireEvent.click(todoChechbox);
+    expect(screen.getByText(/Learn React/)).toHaveStyle('text-decoration: line-through;');
+  });
+
+  it('Todo item should be removed', () => {
+    fireEvent.change(screen.getByTestId('todo-input'), { target: { value: 'Learn React' } });
+    fireEvent.click(screen.getByTestId('todo-list-add-button'));
+
+    const removeTodoButton = screen.getByTestId('remove-todo-button');
+
+    expect(removeTodoButton).toBeInTheDocument();
+    fireEvent.click(removeTodoButton);
+    expect(screen.queryByText(/Learn React/)).not.toBeInTheDocument();
+  });
+});
