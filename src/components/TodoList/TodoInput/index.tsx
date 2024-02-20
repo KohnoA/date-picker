@@ -25,13 +25,16 @@ export const TodoInput = memo(({ onAdd }: TodoInputProps) => {
   return (
     <TodoInputContainer>
       <NewTodoInput
+        data-testid="todo-input"
         type="text"
         value={newTodo}
         onChange={handleInput}
         placeholder="Add your todo"
         autoFocus
       />
-      <AddTodoButton onClick={handleAddNewTodo}>Add</AddTodoButton>
+      <AddTodoButton data-testid="todo-list-add-button" onClick={handleAddNewTodo}>
+        Add
+      </AddTodoButton>
     </TodoInputContainer>
   );
 });

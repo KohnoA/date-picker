@@ -26,13 +26,24 @@ export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: T
   const handleToggle = () => onToggle(id);
 
   return (
-    <TodoItemContainer>
-      <TodoItemDescription $completed={completed}>{children}</TodoItemDescription>
+    <TodoItemContainer data-testid="todo-item">
+      <TodoItemDescription data-testid="todo-item-desc" $completed={completed}>
+        {children}
+      </TodoItemDescription>
 
       <TodoItemWrapper>
-        <TodoItemCheckbox type="checkbox" onChange={handleToggle} checked={completed} />
+        <TodoItemCheckbox
+          data-testid="todo-item-checkbox"
+          type="checkbox"
+          onChange={handleToggle}
+          checked={completed}
+        />
 
-        <TodoItemRemoveButton aria-label="Remove todo item" onClick={handleRemove}>
+        <TodoItemRemoveButton
+          data-testid="remove-todo-button"
+          aria-label="Remove todo item"
+          onClick={handleRemove}
+        >
           <CrossIcon width={18} height={18} />
         </TodoItemRemoveButton>
       </TodoItemWrapper>

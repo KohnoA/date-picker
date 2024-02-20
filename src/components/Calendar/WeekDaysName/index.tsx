@@ -14,7 +14,7 @@ export const WeekDaysName = memo(() => {
   );
 
   return (
-    <DaysNameList $showWeekends={!!showWeekends}>
+    <DaysNameList data-testid="calendar-day-name" $showWeekends={!!showWeekends}>
       {daysName.map((dayName) => (
         <DayNameItem key={dayName}>{dayName}</DayNameItem>
       ))}

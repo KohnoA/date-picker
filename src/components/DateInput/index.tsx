@@ -33,11 +33,14 @@ export const DateInput = memo((props: DateInputProps) => {
   const showClearButton = !!value.length;
 
   return (
-    <Container>
-      <Label htmlFor={dateInputId}>{label ?? DEFAULT_LABEL}</Label>
+    <Container data-testid="date-input">
+      <Label data-testid="date-input-label" htmlFor={dateInputId}>
+        {label ?? DEFAULT_LABEL}
+      </Label>
 
       <InputWrapper>
         <Input
+          data-testid="date-input-field"
           id={dateInputId}
           type="text"
           placeholder="Choose Date"
@@ -46,18 +49,18 @@ export const DateInput = memo((props: DateInputProps) => {
           $isInvalid={!!error}
         />
 
-        <CalendarButton onClick={toggleCalendar}>
+        <CalendarButton data-testid="toggle-calendar-button" onClick={toggleCalendar}>
           <CalendarIcon />
         </CalendarButton>
 
         {showClearButton && (
-          <ClearButton onClick={onClear}>
+          <ClearButton data-testid="clear-date-input-button" onClick={onClear}>
             <ClearIcon />
           </ClearButton>
         )}
       </InputWrapper>
 
-      {error && <Error>{error}</Error>}
+      {error && <Error data-testid="date-input-error">{error}</Error>}
     </Container>
   );
 });

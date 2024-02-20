@@ -8,7 +8,7 @@ export const RangeDatePicker = () => {
   const { showCalendar, toggleVisibility } = useCalendarToggle();
 
   return (
-    <DatePickerContainer>
+    <DatePickerContainer data-testid="range-date-picker">
       <DateInput
         value={rangeValue}
         error={error}

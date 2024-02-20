@@ -32,7 +32,11 @@ const Calendar = (props: CalendarProps) => {
   });
 
   return (
-    <CalendarContainer $showCalendar={showCalendar} $showClearButton={showClearButton}>
+    <CalendarContainer
+      data-testid="calendar"
+      $showCalendar={showCalendar}
+      $showClearButton={showClearButton}
+    >
       <CalendarHeader
         year={year}
         month={month}
@@ -44,7 +48,7 @@ const Calendar = (props: CalendarProps) => {
       />
       <WeekDaysName />
 
-      <DaysList $showWeekends={!!showWeekends}>
+      <DaysList data-testid="calendar-cell-list" $showWeekends={!!showWeekends}>
         {days.map((day) => (
           <CalendarCell
             key={day.data.timestamp}
