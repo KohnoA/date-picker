@@ -10,14 +10,17 @@ import { ClearButton } from './ClearButton';
 import { CalendarContainer, DaysList } from './styled';
 import { WeekDaysName } from './WeekDaysName';
 
-interface CalendarProps {
+/* The type alias is declared, not the interface, because there are errors during assembly
+https://stackoverflow.com/questions/43900035/ts4023-exported-variable-x-has-or-is-using-name-y-from-external-module-but */
+
+type CalendarProps = {
   showCalendar: boolean;
   showClearButton: boolean;
   activeDay: number | null;
   rangeEndDay?: number | null;
   onClear: () => void;
   onClickCell: (timestamp: number) => void;
-}
+};
 
 const Calendar = (props: CalendarProps) => {
   const { showCalendar, activeDay, rangeEndDay, showClearButton, onClear, onClickCell } = props;
