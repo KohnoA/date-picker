@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   CalendarView,
   CalendarWeekStart,
+  ERROR_INVALID_SIMPLE_DATE,
   ERROR_VALUE_LESS_MIN,
   ERROR_VALUE_MORE_MAX,
   MONTH_NAMES,
@@ -326,5 +327,58 @@ describe('Testing TodoList component', () => {
     expect(removeTodoButton).toBeInTheDocument();
     fireEvent.click(removeTodoButton);
     expect(screen.queryByText(/Learn React/)).not.toBeInTheDocument();
+  });
+});
+
+describe('Testing SimpleDatePicker component', () => {
+  it('An error message should be displayed if the value is invalid date', () => {
+    render(<DatePicker />);
+
+    const invalidDate = '45/45/3481';
+
+    const dateInput = screen.getByTestId('date-input-field');
+    fireEvent.change(dateInput, { target: { value: invalidDate } });
+
+    const errorMessage = screen.getByTestId('date-input-error');
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveTextContent(ERROR_INVALID_SIMPLE_DATE);
+  });
+
+  it('The selected day should clear when you click on the clear button', () => {
+    const activeDay = new Date(2024, 0, 1);
+
+    render(<DatePicker initialDate={activeDay} />);
+
+    const activeCalendarCell = screen.getByTestId(`calendar-cell-${activeDay.getTime()}`);
+
+    expect(activeCalendarCell).toHaveStyle(activeCalendarCellStyles);
+    fireEvent.click(screen.getByTestId('calendar-clear-button'));
+    expect(activeCalendarCell).not.toHaveStyle(activeCalendarCellStyles);
+  });
+
+  it('Setting the value in the date input should be displayed on the calendar', () => {
+    const activeDay = new Date(2024, 0, 1);
+
+    render(<DatePicker />);
+
+    fireEvent.change(screen.getByTestId('date-input-field'), { target: { value: '01/01/2024' } });
+
+    expect(screen.getByTestId(`calendar-cell-${activeDay.getTime()}`)).toHaveStyle(
+      activeCalendarCellStyles,
+    );
+  });
+
+  it('Setting a calendar date value should appear in date input', () => {
+    const actvieDay = new Date(2024, 0, 1);
+
+    render(<DatePicker initialDate={actvieDay} />);
+
+    fireEvent.click(screen.getByTestId('toggle-calendar-button'));
+    fireEvent.click(screen.getByTestId('calendar-clear-button'));
+
+    const activeDayCallendarCell = screen.getByTestId(`calendar-cell-${actvieDay.getTime()}`);
+    fireEvent.click(activeDayCallendarCell);
+
+    expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024');
   });
 });
