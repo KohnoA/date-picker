@@ -5,6 +5,9 @@ import terser from '@rollup/plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import babel from '@rollup/plugin-babel';
 import svgr from '@svgr/rollup';
+import typescript from '@rollup/plugin-typescript';
+import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
+import url from '@rollup/plugin-url';
 import { createRequire } from 'node:module';
 
 const requireFile = createRequire(import.meta.url);
@@ -26,10 +29,15 @@ export default [
       },
     ],
     plugins: [
+      url({
+        include: ['**/*.woff', '**/*.woff2'],
+      }),
+      tsConfigPaths(),
       peerDepsExternal(),
       resolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
       commonjs(),
       svgr(),
+      typescript({ tsconfig: './tsconfig.json' }),
       babel({
         babelHelpers: 'runtime',
         exclude: 'node_modules/**',
@@ -42,6 +50,15 @@ export default [
   {
     input: 'src/index.ts',
     output: [{ file: 'dist/types.d.ts', format: 'es' }],
-    plugins: [dts()],
+    plugins: [
+      dts({
+        compilerOptions: {
+          baseUrl: '.',
+          paths: {
+            '@/*': ['./src/*'],
+          },
+        },
+      }),
+    ],
   },
 ];

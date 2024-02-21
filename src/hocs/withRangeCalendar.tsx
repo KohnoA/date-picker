@@ -1,16 +1,11 @@
-import { ComponentProps, memo, useCallback, useContext } from 'react';
+import { ComponentType, memo, useCallback, useContext } from 'react';
 
-import { type CalendarType } from '@/components/Calendar';
+import { CalendarProps } from '@/components/Calendar';
 import { ActiveRangeContext } from '@/context';
 
-export const withRangeCalendar = (WrappedCalendar: CalendarType) =>
+export const withRangeCalendar = (WrappedCalendar: ComponentType<CalendarProps>) =>
   memo(
-    (
-      props: Omit<
-        ComponentProps<typeof WrappedCalendar>,
-        'activeDay' | 'showClearButton' | 'onClear' | 'onClickCell'
-      >,
-    ) => {
+    (props: Omit<CalendarProps, 'activeDay' | 'showClearButton' | 'onClear' | 'onClickCell'>) => {
       const { activeStartDay, activeEndDay, setActiveStartDay, setActiveEndDay, resetActiveRange } =
         useContext(ActiveRangeContext);
 
