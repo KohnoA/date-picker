@@ -1,5 +1,9 @@
 # Date Picker
 
+***DatePicker*** - UI react component for working with various types of calendar.
+
+[Online demo](https://date-picker-ivory.vercel.app/)
+
 ## Technologies
 - [React](https://react.dev/)
 - [Styled components](https://styled-components.com/)
@@ -9,108 +13,184 @@
 - [Jest](https://jestjs.io/ru/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
-## Clone the repository
-To clone a repository run the following commands:
+## Installation
 ```bash
-$ git clone https://github.com/KohnoA/date-picker.git
-$ cd date-picker
+$ yarn add kohnoa-date-picker
+$ npm install kohnoa-date-picker
 ```
 
-## Installing dependencies
-To install dependencies, run the command:
-```bash
-$ yarn install
+## Example
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
+
+export default function Example() {
+  return (
+    <DatePicker
+      range
+      initialStartDate={new Date(2024, 1, 1)}
+      initialEndDate={new Date(2024, 1, 12)}
+      onChange={(timestamp: number) => {}}
+    />
+  );
+}
 ```
 
-## Development
-To start the development server, run the command:
-```bash
-$ yarn storybook
+## Documentation
+### Custom Theme
+You can change the theme of the DatePicker component
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
+
+export default function Example() {
+  return (
+    <DatePicker
+      customTheme={{ 
+        fontSizes: { lg: '16px' },
+        borderRadius: { hight: '10px' },
+      }}
+    />
+  );
+}
 ```
 
-## Production
-To run a production build, run the command:
-```bash
-$ yarn build
-// or
-$ yarn build-storybook
+#### Possible settings
+
+```jsx
+export interface ThemeType {
+  datePickerMaxWidth: string;
+
+  fontSizes: {
+    lg: string;
+    md: string;
+    sm: string;
+  };
+
+  colors: {
+    blue: string;
+    blueTransparent: string;
+    red: string;
+    greyLight: string;
+    greyNormal: string;
+    greyNormalAlt: string;
+    greyDark: string;
+    black: string;
+    white: string;
+    backdrop: string;
+  };
+
+  borderRadius: {
+    high: string;
+    low: string;
+  };
+
+  opacity: {
+    low: string;
+    high: string;
+  };
+
+  margin: {
+    lg: string;
+    sm: string;
+  };
+
+  duration: string;
+}
 ```
 
-## Testing
-```bash
-$ yarn test
+### Range
+Get DatePicker with range selection
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
+
+export default function Example() {
+  return (
+    <DayPicker range />
+  );
+}
 ```
 
-## Техническое задание
-Необходимо реализовать библиотеку Javascript - ***DatePicker***, для работы с различными видами календаря.
-Цель состоит в том, чтобы создать базовую библиотеку, которую можно настраивать и расширять.
+### Min and Max
+You can limit the date selection range
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
 
+export default function Example() {
+  return (
+    <DayPicker 
+      min={new Date(2024, 1, 1)}
+      max={new Date(2024, 1, 10)}
+    />
+  );
+}
+```
 
-#### Необходимый функционал:
+### View
+You can customize the calendar view. By week, month or with the ability to switch by year.
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
 
+export default function Example() {
+  return (
+    <DatePicker view='week' />
+    {/* or */}
+    <DatePicker view='month' />
+    {/* or */}
+    <DatePicker view='year' />
+  );
+}
+```
 
-- Просмотр календаря;
-- Выбор диапазона для календаря;
-- Дефолтный календарь с заранее установленным диапазоном;
-- Возможность выбора начала недели(с понедельника или воскресенья);
-- Выбор вида календаря (по неделям, месяцам и т.д.);
-- Реализовать возможность при клике на определенный день добавлять список задач и
-сохранять их в localStorage;
-- Возможность переключения на предыдущий(ую)/следующий(ую) неделю/месяц/год;
-- Возможность выбора максимальной даты календаря;
-- Возможность выбора минимальной даты для календаря;
-- Возможность скрывать/показывать выходные дни и выделять праздничные дни другим цветом;
-- Возможность перейти в календаре на введенную пользователем дату;
-- Стилизация календаря.
+### Week start
+You can set the start of the week from Monday or Sunday.
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
 
+export default function Example() {
+  return (
+    <DatePicker weekStart="sunday" />
+    {/* or */}
+    <DatePicker weekStart='monday' />
+  );
+}
+```
 
-#### Дополнительный функционал:
+### Show holidays
+Enable holiday display.
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
 
+export default function Example() {
+  return (
+    <DatePicker showHolidays />
+  );
+}
+```
 
-- Развернуть приложение на хостинге (heroku, vercel);
-- Настроить CI/CD, используя [GitHub Actions](https://github.com/features/actions);
-- Собрать проект с нуля(с настройками всех конфигов: rollup, eslint, prettier, husky).
+### Show weekends
+Enable weekends display.
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
 
+export default function Example() {
+  return (
+    <DatePicker showWeekends />
+  );
+}
+```
 
-#### Пример графического представления:
+### Initial Dates
+You can set the start date
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
 
-
-Ссылка на макет: [Макет "DatePicker"](https://www.figma.com/file/PGg4P38QaPjUzasxC2GSkv/Modsen-Datepicker?node-id=0%3A1&t=dWZj8oM41qBje0bv-0).
-
-
-#### Также проект предполагает:
-
-- Придерживаться требований по написанию и организации кода react приложения. Ссылка на требования: [Требования к тестовому заданию](https://github.com/annaprystavka/requirements);
-
-- Разделить библиотеку на два основных компонента: представления и логики. Для реализации логики приложения необходимо использовать порождающий паттерн программирования ***"Декоратор"***, который позволяет динамически добавлять объектам новую функциональность, оборачивая их в полезные «обёртки» (см. подробнее [паттерн Декоратор](https://refactoring.guru/ru/design-patterns/decorator)). При помощи паттерна создать сервисный класс, в котором вы будете задавать конфигурацию и создавать календарь;
-
-
-- Настроить конфигурации ***babel***, ***eslint***, ***prettier***;
-
-- Подключить и настроить бандлер ***Rollup*** для сборки проекта в библиотеку;
-
-- Подключить и настроить ***Storybook*** для проверки работоспособности вашей библиотеки;
-
-- Добавить обработку ошибок через паттерн ***Error Boundaries***;
-
-- Добавить проверку типов в React компонентах, передаваемых параметров и подобных объектов;
-
-- Использовать алиасы для импортирования файлов;
-
-- В приложении допускается использование языка typescript;
-
-- Нельзя использовать какие-либо сторонние библиотеки.
-
-
-## Используемые технологии
-
-- ***node.js*** - программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код);
-- ***babel*** - транспайлер, преобразующий код из одного стандарта в другой;
-- ***eslint*** - линтер для JavaScript кода;
-- ***yarn*** - менеджер пакетов;
-- ***rollup*** - сборщик ES-модулей;
-- ***storybook*** - инструмент, используемый для разработки компонентов пользовательского интерфейса в изоляции;
-- ***react*** - JavaScript-библиотека для создания пользовательских интерфейсов;
-- ***prop-types*** - набор валидаторов, которые могут быть использованы для проверки получаемых данных;
-- ***styled-components*** - система стилизации react компонентов;
-- ***jest*** — интеграционное тестирование (rtl) + unit-тестирование.
+export default function Example() {
+  return (
+    <DayPicker initialDate={new Date(2024, 1, 1)} />
+    {/* or for range date picker */}
+    <DatePicker 
+      initialStartDate={new Date(2024, 1, 1)}
+      initialStartDate={new Date(2024, 1, 10)}
+    />
+  );
+}
+```
