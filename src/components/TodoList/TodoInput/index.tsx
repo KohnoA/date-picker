@@ -32,7 +32,7 @@ export const TodoInput = memo(({ onAdd }: TodoInputProps) => {
         placeholder="Add your todo"
         autoFocus
       />
-      <AddTodoButton data-testid="todo-list-add-button" onClick={handleAddNewTodo}>
+      <AddTodoButton data-testid="todo-list-add-button" type="button" onClick={handleAddNewTodo}>
         Add
       </AddTodoButton>
     </TodoInputContainer>

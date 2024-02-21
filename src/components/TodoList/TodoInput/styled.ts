@@ -16,6 +16,7 @@ export const NewTodoInput = styled.input`
 
   border-radius: ${({ theme }) => theme.borderRadius.high};
   border: 1px solid ${({ theme }) => theme.colors.greyLight};
+  background-color: ${({ theme }) => theme.colors.white};
   outline: none;
 `;
 
