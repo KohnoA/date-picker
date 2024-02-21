@@ -19,7 +19,8 @@
     "declaration": true,
     "declarationDir": "types",
     "sourceMap": true,
-    "noEmit": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
