@@ -1,6 +1,6 @@
 {
   "name": "kohnoa-date-picker",
-  "version": "1.0.5",
+  "version": "1.0.15",
   "repository": "https://github.com/KohnoA/date-picker.git",
   "author": "KohnoA <san.kohno@yandex.ru>",
   "license": "MIT",
@@ -8,13 +8,14 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "resolutions": {
     "jackspeak": "2.1.1"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -rf dist && rollup -c",
     "prepare": "husky install",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "eslint --ext .ts,.tsx src --fix",
@@ -25,11 +26,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
-    "@babel/plugin-transform-runtime": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
-    "@babel/runtime": "^7.23.9",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",

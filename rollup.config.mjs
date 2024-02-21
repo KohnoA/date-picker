@@ -28,37 +28,26 @@ export default [
         sourcemap: true,
       },
     ],
+    external: ['react', 'react-dom', 'styled-components'],
     plugins: [
-      url({
-        include: ['**/*.woff', '**/*.woff2'],
-      }),
       tsConfigPaths(),
       peerDepsExternal(),
-      resolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
-      commonjs(),
+      url({ include: ['**/*.woff', '**/*.woff2'] }),
       svgr(),
       typescript({ tsconfig: './tsconfig.json' }),
       babel({
-        babelHelpers: 'runtime',
-        exclude: 'node_modules/**',
+        babelHelpers: 'bundled',
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        exclude: 'node_modules/**',
       }),
+      commonjs(),
+      resolve(),
       terser(),
     ],
-    external: [/@babel\/runtime/, 'react', 'react-dom', 'styled-components'],
   },
   {
-    input: 'src/index.ts',
-    output: [{ file: 'dist/types.d.ts', format: 'es' }],
-    plugins: [
-      dts({
-        compilerOptions: {
-          baseUrl: '.',
-          paths: {
-            '@/*': ['./src/*'],
-          },
-        },
-      }),
-    ],
+    input: 'dist/esm/types/index.d.ts',
+    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+    plugins: [dts()],
   },
 ];
