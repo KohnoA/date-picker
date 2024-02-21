@@ -49,12 +49,12 @@ export const DateInput = memo((props: DateInputProps) => {
           $isInvalid={!!error}
         />
 
-        <CalendarButton data-testid="toggle-calendar-button" onClick={toggleCalendar}>
+        <CalendarButton data-testid="toggle-calendar-button" type="button" onClick={toggleCalendar}>
           <CalendarIcon />
         </CalendarButton>
 
         {showClearButton && (
-          <ClearButton data-testid="clear-date-input-button" onClick={onClear}>
+          <ClearButton data-testid="clear-date-input-button" type="button" onClick={onClear}>
             <ClearIcon />
           </ClearButton>
         )}
