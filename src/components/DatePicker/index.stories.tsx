@@ -14,6 +14,7 @@ const meta: Meta<typeof DatePicker> = {
     view: {
       options: [CalendarView.MONTH, CalendarView.WEEK, CalendarView.YEAR],
       control: 'select',
+      defaultValue: CalendarView.MONTH,
     },
     initialDate: {
       control: 'date',
@@ -21,24 +22,33 @@ const meta: Meta<typeof DatePicker> = {
     weekStart: {
       options: [CalendarWeekStart.MONDAY, CalendarWeekStart.SUNDAY],
       control: 'select',
+      defaultValue: CalendarWeekStart.SUNDAY,
     },
     min: {
       control: 'date',
+      defaultValue: 'none',
     },
     max: {
       control: 'date',
     },
     showHolidays: {
       control: 'boolean',
+      defaultValue: false,
     },
     showWeekends: {
       control: 'boolean',
+      defaultValue: true,
     },
     customTheme: {
       control: 'object',
     },
     range: {
       control: 'boolean',
+      defaultValue: false,
+    },
+    onChange: {
+      description: 'Optional change handler',
+      type: 'function',
     },
   },
 };
