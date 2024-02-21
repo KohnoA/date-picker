@@ -34,7 +34,6 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@rollup/plugin-url": "^8.0.2",
     "@storybook/addon-essentials": "^7.6.13",
     "@storybook/addon-interactions": "^7.6.13",
     "@storybook/addon-links": "^7.6.13",

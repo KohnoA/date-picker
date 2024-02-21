@@ -7,7 +7,6 @@ import babel from '@rollup/plugin-babel';
 import svgr from '@svgr/rollup';
 import typescript from '@rollup/plugin-typescript';
 import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
-import url from '@rollup/plugin-url';
 import { createRequire } from 'node:module';
 
 const requireFile = createRequire(import.meta.url);
@@ -32,7 +31,6 @@ export default [
     plugins: [
       tsConfigPaths(),
       peerDepsExternal(),
-      url({ include: ['**/*.woff', '**/*.woff2'] }),
       svgr(),
       typescript({ tsconfig: './tsconfig.json' }),
       babel({
