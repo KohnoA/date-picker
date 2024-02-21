@@ -9,7 +9,7 @@ const INITIAL_ERROR_VALUE = null;
 export function useDateInput() {
   const prevActiveDayRef = useRef<number | null>(null);
   const { activeDay, setActiveDay, resetActiveDay } = useContext(ActiveDayContext);
-  const { initialDate, min, max } = useContext(ConfigContext);
+  const { initialDate, min, max, onChange: outerOnChange } = useContext(ConfigContext);
   const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
   const [dateValue, setDateValue] = useState<string>(
     initialDate ? timestampToDateFormat(initialDate.getTime()) : INITIAL_VALUE,
@@ -19,6 +19,7 @@ export function useDateInput() {
     if (activeDay) {
       setDateValue(timestampToDateFormat(activeDay));
       setError(INITIAL_ERROR_VALUE);
+      if (outerOnChange) outerOnChange(timestampToDateFormat(activeDay));
     }
 
     prevActiveDayRef.current = activeDay;

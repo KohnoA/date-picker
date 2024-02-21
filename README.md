@@ -29,7 +29,7 @@ export default function Example() {
       range
       initialStartDate={new Date(2024, 1, 1)}
       initialEndDate={new Date(2024, 1, 12)}
-      onChange={(timestamp: number) => {}}
+      onChange={(value: string) => {}}
     />
   );
 }
@@ -53,7 +53,7 @@ export default function Example() {
 }
 ```
 
-#### Possible settings
+#### Possible theme settings
 
 ```jsx
 export interface ThemeType {
@@ -104,7 +104,7 @@ import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
   return (
-    <DayPicker range />
+    <DatePicker range />
   );
 }
 ```
@@ -116,7 +116,7 @@ import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
   return (
-    <DayPicker 
+    <DatePicker 
       min={new Date(2024, 1, 1)}
       max={new Date(2024, 1, 10)}
     />

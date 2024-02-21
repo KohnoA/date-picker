@@ -15,4 +15,5 @@ export interface DatePickerConfigType {
   max?: Date;
   weekStart?: CalendarWeekStart;
   customTheme?: Partial<ThemeType>;
+  onChange?: (value: string) => void;
 }
