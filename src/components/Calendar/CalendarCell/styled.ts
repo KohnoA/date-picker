@@ -21,7 +21,7 @@ export const CalendarCellContainer = styled.li<{
   user-select: none;
   cursor: pointer;
 
-  color: ${({ $isHoliday, theme }) => ($isHoliday ? theme.colors.red : theme.colors.black)};
+  color: ${({ theme }) => theme.colors.black};
 
   ${({ $hidden }) =>
     $hidden
@@ -47,6 +47,8 @@ export const CalendarCellContainer = styled.li<{
     background-color: ${theme.colors.blueTransparent};
     border-radius: 0;
   `}
+
+  ${({ $isHoliday, theme }) => $isHoliday && `color: ${theme.colors.red};`}
 
   ${({ $isRangeEnd, theme }) =>
     $isRangeEnd &&

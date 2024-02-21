@@ -7,6 +7,7 @@ export const CalendarContainer = styled.section<{
   $showCalendar: boolean;
 }>`
   position: absolute;
+  z-index: 999;
 
   top: 100%;
 
@@ -20,8 +21,8 @@ export const CalendarContainer = styled.section<{
   ${({ $showClearButton, theme }) =>
     $showClearButton
       ? `
-    border-bottom-right-radius: none;
-    border-bottom-left-radius: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     border-top-right-radius: ${theme.borderRadius.high};
     border-top-left-radius: ${theme.borderRadius.high};
   `
