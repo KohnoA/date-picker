@@ -15,10 +15,24 @@ export const withRangeCalendar = (WrappedCalendar: ComponentType<CalendarProps>)
 
       const onClickCellHandler = useCallback(
         (timestamp: number) => {
-          if (!!activeStartDay && timestamp > activeStartDay) setActiveEndDay(timestamp);
-          else setActiveStartDay(timestamp);
+          if (!activeStartDay) {
+            setActiveStartDay(timestamp);
+            return;
+          }
+
+          if (!!activeStartDay && !!activeEndDay) {
+            setActiveStartDay(timestamp);
+            setActiveEndDay(null);
+            return;
+          }
+
+          if (timestamp < activeStartDay) {
+            setActiveStartDay(timestamp);
+          } else if (timestamp > activeStartDay) {
+            setActiveEndDay(timestamp);
+          }
         },
-        [activeStartDay],
+        [activeStartDay, activeEndDay],
       );
 
       return (
