@@ -17,22 +17,22 @@ import '@testing-library/jest-dom';
 import { DatePicker } from './index';
 
 const activeCalendarCellStyles = `
-  color: ${theme.colors.white};
-  background-color: ${theme.colors.blue};
+  color: ${theme.calendar.background};
+  background-color: ${theme.calendar.cell!.active};
 `;
 const activeRangeStartStyles = `
-  opacity: ${theme.opacity.low};
+  opacity: ${theme.general.opacity!.low};
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 `;
 const activeRangeMiddleStyles = `
-  color: ${theme.colors.blue};
-  background-color: ${theme.colors.blueTransparent};
+  color: ${theme.calendar.cell!.active};
+  background-color: ${theme.calendar.cell!.range};
   border-radius: 0;
 `;
 const activeRangeEndStyles = `
-  color: ${theme.colors.white};
-  background-color: ${theme.colors.blue};
+  color: ${theme.calendar.background};
+  background-color: ${theme.calendar.cell!.active};
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 `;
@@ -90,8 +90,8 @@ describe('Testing the DatePicker Component Configuration', () => {
     expect(screen.getByTestId('date-input-label')).toHaveTextContent('Custom label');
   });
 
-  it('custom styling must be applied', () => {
-    render(<DatePicker customTheme={{ datePickerMaxWidth: '350px' }} />);
+  it('Custom styling must be applied', () => {
+    render(<DatePicker customTheme={{ general: { maxWidth: '350px' } }} />);
 
     expect(screen.getByTestId('simple-date-picker')).toHaveStyle('max-width: 350px;');
   });

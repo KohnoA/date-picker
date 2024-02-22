@@ -1,6 +1,6 @@
 import { ThemeType } from '@/types';
 
-export const theme: ThemeType = {
+export const theme: Required<ThemeType> = {
   input: {
     label: '#333333',
     placeholder: '#BBBBBB',
