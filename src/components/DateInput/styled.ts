@@ -8,6 +8,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.margin.sm};
+  box-sizing: border-box;
 
   margin-bottom: ${({ theme }) => theme.margin.sm};
 `;
@@ -23,6 +24,7 @@ export const InputWrapper = styled.div`
 export const Input = styled.input<{ $isInvalid?: boolean }>`
   width: 100%;
   padding: 12px 40px;
+  box-sizing: border-box;
 
   font: inherit;
 
@@ -75,6 +77,7 @@ export const ClearButton = styled(Button)`
 
 export const Error = styled.p`
   width: 100%;
+  margin: 0;
 
   text-align: center;
   color: ${({ theme }) => theme.colors.red};

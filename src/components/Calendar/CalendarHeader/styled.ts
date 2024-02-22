@@ -39,6 +39,7 @@ export const RewindButton = styled.button`
 
 export const YearAndMonth = styled.p<{ $showWeek: boolean }>`
   flex-grow: 1;
+  margin: 0;
 
   text-align: center;
   font-weight: 700;

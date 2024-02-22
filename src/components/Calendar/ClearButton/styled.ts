@@ -20,6 +20,7 @@ export const ClearButtonOwnButton = styled.button`
 
   font-weight: 600;
   font-size: ${({ theme }) => theme.fontSizes.sm};
+  color: ${({ theme }) => theme.colors.white};
 
   border: none;
   outline: none;

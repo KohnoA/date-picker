@@ -13,6 +13,7 @@ export const CalendarContainer = styled.section<{
 
   width: 100%;
   padding: 10px;
+  box-sizing: border-box;
 
   border: 1px solid ${({ theme }) => theme.colors.greyLight};
   background-color: ${({ theme }) => theme.colors.white};
@@ -48,6 +49,9 @@ export const CalendarContainer = styled.section<{
 
 export const DaysList = styled.ul<{ $showWeekends: boolean }>`
   ${({ $showWeekends }) => ($showWeekends ? calendarGrid(7) : calendarGrid(5, '44px'))}
+
+  padding: 0;
+  margin: 0;
 
   list-style: none;
 `;

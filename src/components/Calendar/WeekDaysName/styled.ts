@@ -4,6 +4,9 @@ import { calendarGrid, flex } from '@/styles';
 
 export const DaysNameList = styled.ul<{ $showWeekends: boolean }>`
   ${({ $showWeekends }) => ($showWeekends ? calendarGrid(7) : calendarGrid(5, '44px'))}
+
+  padding: 0;
+  margin: 0;
 `;
 
 export const DayNameItem = styled.li`
