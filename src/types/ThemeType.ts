@@ -1,4 +1,5 @@
 interface InputThemeType {
+  label: string;
   placeholder: string;
   text: string;
   icons: string;

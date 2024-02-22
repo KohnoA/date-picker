@@ -2,6 +2,7 @@ import { ThemeType } from '@/types';
 
 export const theme: ThemeType = {
   input: {
+    label: '#333333',
     placeholder: '#BBBBBB',
     text: '#333333',
     icons: '#AAAAAA',
