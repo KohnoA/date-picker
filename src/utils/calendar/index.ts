@@ -10,3 +10,4 @@ export { checkDisableStatus } from './checkDisableStatus';
 export { convertDayNames } from './convertDayNames';
 export { countWeeksInMonth } from './countWeeksInMonth';
 export { generateCalendarData } from './generateCalendarData';
+export { sliceOnWeeks } from './sliceOnWeeks';

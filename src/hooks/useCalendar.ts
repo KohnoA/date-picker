@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { CalendarView } from '@/constants';
 import { UseCalendarOptionsType } from '@/types';
@@ -9,12 +9,12 @@ import {
   canRewindPrevYear,
   countWeeksInMonth,
   generateCalendarData,
+  sliceOnWeeks,
 } from '@/utils';
 import { canRewindNextWeek, canRewindPrevWeek } from '@/utils/calendar/canRewind';
 
 const INITIAL_DATE = new Date(Date.now());
 const INITIAL_WEEK_VALUE = 1;
-const NUMBER_DAYS_IN_WEEK = 7;
 
 export function useCalendar(options: UseCalendarOptionsType) {
   const { activeDay, view, weekStart, min, max } = options;
@@ -24,11 +24,6 @@ export function useCalendar(options: UseCalendarOptionsType) {
   const [currentDate, setCurrentDate] = useState<Date>(
     activeDay ? new Date(activeDay) : INITIAL_DATE,
   );
-
-  if (prevActiveDayRef.current !== activeDay) {
-    if (activeDay) setCurrentDate(new Date(activeDay));
-    prevActiveDayRef.current = activeDay;
-  }
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
@@ -82,10 +77,15 @@ export function useCalendar(options: UseCalendarOptionsType) {
     setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)));
   }, [year, month, max]);
 
+  useEffect(() => {
+    if (prevActiveDayRef.current === activeDay) return;
+
+    if (activeDay) setCurrentDate(new Date(activeDay));
+    prevActiveDayRef.current = activeDay;
+  }, [activeDay]);
+
   return {
-    days: viewOnWeeks
-      ? days.slice(NUMBER_DAYS_IN_WEEK * week - NUMBER_DAYS_IN_WEEK, NUMBER_DAYS_IN_WEEK * week)
-      : days,
+    days: viewOnWeeks ? sliceOnWeeks(days, week) : days,
     year,
     month,
     week,

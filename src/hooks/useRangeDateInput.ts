@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 
 import { RANGE_DATE_SEPARATOR } from '@/constants';
 import { ActiveRangeContext, ConfigContext } from '@/context';
@@ -27,17 +27,6 @@ export function useRangeDateInput() {
       : INITIAL_RANGE_VALUE,
   );
 
-  if (prevRangeValueRef.current !== activeRangeString) {
-    if (activeStartDay && activeEndDay) {
-      setRangeValue(activeRangeString);
-
-      if (outerOnChange) outerOnChange(activeRangeString);
-    }
-
-    setError(INITIAL_ERROR_VALUE);
-    prevRangeValueRef.current = activeRangeString;
-  }
-
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
@@ -60,6 +49,19 @@ export function useRangeDateInput() {
     setError(INITIAL_ERROR_VALUE);
     resetActiveRange();
   };
+
+  useEffect(() => {
+    if (prevRangeValueRef.current === activeRangeString) return;
+
+    if (activeStartDay && activeEndDay) {
+      setRangeValue(activeRangeString);
+
+      if (outerOnChange) outerOnChange(activeRangeString);
+    }
+
+    setError(INITIAL_ERROR_VALUE);
+    prevRangeValueRef.current = activeRangeString;
+  }, [activeRangeString, activeStartDay, activeEndDay]);
 
   return { rangeValue, error, onChange, onClear };
 }
