@@ -32,6 +32,7 @@ export const Input = styled.input<{ $isInvalid?: boolean }>`
   padding: 12px 40px;
   box-sizing: border-box;
 
+  color: ${({ theme }) => theme.input.text};
   font: inherit;
 
   border-radius: ${({ theme }) => theme.general.borderRadius.high};
