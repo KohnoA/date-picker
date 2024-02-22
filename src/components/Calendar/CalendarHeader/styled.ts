@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import { ICONS } from '@/constants';
 import { flex } from '@/styles';
+
+const { PrevIcon, NextIcon, OneArrowNextIcon, OneArrowPrevIcon } = ICONS;
 
 export const CalendarHeaderContainer = styled.div<{ $smallButtonPadding: boolean }>`
   ${flex('space-between')}
@@ -17,22 +20,22 @@ export const RewindButtonsContainer = styled.div`
 export const RewindButton = styled.button`
   ${flex()}
 
-  border-radius: ${({ theme }) => theme.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high};
   border: none;
   background-color: transparent;
-  transition: opacity ${({ theme }) => theme.duration};
+  transition: opacity ${({ theme }) => theme.general.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${({ theme }) => theme.opacity.low};
+    opacity: ${({ theme }) => theme.general.opacity.low};
   }
 
   &:active {
-    opacity: ${({ theme }) => theme.opacity.high};
+    opacity: ${({ theme }) => theme.general.opacity.high};
   }
 
   &:disabled {
-    opacity: ${({ theme }) => theme.opacity.high};
+    opacity: ${({ theme }) => theme.general.opacity.high};
     pointer-events: none;
   }
 `;
@@ -43,5 +46,22 @@ export const YearAndMonth = styled.p<{ $showWeek: boolean }>`
 
   text-align: center;
   font-weight: 700;
-  font-size: ${({ $showWeek, theme }) => ($showWeek ? theme.fontSizes.sm : theme.fontSizes.md)};
+  font-size: ${({ $showWeek, theme }) =>
+    $showWeek ? theme.general.fontSizes.sm : theme.general.fontSizes.md};
+`;
+
+export const PrevIconStyled = styled(PrevIcon)`
+  ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
+`;
+
+export const NextIconStyled = styled(NextIcon)`
+  ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
+`;
+
+export const OneArrowPrevIconStyled = styled(OneArrowPrevIcon)`
+  ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
+`;
+
+export const OneArrowNextIconStyled = styled(OneArrowNextIcon)`
+  ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;

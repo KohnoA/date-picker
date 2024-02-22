@@ -1,9 +1,11 @@
+import { memo } from 'react';
+
 import { RangeCalendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
 import { useCalendarToggle, useRangeDateInput } from '@/hooks';
 import { DatePickerContainer } from '@/styles';
 
-export const RangeDatePicker = () => {
+export const RangeDatePicker = memo(() => {
   const { rangeValue, error, onChange, onClear } = useRangeDateInput();
   const { showCalendar, toggleVisibility } = useCalendarToggle();
 
@@ -20,4 +22,4 @@ export const RangeDatePicker = () => {
       <RangeCalendar showCalendar={showCalendar} />
     </DatePickerContainer>
   );
-};
+});

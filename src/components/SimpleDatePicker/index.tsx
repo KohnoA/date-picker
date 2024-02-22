@@ -1,9 +1,11 @@
+import { memo } from 'react';
+
 import { SimpleCalendar } from '@/components/Calendar';
 import { DateInput } from '@/components/DateInput';
 import { useCalendarToggle, useDateInput } from '@/hooks';
 import { DatePickerContainer } from '@/styles';
 
-export const SimpleDatePicker = () => {
+export const SimpleDatePicker = memo(() => {
   const { dateValue, error, onChange, onClear } = useDateInput();
   const { showCalendar, toggleVisibility } = useCalendarToggle();
 
@@ -20,4 +22,4 @@ export const SimpleDatePicker = () => {
       <SimpleCalendar showCalendar={showCalendar} />
     </DatePickerContainer>
   );
-};
+});

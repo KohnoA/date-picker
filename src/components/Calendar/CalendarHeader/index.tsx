@@ -1,17 +1,19 @@
 import { memo, useContext, useMemo } from 'react';
 
-import { CalendarView, ICONS, MONTH_NAMES } from '@/constants';
+import { CalendarView, MONTH_NAMES } from '@/constants';
 import { ConfigContext } from '@/context';
 import { checkDisableStatus } from '@/utils';
 
 import {
   CalendarHeaderContainer,
+  NextIconStyled,
+  OneArrowNextIconStyled,
+  OneArrowPrevIconStyled,
+  PrevIconStyled,
   RewindButton,
   RewindButtonsContainer,
   YearAndMonth,
 } from './styled';
-
-const { PrevIcon, NextIcon, OneArrowNextIcon, OneArrowPrevIcon } = ICONS;
 
 interface CalendarHeaderProps {
   year: number;
@@ -44,7 +46,7 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
           onClick={setPrev}
           disabled={disablePrevButton}
         >
-          <PrevIcon />
+          <PrevIconStyled />
         </RewindButton>
 
         {showRewindYearButtons && (
@@ -53,7 +55,7 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
             onClick={setPrevYear}
             disabled={disablePrevYearButton}
           >
-            <OneArrowPrevIcon />
+            <OneArrowPrevIconStyled />
           </RewindButton>
         )}
       </RewindButtonsContainer>
@@ -70,7 +72,7 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
             onClick={setNextYear}
             disabled={disableNextYearButton}
           >
-            <OneArrowNextIcon />
+            <OneArrowNextIconStyled />
           </RewindButton>
         )}
 
@@ -79,7 +81,7 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
           onClick={setNext}
           disabled={disableNextButton}
         >
-          <NextIcon />
+          <NextIconStyled />
         </RewindButton>
       </RewindButtonsContainer>
     </CalendarHeaderContainer>

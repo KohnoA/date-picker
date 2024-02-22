@@ -14,29 +14,29 @@ export const NewTodoInput = styled.input`
 
   padding: 8px 10px;
 
-  border-radius: ${({ theme }) => theme.borderRadius.high};
-  border: 1px solid ${({ theme }) => theme.colors.greyLight};
-  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border: 1px solid ${({ theme }) => theme.todos.border};
+  background-color: ${({ theme }) => theme.todos.background};
   outline: none;
 `;
 
 export const AddTodoButton = styled.button`
   padding: 8px 10px;
 
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.todos.addButton.text};
   font-weight: 600;
 
-  background-color: ${({ theme }) => theme.colors.blue};
+  background-color: ${({ theme }) => theme.todos.addButton.background};
   border: none;
-  border-radius: ${({ theme }) => theme.borderRadius.high};
-  transition: opacity ${({ theme }) => theme.duration};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  transition: opacity ${({ theme }) => theme.general.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${({ theme }) => theme.opacity.low};
+    opacity: ${({ theme }) => theme.general.opacity.low};
   }
 
   &:active {
-    opacity: ${({ theme }) => theme.opacity.high};
+    opacity: ${({ theme }) => theme.general.opacity.high};
   }
 `;

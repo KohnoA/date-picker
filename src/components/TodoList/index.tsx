@@ -1,9 +1,9 @@
 import { MouseEvent } from 'react';
 
-import { ICONS } from '@/constants';
 import { TodoType } from '@/types';
 
 import {
+  CrossIconStyled,
   TodoListBackdrop,
   TodoListCloseButton,
   TodoListContent,
@@ -12,8 +12,6 @@ import {
 } from './styled';
 import { TodoInput } from './TodoInput';
 import { TodoItem } from './TodoItem';
-
-const { CrossIcon } = ICONS;
 
 interface TodoListProps {
   weekday: string;
@@ -34,7 +32,7 @@ export const TodoList = (props: TodoListProps) => {
     <TodoListBackdrop data-testid="todo-list-backdrop" onClick={onClose}>
       <TodoListContent data-testid="todo-list" onClick={handleContentClick}>
         <TodoListCloseButton data-testid="todo-list-close-button" onClick={onClose}>
-          <CrossIcon />
+          <CrossIconStyled />
         </TodoListCloseButton>
 
         <TodoListDayDescription>

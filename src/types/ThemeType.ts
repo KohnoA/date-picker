@@ -1,23 +1,48 @@
-export interface ThemeType {
-  datePickerMaxWidth: string;
+interface InputThemeType {
+  placeholder: string;
+  text: string;
+  icons: string;
+  background: string;
+  border: string;
+  error: string;
+}
+
+interface CalendarThemeType {
+  background: string;
+  border: string;
+  text: string;
+  icons: string;
+  hover: string;
+  cell: {
+    active: string;
+    range: string;
+    holiday: string;
+    indicator: string;
+  };
+}
+
+interface TodosThemeType {
+  backdrop: string;
+  background: string;
+  text: string;
+  placeholder: string;
+  icons: string;
+  border: string;
+  addButton: {
+    text: string;
+    background: string;
+  };
+}
+
+interface GeneralThemeType {
+  maxWidth: string;
+
+  fontFamily: string;
 
   fontSizes: {
     lg: string;
     md: string;
     sm: string;
-  };
-
-  colors: {
-    blue: string;
-    blueTransparent: string;
-    red: string;
-    greyLight: string;
-    greyNormal: string;
-    greyNormalAlt: string;
-    greyDark: string;
-    black: string;
-    white: string;
-    backdrop: string;
   };
 
   borderRadius: {
@@ -37,3 +62,10 @@ export interface ThemeType {
 
   duration: string;
 }
+
+export type ThemeType = Partial<{
+  input: Partial<InputThemeType>;
+  calendar: Partial<CalendarThemeType>;
+  todos: Partial<TodosThemeType>;
+  general: Partial<GeneralThemeType>;
+}>;

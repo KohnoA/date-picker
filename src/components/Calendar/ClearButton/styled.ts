@@ -7,9 +7,9 @@ export const ClearButtonContainer = styled.div`
 
   width: 100%;
 
-  border: 1px solid ${({ theme }) => theme.colors.greyLight};
-  border-bottom-left-radius: ${({ theme }) => theme.borderRadius.high};
-  border-bottom-right-radius: ${({ theme }) => theme.borderRadius.high};
+  border: 1px solid ${({ theme }) => theme.calendar.border};
+  border-bottom-left-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-bottom-right-radius: ${({ theme }) => theme.general.borderRadius.high};
   overflow: hidden;
   box-sizing: content-box;
 `;
@@ -19,20 +19,20 @@ export const ClearButtonOwnButton = styled.button`
   padding: 10px 0;
 
   font-weight: 600;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.general.fontSizes.sm};
+  color: ${({ theme }) => theme.calendar.text};
 
   border: none;
   outline: none;
-  background-color: ${({ theme }) => theme.colors.white};
-  transition: background ${({ theme }) => theme.duration};
+  background-color: ${({ theme }) => theme.calendar.background};
+  transition: background ${({ theme }) => theme.general.duration};
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.greyNormalAlt};
+    background-color: ${({ theme }) => theme.calendar.hover};
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.greyLight};
+    background-color: ${({ theme }) => theme.calendar.border};
   }
 `;

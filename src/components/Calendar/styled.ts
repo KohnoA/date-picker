@@ -15,20 +15,20 @@ export const CalendarContainer = styled.section<{
   padding: 10px;
   box-sizing: border-box;
 
-  border: 1px solid ${({ theme }) => theme.colors.greyLight};
-  background-color: ${({ theme }) => theme.colors.white};
-  transition: all 200ms;
+  border: 1px solid ${({ theme }) => theme.calendar.border};
+  background-color: ${({ theme }) => theme.calendar.background};
+  transition: all ${({ theme }) => theme.general.duration};
 
   ${({ $showClearButton, theme }) =>
     $showClearButton
       ? `
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius: ${theme.borderRadius.high};
-    border-top-left-radius: ${theme.borderRadius.high};
+    border-top-right-radius: ${theme.general.borderRadius.high};
+    border-top-left-radius: ${theme.general.borderRadius.high};
   `
       : `
-    border-radius: ${theme.borderRadius.high};
+    border-radius: ${theme.general.borderRadius.high};
   `}
 
   ${({ $showCalendar }) =>

@@ -57,44 +57,72 @@ export default function Example() {
 
 ```jsx
 export interface ThemeType {
-  datePickerMaxWidth: string;
+  input: {
+    placeholder: string,
+    text: string,
+    icons: string,
+    background: string,
+    border: string,
+    error: string,
+  },
 
-  fontSizes: {
-    lg: string;
-    md: string;
-    sm: string;
-  };
+  calendar: {
+    background: string,
+    border: string,
+    text: string,
+    icons: string,
+    hover: string,
+    cell: {
+      active: string,
+      range: string,
+      holiday: string,
+      indicator: string,
+    },
+  },
 
-  colors: {
-    blue: string;
-    blueTransparent: string;
-    red: string;
-    greyLight: string;
-    greyNormal: string;
-    greyNormalAlt: string;
-    greyDark: string;
-    black: string;
-    white: string;
-    backdrop: string;
-  };
+  todos: {
+    backdrop: string,
+    background: string,
+    text: string,
+    placeholder: string,
+    icons: string,
+    border: string,
+    addButton: {
+      text: string,
+      background: string,
+    }
+  },
 
-  borderRadius: {
-    high: string;
-    low: string;
-  };
+  general: {
+    maxWidth: string,
 
-  opacity: {
-    low: string;
-    high: string;
-  };
+    fontFamily: string,
 
-  margin: {
-    lg: string;
-    sm: string;
-  };
+    fontSizes: {
+      lg: string,
+      md: string,
+      sm: string,
+    },
 
-  duration: string;
+    borderRadius: {
+      high: string,
+      low: string,
+    },
+  
+    opacity: {
+      low: string,
+      high: string,
+    },
+  
+    margin: {
+      lg: string,
+      sm: string,
+    },
+  
+    duration: string,
+  },
 }
+
 ```
 
 ### Range

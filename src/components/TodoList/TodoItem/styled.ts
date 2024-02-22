@@ -13,12 +13,12 @@ export const TodoItemContainer = styled.li`
   padding-top: 0;
   margin-bottom: 10px;
 
-  border-bottom: 1px solid ${({ theme }) => theme.colors.greyLight};
+  border-bottom: 1px solid ${({ theme }) => theme.todos.border};
 
   &:first-child {
     padding-top: 10px;
 
-    border-top: 1px solid ${({ theme }) => theme.colors.greyLight};
+    border-top: 1px solid ${({ theme }) => theme.todos.border};
   }
 
   &:last-child {
@@ -52,14 +52,14 @@ export const TodoItemRemoveButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity ${({ theme }) => theme.duration};
+  transition: opacity ${({ theme }) => theme.general.duration};
   cursor: pointer;
 
   &:hover {
-    opacity: ${({ theme }) => theme.opacity.low};
+    opacity: ${({ theme }) => theme.general.opacity.low};
   }
 
   &:active {
-    opacity: ${({ theme }) => theme.opacity.high};
+    opacity: ${({ theme }) => theme.general.opacity.high};
   }
 `;

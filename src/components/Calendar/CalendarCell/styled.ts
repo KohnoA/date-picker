@@ -13,15 +13,15 @@ export const CalendarCellContainer = styled.li<{
 }>`
   position: relative;
 
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.general.fontSizes.sm};
   font-weight: 600;
 
-  border-radius: ${({ theme }) => theme.borderRadius.high};
-  transition: all ${({ theme }) => theme.duration};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  transition: all ${({ theme }) => theme.general.duration};
   user-select: none;
   cursor: pointer;
 
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.calendar.text};
 
   ${({ $hidden }) =>
     $hidden
@@ -36,25 +36,25 @@ export const CalendarCellContainer = styled.li<{
         pointer-events: all;
   `
       : `
-        opacity: ${theme.opacity.high};
+        opacity: ${theme.general.opacity.high};
         pointer-events: none;
   `}
 
   ${({ $isRangeMiddle, theme }) =>
     $isRangeMiddle &&
     `
-    color: ${theme.colors.blue};
-    background-color: ${theme.colors.blueTransparent};
+    color: ${theme.calendar.cell.active};
+    background-color: ${theme.calendar.cell.range};
     border-radius: 0;
   `}
 
-  ${({ $isHoliday, theme }) => $isHoliday && `color: ${theme.colors.red};`}
+  ${({ $isHoliday, theme }) => $isHoliday && `color: ${theme.calendar.cell.holiday};`}
 
   ${({ $isRangeEnd, theme }) =>
     $isRangeEnd &&
     `
-    color: ${theme.colors.white};
-    background-color: ${theme.colors.blue};
+    color: ${theme.calendar.background};
+    background-color: ${theme.calendar.cell.active};
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   `}
@@ -62,14 +62,14 @@ export const CalendarCellContainer = styled.li<{
   ${({ $isActive, theme }) =>
     $isActive &&
     `
-        color: ${theme.colors.white};
-        background-color: ${theme.colors.blue};
+        color: ${theme.calendar.background};
+        background-color: ${theme.calendar.cell.active};
       `}
 
   ${({ $isRangeStart, theme }) =>
     $isRangeStart &&
     `
-    opacity: ${theme.opacity.low};
+    opacity: ${theme.general.opacity.low};
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   `}
@@ -81,8 +81,8 @@ export const CalendarCellContainer = styled.li<{
     !$isRangeEnd &&
     `
     &:hover {
-      color: ${$isHoliday ? theme.colors.red : theme.colors.black};
-      background-color: ${theme.colors.greyNormalAlt};
+      color: ${$isHoliday ? theme.calendar.cell.holiday : theme.calendar.text};
+      background-color: ${theme.calendar.hover};
     }
   `}
 `;
@@ -97,6 +97,6 @@ export const TodosIndicator = styled.span<{ $hasTodos: boolean }>`
   width: 5px;
   height: 5px;
 
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: ${({ theme }) => theme.calendar.cell.indicator};
   border-radius: 100%;
 `;

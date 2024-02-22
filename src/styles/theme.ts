@@ -1,41 +1,68 @@
 import { ThemeType } from '@/types';
 
 export const theme: ThemeType = {
-  datePickerMaxWidth: '250px',
-
-  fontSizes: {
-    lg: '15px',
-    md: '14px',
-    sm: '13px',
+  input: {
+    placeholder: '#BBBBBB',
+    text: '#333333',
+    icons: '#AAAAAA',
+    background: '#FFFFFF',
+    border: '#DDDDDD',
+    error: '#FF0000',
   },
 
-  colors: {
-    blue: '#2F80ED',
-    blueTransparent: '#2F80ED10',
-    red: 'red',
-    greyLight: '#DDDDDD',
-    greyNormal: '#BBBBBB',
-    greyNormalAlt: '#F1F1F1',
-    greyDark: '#AAAAAA',
-    black: '#333333',
-    white: '#FFFFFF',
+  calendar: {
+    background: '#FFFFFF',
+    border: '#DDDDDD',
+    text: '#333333',
+    icons: '#333333',
+    hover: '#F1F1F1',
+    cell: {
+      active: '#2F80ED',
+      range: '#2F80ED10',
+      holiday: '#FF0000',
+      indicator: '#FF0000',
+    },
+  },
+
+  todos: {
     backdrop: '#00000033',
+    background: '#FFFFFF',
+    text: '#333333',
+    placeholder: '#BBBBBB',
+    icons: '#333333',
+    border: '#DDDDDD',
+    addButton: {
+      text: '#FFFFFF',
+      background: '#2F80ED',
+    },
   },
 
-  borderRadius: {
-    high: '8px',
-    low: '4px',
-  },
+  general: {
+    maxWidth: '250px',
 
-  opacity: {
-    low: '0.7',
-    high: '0.6',
-  },
+    fontFamily: `'Open-Sans', sans-serif`,
 
-  margin: {
-    lg: '25px',
-    sm: '8px',
-  },
+    fontSizes: {
+      lg: '15px',
+      md: '14px',
+      sm: '13px',
+    },
 
-  duration: '200ms',
+    borderRadius: {
+      high: '8px',
+      low: '4px',
+    },
+
+    opacity: {
+      low: '0.7',
+      high: '0.6',
+    },
+
+    margin: {
+      lg: '25px',
+      sm: '8px',
+    },
+
+    duration: '200ms',
+  },
 };

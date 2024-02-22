@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import { ICONS } from '@/constants';
 import { flex } from '@/styles';
+
+const { CrossIcon } = ICONS;
 
 export const TodoListBackdrop = styled.div`
   position: fixed;
@@ -14,7 +17,7 @@ export const TodoListBackdrop = styled.div`
 
   padding: 5px;
 
-  background-color: ${({ theme }) => theme.colors.backdrop};
+  background-color: ${({ theme }) => theme.todos.backdrop};
 `;
 
 export const TodoListContent = styled.div`
@@ -24,8 +27,8 @@ export const TodoListContent = styled.div`
   margin: auto;
   padding: 20px;
 
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.borderRadius.high};
+  background-color: ${({ theme }) => theme.todos.background};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high};
 `;
 
 export const TodoListCloseButton = styled.button`
@@ -42,11 +45,11 @@ export const TodoListCloseButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    opacity: ${({ theme }) => theme.opacity.low};
+    opacity: ${({ theme }) => theme.general.opacity.low};
   }
 
   &:active {
-    opacity: ${({ theme }) => theme.opacity.high};
+    opacity: ${({ theme }) => theme.general.opacity.high};
   }
 `;
 
@@ -62,4 +65,10 @@ export const TodoListOwn = styled.ul`
   flex-direction: column;
 
   list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+export const CrossIconStyled = styled(CrossIcon)`
+  ${({ theme }) => `& path { fill: ${theme.input.icons}; }`}
 `;

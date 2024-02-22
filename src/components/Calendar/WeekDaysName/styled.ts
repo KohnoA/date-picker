@@ -13,5 +13,5 @@ export const DayNameItem = styled.li`
   ${flex()}
 
   font-weight: 700;
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-size: ${({ theme }) => theme.general.fontSizes.md};
 `;

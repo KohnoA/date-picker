@@ -1,19 +1,18 @@
 import { ChangeEvent, memo, useContext, useId } from 'react';
 
-import { ICONS } from '@/constants';
 import { ConfigContext } from '@/context';
 
 import {
   CalendarButton,
+  CalendarIconStyled,
   ClearButton,
+  ClearIconStyled,
   Container,
   Error,
   Input,
   InputWrapper,
   Label,
 } from './styled';
-
-const { CalendarIcon, ClearIcon } = ICONS;
 
 const DEFAULT_LABEL = 'Date';
 
@@ -50,12 +49,12 @@ export const DateInput = memo((props: DateInputProps) => {
         />
 
         <CalendarButton data-testid="toggle-calendar-button" type="button" onClick={toggleCalendar}>
-          <CalendarIcon />
+          <CalendarIconStyled />
         </CalendarButton>
 
         {showClearButton && (
           <ClearButton data-testid="clear-date-input-button" type="button" onClick={onClear}>
-            <ClearIcon />
+            <ClearIconStyled />
           </ClearButton>
         )}
       </InputWrapper>
