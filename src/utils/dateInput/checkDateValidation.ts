@@ -16,12 +16,12 @@ export function checkDateValidation(value: string, min?: Date, max?: Date) {
   const isMoreMaxDate = max ? new Date(value).getTime() > max.getTime() : false;
   const canSetValue = isFullDateEntered && !isIncorrectDate && !isLessMinDate && !isMoreMaxDate;
 
-  if (isLessMinDate) {
-    errorMessage = ERROR_VALUE_LESS_MIN;
+  if (isIncorrectDate) {
+    errorMessage = ERROR_INVALID_SIMPLE_DATE;
   } else if (isMoreMaxDate) {
     errorMessage = ERROR_VALUE_MORE_MAX;
-  } else if (isIncorrectDate) {
-    errorMessage = ERROR_INVALID_SIMPLE_DATE;
+  } else if (isLessMinDate) {
+    errorMessage = ERROR_VALUE_LESS_MIN;
   } else {
     errorMessage = null;
   }

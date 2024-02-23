@@ -33,14 +33,14 @@ export function checkRangeDateValidation(value: string, min?: Date, max?: Date) 
     !isIncorrectStartDate &&
     !isIncorrectEndDate;
 
-  if (startMoreEnd) {
-    errorMessage = ERROR_INCORRECT_RANGE;
+  if (isIncorrectStartDate || isIncorrectEndDate) {
+    errorMessage = ERROR_INVALID_RANGE_DATE;
   } else if (startDateLessMin) {
     errorMessage = ERROR_VALUE_LESS_MIN;
   } else if (endDateMoreMax) {
     errorMessage = ERROR_VALUE_MORE_MAX;
-  } else if (isIncorrectStartDate || isIncorrectEndDate) {
-    errorMessage = ERROR_INVALID_RANGE_DATE;
+  } else if (startMoreEnd) {
+    errorMessage = ERROR_INCORRECT_RANGE;
   } else {
     errorMessage = null;
   }
