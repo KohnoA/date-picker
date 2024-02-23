@@ -27,9 +27,12 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 
-export const Input = styled.input<{ $isInvalid?: boolean }>`
+export const Input = styled.input<{ $isInvalid?: boolean; $showClearButton: boolean }>`
   width: 100%;
-  padding: 12px 40px;
+  padding-top: 12px;
+  padding-right: ${({ $showClearButton }) => ($showClearButton ? '40px' : '15px')};
+  padding-bottom: 12px;
+  padding-left: 40px;
   box-sizing: border-box;
 
   color: ${({ theme }) => theme.input.text};

@@ -1,29 +1,34 @@
-import {
-  ERROR_INVALID_SIMPLE_DATE,
-  ERROR_VALUE_LESS_MIN,
-  ERROR_VALUE_MORE_MAX,
-  MAX_DATE_VALUE_LENGTH,
-} from '@/constants';
+import { DateErrors, DateFormats } from '@/constants';
 
-import { dateStringHasError } from './dateStringHasError';
+import { checkMaxDate, checkMinDate, stringToDate } from '../helpers';
 
-export function checkDateValidation(value: string, min?: Date, max?: Date) {
-  let errorMessage: string | null;
+import { isInvalidDate } from './isInvalidDate';
 
-  const isIncorrectDate = dateStringHasError(value);
-  const isFullDateEntered = value.length === MAX_DATE_VALUE_LENGTH;
-  const isLessMinDate = min ? new Date(value).getTime() < min.getTime() : false;
-  const isMoreMaxDate = max ? new Date(value).getTime() > max.getTime() : false;
-  const canSetValue = isFullDateEntered && !isIncorrectDate && !isLessMinDate && !isMoreMaxDate;
+export function checkDateValidation(
+  value: string,
+  min?: Date,
+  max?: Date,
+  format = DateFormats.PRIMARY,
+) {
+  let canSetValue: boolean = false;
+  let errorMessage: string | null = null;
+
+  if (!value.length) {
+    return { canSetValue, errorMessage };
+  }
+
+  const isIncorrectDate = isInvalidDate(value, format);
+  const dateObj = stringToDate(value, format);
+  const isLessMinDate = !isIncorrectDate && checkMinDate(dateObj, min);
+  const isMoreMaxDate = !isIncorrectDate && checkMaxDate(dateObj, max);
+  canSetValue = !isIncorrectDate && !isLessMinDate && !isMoreMaxDate;
 
   if (isIncorrectDate) {
-    errorMessage = ERROR_INVALID_SIMPLE_DATE;
+    errorMessage = DateErrors.INVALID + format;
   } else if (isMoreMaxDate) {
-    errorMessage = ERROR_VALUE_MORE_MAX;
+    errorMessage = DateErrors.VALUE_MORE_MAX;
   } else if (isLessMinDate) {
-    errorMessage = ERROR_VALUE_LESS_MIN;
-  } else {
-    errorMessage = null;
+    errorMessage = DateErrors.VALUE_LESS_MIN;
   }
 
   return { canSetValue, errorMessage };

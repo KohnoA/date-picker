@@ -2,47 +2,28 @@ import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 
 import { RANGE_DATE_SEPARATOR } from '@/constants';
 import { ActiveRangeContext, ConfigContext } from '@/context';
-import { checkRangeDateValidation, convertDateRangeToString, isValidRangeDateValue } from '@/utils';
+import {
+  checkRangeDateValidation,
+  dateRangeToString,
+  isValidRangeDateValue,
+  stringToDate,
+} from '@/utils';
 
 const INITIAL_RANGE_VALUE = '';
 const INITIAL_ERROR_VALUE = null;
+const INITIAL_PREV_ACTIVE_RANGE = null;
 
 export function useRangeDateInput() {
+  const prevRangeValueRef = useRef<string | null>(INITIAL_PREV_ACTIVE_RANGE);
+  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
+  const { min, max, format, onChange: outerOnChange } = useContext(ConfigContext);
   const { activeStartDay, activeEndDay, setActiveStartDay, setActiveEndDay, resetActiveRange } =
     useContext(ActiveRangeContext);
-  const activeRangeString = convertDateRangeToString(activeStartDay, activeEndDay);
-
-  const {
-    initialStartDate,
-    initialEndDate,
-    min,
-    max,
-    onChange: outerOnChange,
-  } = useContext(ConfigContext);
-  const prevRangeValueRef = useRef<string | null>(activeRangeString);
-  const [error, setError] = useState<string | null>(INITIAL_ERROR_VALUE);
   const [rangeValue, setRangeValue] = useState<string>(
-    initialStartDate || initialEndDate
-      ? convertDateRangeToString(initialStartDate?.getTime(), initialEndDate?.getTime())
+    activeStartDay || activeEndDay
+      ? dateRangeToString(activeStartDay, activeEndDay)
       : INITIAL_RANGE_VALUE,
   );
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    if (!isValidRangeDateValue(value)) return;
-    const { canSetValue, errorMessage } = checkRangeDateValidation(value, min, max);
-
-    setRangeValue(value);
-    setError(errorMessage);
-
-    if (canSetValue) {
-      const [start, end] = value.split(RANGE_DATE_SEPARATOR);
-
-      setActiveStartDay(new Date(start).getTime());
-      setActiveEndDay(new Date(end).getTime());
-    }
-  };
 
   const onClear = () => {
     setRangeValue(INITIAL_RANGE_VALUE);
@@ -50,18 +31,42 @@ export function useRangeDateInput() {
     resetActiveRange();
   };
 
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    if (!isValidRangeDateValue(value)) return;
+    const { canSetValue, errorMessage } = checkRangeDateValidation(value, min, max, format);
+
+    setRangeValue(value);
+    setError(errorMessage);
+
+    if (canSetValue) {
+      const [start, end] = value.split(RANGE_DATE_SEPARATOR);
+
+      setActiveStartDay(stringToDate(start, format).getTime());
+      setActiveEndDay(stringToDate(end, format).getTime());
+      prevRangeValueRef.current = value;
+    }
+
+    if (!value.length) {
+      resetActiveRange();
+      prevRangeValueRef.current = INITIAL_PREV_ACTIVE_RANGE;
+    }
+  };
+
   useEffect(() => {
+    const activeRangeString = dateRangeToString(activeStartDay, activeEndDay, format);
+
     if (prevRangeValueRef.current === activeRangeString) return;
 
     if (activeStartDay && activeEndDay) {
       setRangeValue(activeRangeString);
-
       if (outerOnChange) outerOnChange(activeRangeString);
     }
 
     setError(INITIAL_ERROR_VALUE);
     prevRangeValueRef.current = activeRangeString;
-  }, [activeRangeString, activeStartDay, activeEndDay]);
+  }, [activeStartDay, activeEndDay]);
 
   return { rangeValue, error, onChange, onClear };
 }

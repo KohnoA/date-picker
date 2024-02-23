@@ -1,31 +1,46 @@
 import {
-  ERROR_INCORRECT_RANGE,
-  ERROR_INVALID_RANGE_DATE,
-  ERROR_VALUE_LESS_MIN,
-  ERROR_VALUE_MORE_MAX,
+  DateErrors,
+  DateFormats,
   MAX_RANGE_DATE_VALUE_LENGTH,
   RANGE_DATE_SEPARATOR,
 } from '@/constants';
 
-import { dateStringHasError } from './dateStringHasError';
+import { checkMaxDate, checkMinDate, stringToDate } from '../helpers';
 
-export function checkRangeDateValidation(value: string, min?: Date, max?: Date) {
-  let errorMessage: string | null;
+import { isInvalidDate } from './isInvalidDate';
+
+export function checkRangeDateValidation(
+  value: string,
+  min?: Date,
+  max?: Date,
+  format = DateFormats.PRIMARY,
+) {
+  let canSetValue: boolean = false;
+  let errorMessage: string | null = null;
+
+  if (!value.length) {
+    return { canSetValue, errorMessage };
+  }
 
   const [start, end] = value.split(RANGE_DATE_SEPARATOR);
-  const startDateTimestamp = new Date(start).getTime();
-  const endDateTimestamp = new Date(end).getTime();
+  const invalidError = `${DateErrors.INVALID}${format} - ${format}`;
 
-  const isIncorrectStartDate = start ? dateStringHasError(start) : true;
-  const isIncorrectEndDate = end ? dateStringHasError(end) : true;
+  if (!start || !end) {
+    return { canSetValue, errorMessage: invalidError };
+  }
 
-  const startMoreEnd = startDateTimestamp > endDateTimestamp;
+  const startDate = stringToDate(start, format);
+  const endDate = stringToDate(end, format);
 
-  const startDateLessMin = min ? startDateTimestamp < min.getTime() : false;
-  const endDateMoreMax = max ? endDateTimestamp > max.getTime() : false;
+  const isIncorrectStartDate = isInvalidDate(start, format);
+  const isIncorrectEndDate = isInvalidDate(end, format);
+
+  const startMoreEnd = startDate.getTime() > endDate.getTime();
+  const startDateLessMin = checkMinDate(startDate, min);
+  const endDateMoreMax = checkMaxDate(endDate, max);
   const isFullRangeDateEntered = value.length === MAX_RANGE_DATE_VALUE_LENGTH;
 
-  const canSetValue =
+  canSetValue =
     isFullRangeDateEntered &&
     !startMoreEnd &&
     !startDateLessMin &&
@@ -34,15 +49,13 @@ export function checkRangeDateValidation(value: string, min?: Date, max?: Date) 
     !isIncorrectEndDate;
 
   if (isIncorrectStartDate || isIncorrectEndDate) {
-    errorMessage = ERROR_INVALID_RANGE_DATE;
+    errorMessage = invalidError;
   } else if (startDateLessMin) {
-    errorMessage = ERROR_VALUE_LESS_MIN;
+    errorMessage = DateErrors.VALUE_LESS_MIN;
   } else if (endDateMoreMax) {
-    errorMessage = ERROR_VALUE_MORE_MAX;
+    errorMessage = DateErrors.VALUE_MORE_MAX;
   } else if (startMoreEnd) {
-    errorMessage = ERROR_INCORRECT_RANGE;
-  } else {
-    errorMessage = null;
+    errorMessage = DateErrors.INCORRECT_RANGE;
   }
 
   return { canSetValue, errorMessage };

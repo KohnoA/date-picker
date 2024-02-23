@@ -1,4 +1,6 @@
-export function timestampToDateFormat(timestamp: number, format = 'MM/DD/YYYY') {
+import { DateFormats } from '@/constants';
+
+export function timestampToDateFormat(timestamp: number, format = DateFormats.PRIMARY) {
   const date = new Date(timestamp);
   const year = String(date.getFullYear());
   const month = String(date.getMonth() + 1).padStart(2, '0');

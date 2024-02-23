@@ -1,8 +1,9 @@
-import { CalendarView, CalendarWeekStart } from '@/constants';
+import { CalendarView, CalendarWeekStart, DateFormats } from '@/constants';
 
 import { ThemeType } from './ThemeType';
 
 export interface DatePickerConfigType {
+  format?: DateFormats;
   range?: boolean;
   initialDate?: Date;
   initialStartDate?: Date;
