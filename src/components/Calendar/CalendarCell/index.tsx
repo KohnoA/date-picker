@@ -4,7 +4,7 @@ import { TodosContext } from '@/context';
 import { useCalendarCell } from '@/hooks';
 import { DayWithTodoControls } from '@/types';
 
-import { CalendarCellContainer, TodosIndicator } from './styled';
+import { CalendarCellContainer, TodosClue, TodosIndicator } from './styled';
 
 interface CalendarCellProps {
   dayData: DayWithTodoControls;
@@ -47,6 +47,7 @@ export const CalendarCell = memo((props: CalendarCellProps) => {
       $hidden={isHidden}
     >
       <TodosIndicator $hasTodos={hasTodos} />
+      <TodosClue>Dbclick open todos</TodosClue>
       {day}
     </CalendarCellContainer>
   );

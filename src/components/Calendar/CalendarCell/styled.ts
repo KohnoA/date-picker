@@ -2,6 +2,28 @@ import styled from 'styled-components';
 
 import { flex } from '@/styles';
 
+export const TodosClue = styled.p`
+  position: absolute;
+  z-index: 999;
+  top: -35px;
+  left: 100%;
+
+  width: min-content;
+  padding: 5px;
+
+  white-space: nowrap;
+  color: ${({ theme }) => theme.calendar.text};
+  font-size: 12px;
+
+  transition: ${({ theme }) => theme.general.duration};
+  background-color: ${({ theme }) => theme.calendar.hover};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+`;
+
 export const CalendarCellContainer = styled.li<{
   $canSelect: boolean;
   $isActive: boolean;
@@ -85,6 +107,13 @@ export const CalendarCellContainer = styled.li<{
       background-color: ${theme.calendar.hover};
     }
   `}
+
+  &:hover {
+    ${TodosClue} {
+      opacity: 0.9;
+      visibility: visible;
+    }
+  }
 `;
 
 export const TodosIndicator = styled.span<{ $hasTodos: boolean }>`
