@@ -29,21 +29,21 @@ export function useTodos() {
     setTodosState(initialTodosState);
   };
 
-  const add = (value: string) => {
+  const addTodo = (value: string) => {
     setTodosState(({ day, todos }) => ({
       day,
       todos: [...todos, { id: Date.now(), title: value, completed: false }],
     }));
   };
 
-  const remove = (id: number) => {
+  const removeTodo = (id: number) => {
     setTodosState(({ day, todos }) => ({
       day,
       todos: todos.filter((todo) => todo.id !== id),
     }));
   };
 
-  const toggle = (id: number) => {
+  const toggleTodoStatus = (id: number) => {
     setTodosState(({ day, todos }) => ({
       day,
       todos: todos.map((todo) => {
@@ -61,8 +61,8 @@ export function useTodos() {
     todos: todosState.todos,
     openTodos,
     closeTodos,
-    add,
-    remove,
-    toggle,
+    addTodo,
+    removeTodo,
+    toggleTodoStatus,
   };
 }

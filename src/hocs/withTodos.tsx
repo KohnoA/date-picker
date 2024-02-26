@@ -8,7 +8,7 @@ import { timestampToDateFormat } from '@/utils';
 export const withTodos =
   <T,>(WrappedComponent: ComponentType<T>) =>
   (props: ComponentProps<typeof WrappedComponent>) => {
-    const { day, todos, openTodos, closeTodos, add, remove, toggle } = useTodos();
+    const { day, todos, openTodos, closeTodos, addTodo, removeTodo, toggleTodoStatus } = useTodos();
     const showTodos = !!day;
 
     const todosContextObj = useMemo(() => ({ openTodos }), [day]);
@@ -23,9 +23,9 @@ export const withTodos =
             date={timestampToDateFormat(day.data.timestamp)}
             todos={todos}
             onClose={closeTodos}
-            onAdd={add}
-            onRemove={remove}
-            onToggle={toggle}
+            onAdd={addTodo}
+            onRemove={removeTodo}
+            onToggle={toggleTodoStatus}
           />
         )}
       </TodosContext.Provider>
