@@ -8,16 +8,8 @@ import { CalendarCell } from './CalendarCell';
 import { CalendarHeader } from './CalendarHeader';
 import { ClearButton } from './ClearButton';
 import { CalendarContainer, DaysList } from './styled';
+import { CalendarProps } from './types';
 import { WeekDaysName } from './WeekDaysName';
-
-export interface CalendarProps {
-  showCalendar: boolean;
-  showClearButton: boolean;
-  activeDay: number | null;
-  rangeEndDay?: number | null;
-  onClear: () => void;
-  onClickCell: (timestamp: number) => void;
-}
 
 const Calendar = (props: CalendarProps) => {
   const { showCalendar, activeDay, rangeEndDay, showClearButton, onClear, onClickCell } = props;

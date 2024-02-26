@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 import { calendarGrid } from '@/styles';
 
-export const CalendarContainer = styled.section<{
-  $showClearButton: boolean;
-  $showCalendar: boolean;
-}>`
+import { CalendarContainerProps, DaysListProps } from './types';
+
+export const CalendarContainer = styled.section<CalendarContainerProps>`
   position: absolute;
   z-index: 999;
 
@@ -47,7 +46,7 @@ export const CalendarContainer = styled.section<{
   `}
 `;
 
-export const DaysList = styled.ul<{ $showWeekends: boolean }>`
+export const DaysList = styled.ul<DaysListProps>`
   ${({ $showWeekends }) => ($showWeekends ? calendarGrid(7) : calendarGrid(5, '44px'))}
 
   padding: 0;
