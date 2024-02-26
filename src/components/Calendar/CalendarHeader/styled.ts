@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { ICONS } from '@/constants';
 import { flex } from '@/styles';
 
+import { CalendarHeaderContainerProps, YearAndMonthProps } from './types';
+
 const { PrevIcon, NextIcon, OneArrowNextIcon, OneArrowPrevIcon } = ICONS;
 
-export const CalendarHeaderContainer = styled.div<{ $smallButtonPadding: boolean }>`
+export const CalendarHeaderContainer = styled.div<CalendarHeaderContainerProps>`
   ${flex('space-between')}
 
   & button {
@@ -40,7 +42,7 @@ export const RewindButton = styled.button`
   }
 `;
 
-export const YearAndMonth = styled.p<{ $showWeek: boolean }>`
+export const YearAndMonth = styled.p<YearAndMonthProps>`
   flex-grow: 1;
   margin: 0;
 

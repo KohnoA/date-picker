@@ -14,16 +14,7 @@ import {
   RewindButtonsContainer,
   YearAndMonth,
 } from './styled';
-
-interface CalendarHeaderProps {
-  year: number;
-  month: number;
-  week: number;
-  setNext: () => void;
-  setPrev: () => void;
-  setNextYear: () => void;
-  setPrevYear: () => void;
-}
+import { CalendarHeaderProps } from './types';
 
 export const CalendarHeader = memo((props: CalendarHeaderProps) => {
   const { year, month, week, setNext, setPrev, setNextYear, setPrevYear } = props;
