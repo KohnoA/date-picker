@@ -3,12 +3,12 @@ import { useContext } from 'react';
 import { ConfigContext } from '@/context';
 import { withRangeCalendar, withSimpleCalendar, withTodos } from '@/hocs';
 import { useCalendar } from '@/hooks';
+import { CalendarProps } from '@/types';
 
 import { CalendarCell } from './CalendarCell';
 import { CalendarHeader } from './CalendarHeader';
 import { ClearButton } from './ClearButton';
 import { CalendarContainer, DaysList } from './styled';
-import { CalendarProps } from './types';
 import { WeekDaysName } from './WeekDaysName';
 
 const Calendar = (props: CalendarProps) => {

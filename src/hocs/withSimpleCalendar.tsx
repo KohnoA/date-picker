@@ -1,7 +1,7 @@
 import { ComponentType, memo, useCallback, useContext } from 'react';
 
-import { CalendarProps } from '@/components/Calendar';
 import { ActiveDayContext } from '@/context';
+import { CalendarProps } from '@/types';
 
 export const withSimpleCalendar = (WrappedCalendar: ComponentType<CalendarProps>) =>
   memo(
