@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { flex } from '@/styles';
 
+import { TodoItemDescriptionProps } from './types';
+
 export const TodoItemContainer = styled.li`
   ${flex('flex-start')}
 
@@ -29,7 +31,7 @@ export const TodoItemContainer = styled.li`
   }
 `;
 
-export const TodoItemDescription = styled.span<{ $completed: boolean }>`
+export const TodoItemDescription = styled.span<TodoItemDescriptionProps>`
   flex-grow: 1;
 
   font-weight: 600;

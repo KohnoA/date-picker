@@ -1,7 +1,5 @@
 import { MouseEvent } from 'react';
 
-import { TodoType } from '@/types';
-
 import {
   CrossIconStyled,
   TodoListBackdrop,
@@ -12,16 +10,7 @@ import {
 } from './styled';
 import { TodoInput } from './TodoInput';
 import { TodoItem } from './TodoItem';
-
-interface TodoListProps {
-  weekday: string;
-  date: string;
-  todos: TodoType[];
-  onClose: () => void;
-  onAdd: (value: string) => void;
-  onRemove: (id: number) => void;
-  onToggle: (id: number) => void;
-}
+import { TodoListProps } from './types';
 
 export const TodoList = (props: TodoListProps) => {
   const { weekday, date, todos, onClose, onAdd, onRemove, onToggle } = props;

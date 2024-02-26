@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { memo } from 'react';
 
 import { ICONS } from '@/constants';
 
@@ -9,16 +9,9 @@ import {
   TodoItemRemoveButton,
   TodoItemWrapper,
 } from './styled';
+import { TodoItemProps } from './types';
 
 const { CrossIcon } = ICONS;
-
-interface TodoItemProps {
-  id: number;
-  completed: boolean;
-  children: ReactNode;
-  onToggle: (id: number) => void;
-  onRemove: (id: number) => void;
-}
 
 export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: TodoItemProps) => {
   const handleRemove = () => onRemove(id);
