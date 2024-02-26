@@ -1,10 +1,7 @@
 import { memo } from 'react';
 
 import { ClearButtonContainer, ClearButtonOwnButton } from './styled';
-
-interface ClearButtonProps {
-  onClear: () => void;
-}
+import { ClearButtonProps } from './types';
 
 export const ClearButton = memo(({ onClear }: ClearButtonProps) => (
   <ClearButtonContainer>
