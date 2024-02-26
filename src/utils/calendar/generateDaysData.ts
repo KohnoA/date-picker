@@ -7,6 +7,10 @@ export function generateDaysData(
   end: number,
   options?: { isCurrentMonth: boolean },
 ) {
+  if (end < start) {
+    throw new Error('Invalid range for days');
+  }
+
   return new Array(end - start + 1).fill(start).map((_, index) => {
     const date = new Date(year, month, start + index);
     const day = new DayFactory(date, options?.isCurrentMonth);
