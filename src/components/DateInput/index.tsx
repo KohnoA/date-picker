@@ -1,7 +1,8 @@
-import { ChangeEvent, memo, useContext, useId, useMemo } from 'react';
+import { memo, useContext, useId, useMemo } from 'react';
 
 import { ConfigContext } from '@/context';
 
+import { DEFAULT_LABEL } from './constants';
 import {
   CalendarButton,
   CalendarIconStyled,
@@ -13,16 +14,7 @@ import {
   InputWrapper,
   Label,
 } from './styled';
-
-const DEFAULT_LABEL = 'Date';
-
-interface DateInputProps {
-  value: string;
-  error?: string | null;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
-  toggleCalendar: () => void;
-}
+import { DateInputProps } from './types';
 
 export const DateInput = memo((props: DateInputProps) => {
   const { value, error, onChange, onClear, toggleCalendar } = props;

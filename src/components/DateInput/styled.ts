@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { ICONS } from '@/constants';
 import { flex } from '@/styles';
 
+import { InputProps } from './types';
+
 const { CalendarIcon, ClearIcon } = ICONS;
 
 export const Container = styled.div`
@@ -27,7 +29,7 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 
-export const Input = styled.input<{ $isInvalid?: boolean; $showClearButton: boolean }>`
+export const Input = styled.input<InputProps>`
   width: 100%;
   padding-top: 12px;
   padding-right: ${({ $showClearButton }) => ($showClearButton ? '40px' : '15px')};
