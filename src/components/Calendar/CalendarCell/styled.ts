@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { flex } from '@/styles';
 
+import { CalendarCellContainerProps, TodosIndicatorProps } from './types';
+
 export const TodosClue = styled.p`
   position: absolute;
   z-index: 999;
@@ -24,15 +26,21 @@ export const TodosClue = styled.p`
   pointer-events: none;
 `;
 
-export const CalendarCellContainer = styled.li<{
-  $canSelect: boolean;
-  $isActive: boolean;
-  $isHoliday: boolean;
-  $hidden: boolean;
-  $isRangeStart: boolean;
-  $isRangeMiddle: boolean;
-  $isRangeEnd: boolean;
-}>`
+export const TodosIndicator = styled.span<TodosIndicatorProps>`
+  display: ${({ $hasTodos }) => ($hasTodos ? 'block' : 'none')};
+
+  position: absolute;
+  top: 4px;
+  right: 4px;
+
+  width: 5px;
+  height: 5px;
+
+  background-color: ${({ theme }) => theme.calendar.cell.indicator};
+  border-radius: 100%;
+`;
+
+export const CalendarCellContainer = styled.li<CalendarCellContainerProps>`
   position: relative;
 
   font-size: ${({ theme }) => theme.general.fontSizes.sm};
@@ -114,18 +122,4 @@ export const CalendarCellContainer = styled.li<{
       visibility: visible;
     }
   }
-`;
-
-export const TodosIndicator = styled.span<{ $hasTodos: boolean }>`
-  display: ${({ $hasTodos }) => ($hasTodos ? 'block' : 'none')};
-
-  position: absolute;
-  top: 4px;
-  right: 4px;
-
-  width: 5px;
-  height: 5px;
-
-  background-color: ${({ theme }) => theme.calendar.cell.indicator};
-  border-radius: 100%;
 `;
