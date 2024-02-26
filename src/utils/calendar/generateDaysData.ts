@@ -11,7 +11,9 @@ export function generateDaysData(
     const date = new Date(year, month, start + index);
     const day = new DayFactory(date, options?.isCurrentMonth);
 
-    const dayWithTodoControls = new TodosControlDecorator(holidays.checkDay(day));
+    day.isHoliday = holidays.checkDay(date.getDate(), date.getMonth());
+
+    const dayWithTodoControls = new TodosControlDecorator(day);
     dayWithTodoControls.loadTodos();
 
     return dayWithTodoControls;

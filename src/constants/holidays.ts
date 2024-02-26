@@ -1,10 +1,10 @@
 export const HOLIDAYS = [
-  new Date(2024, 1, 14).getTime(),
-  new Date(2024, 1, 23).getTime(),
-  new Date(2024, 2, 8).getTime(),
-  new Date(2024, 2, 15).getTime(),
-  new Date(2024, 4, 9).getTime(),
-  new Date(2024, 6, 3).getTime(),
-  new Date(2024, 0, 1).getTime(),
-  new Date(2024, 0, 2).getTime(),
+  { month: 1, day: 14 },
+  { month: 1, day: 23 },
+  { month: 2, day: 8 },
+  { month: 2, day: 15 },
+  { month: 4, day: 9 },
+  { month: 6, day: 3 },
+  { month: 0, day: 1 },
+  { month: 0, day: 2 },
 ];
