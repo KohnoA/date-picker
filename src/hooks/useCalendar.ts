@@ -20,10 +20,8 @@ export function useCalendar(options: UseCalendarOptionsType) {
   const { activeDay, view, weekStart, min, max } = options;
 
   const prevActiveDayRef = useRef<number | null>(null);
-  const [week, setWeek] = useState<number>(INITIAL_WEEK_VALUE);
-  const [currentDate, setCurrentDate] = useState<Date>(
-    activeDay ? new Date(activeDay) : INITIAL_DATE,
-  );
+  const [week, setWeek] = useState(INITIAL_WEEK_VALUE);
+  const [currentDate, setCurrentDate] = useState(activeDay ? new Date(activeDay) : INITIAL_DATE);
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();

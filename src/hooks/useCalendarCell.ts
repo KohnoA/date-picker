@@ -2,6 +2,7 @@ import { useContext } from 'react';
 
 import { ConfigContext } from '@/context';
 import { DayType } from '@/types';
+import { checkMaxDate, checkMinDate } from '@/utils';
 
 export function useCalendarCell(
   day: DayType,
@@ -12,8 +13,8 @@ export function useCalendarCell(
 
   const { timestamp, isCurrentMonth, isHoliday, isWeekend, todos } = day;
 
-  const isLessMinDate = min ? timestamp < min.getTime() : false;
-  const isMoreMaxDate = max ? timestamp > max.getTime() : false;
+  const isLessMinDate = checkMinDate(timestamp, min);
+  const isMoreMaxDate = checkMaxDate(timestamp, max);
   const canSelectCell = isCurrentMonth && !isLessMinDate && !isMoreMaxDate;
 
   const showHoliday = !!(isHoliday && showHolidays);

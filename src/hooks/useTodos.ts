@@ -10,13 +10,13 @@ interface TodosStateType {
   todos: TodoType[];
 }
 
-const initialTodosState = {
+const initialTodosState: TodosStateType = {
   day: INITIAL_DAY,
   todos: INITIAL_TODOS,
 };
 
 export function useTodos() {
-  const [todosState, setTodosState] = useState<TodosStateType>(initialTodosState);
+  const [todosState, setTodosState] = useState(initialTodosState);
 
   const openTodos = (day: DayWithTodoControls) => {
     setTodosState({ day, todos: day.data.todos });

@@ -19,7 +19,7 @@ export function useRangeDateInput() {
   const { min, max, format, onChange: outerOnChange } = useContext(ConfigContext);
   const { activeStartDay, activeEndDay, setActiveStartDay, setActiveEndDay, resetActiveRange } =
     useContext(ActiveRangeContext);
-  const [rangeValue, setRangeValue] = useState<string>(
+  const [rangeValue, setRangeValue] = useState(
     activeStartDay || activeEndDay
       ? dateRangeToString(activeStartDay, activeEndDay)
       : INITIAL_RANGE_VALUE,
