@@ -4,6 +4,7 @@ export const DatePickerContainer = styled.div`
   position: relative;
 
   max-width: ${({ theme }) => theme.general.maxWidth};
+  min-width: 250px;
 
   font-family: ${({ theme }) => theme.general.fontFamily};
   font-weight: 400;

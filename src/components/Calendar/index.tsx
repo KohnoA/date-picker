@@ -15,7 +15,7 @@ const Calendar = (props: CalendarProps) => {
   const { showCalendar, activeDay, rangeEndDay, showClearButton, onClear, onClickCell } = props;
 
   const { weekStart, showWeekends, min, max, view } = useContext(ConfigContext);
-  const { year, month, week, days, next, prev, nextYear, prevYear } = useCalendar({
+  const { days, ...calendarControls } = useCalendar({
     activeDay: rangeEndDay ?? activeDay,
     weekStart,
     min,
@@ -29,15 +29,7 @@ const Calendar = (props: CalendarProps) => {
       $showCalendar={showCalendar}
       $showClearButton={showClearButton}
     >
-      <CalendarHeader
-        year={year}
-        month={month}
-        week={week}
-        setNext={next}
-        setPrev={prev}
-        setNextYear={nextYear}
-        setPrevYear={prevYear}
-      />
+      <CalendarHeader {...calendarControls} />
       <WeekDaysName />
 
       <DaysList data-testid="calendar-cell-list" $showWeekends={!!showWeekends}>

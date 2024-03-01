@@ -2,8 +2,10 @@ export interface CalendarHeaderProps {
   year: number;
   month: number;
   week: number;
-  setNext: () => void;
-  setPrev: () => void;
+  setNextWeek: () => void;
+  setPrevWeek: () => void;
+  setNextMonth: () => void;
+  setPrevMonth: () => void;
   setNextYear: () => void;
   setPrevYear: () => void;
 }
