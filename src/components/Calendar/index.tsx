@@ -16,7 +16,7 @@ const Calendar = (props: CalendarProps) => {
 
   const { weekStart, showWeekends, min, max, view } = useContext(ConfigContext);
   const { days, ...calendarControls } = useCalendar({
-    activeDay: rangeEndDay ?? activeDay,
+    activeDay,
     weekStart,
     min,
     max,

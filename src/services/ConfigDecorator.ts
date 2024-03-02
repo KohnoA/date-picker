@@ -5,6 +5,12 @@ import { SimpleDatePicker } from '@/components/SimpleDatePicker';
 import { CalendarView } from '@/constants';
 import { withProviders, withRangeLogic, withSimpleLogic } from '@/hocs';
 import { DatePickerConfigType } from '@/types';
+import {
+  revalidateConfig,
+  revalidateDateRange,
+  revalidateInitialDate,
+  revalidateMinMax,
+} from '@/utils';
 
 const defaultConfig: Pick<DatePickerConfigType, 'showWeekends' | 'view'> = {
   showWeekends: true,
@@ -15,7 +21,12 @@ export class ConfigDecorator {
   public DatePickerComponent: ComponentType;
 
   constructor(config: DatePickerConfigType) {
-    const resultConfig = { ...defaultConfig, ...config };
+    const resultConfig = revalidateConfig(
+      { ...defaultConfig, ...config },
+      revalidateMinMax,
+      revalidateInitialDate,
+      revalidateDateRange,
+    );
 
     if (config.range) {
       this.createRangeDatePicker(resultConfig);

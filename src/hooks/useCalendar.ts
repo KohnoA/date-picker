@@ -11,10 +11,10 @@ import {
   canRewindPrevYear,
   countWeeksInMonth,
   generateCalendarData,
+  getInitialState,
   sliceOnWeeks,
 } from '@/utils';
 
-const INITIAL_DATE = new Date(Date.now());
 const INITIAL_WEEK_VALUE = 1;
 
 export function useCalendar(options: UseCalendarOptionsType) {
@@ -22,7 +22,7 @@ export function useCalendar(options: UseCalendarOptionsType) {
 
   const prevActiveDayRef = useRef<number | null>(null);
   const [week, setWeek] = useState(INITIAL_WEEK_VALUE);
-  const [currentDate, setCurrentDate] = useState(activeDay ? new Date(activeDay) : INITIAL_DATE);
+  const [currentDate, setCurrentDate] = useState(getInitialState(activeDay, min, max));
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
@@ -42,7 +42,7 @@ export function useCalendar(options: UseCalendarOptionsType) {
     setWeek(newWeekValue);
 
     if (newWeekValue !== INITIAL_WEEK_VALUE) return;
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   }, [year, month, week, weekStart, max]);
 
   const setPrevWeek = useCallback(() => {
@@ -57,27 +57,27 @@ export function useCalendar(options: UseCalendarOptionsType) {
     setWeek(newWeekValue);
 
     if (newWeekValue !== maxWeeksInMonth) return;
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   }, [year, month, week, weekStart, min]);
 
   const setNextMonth = useCallback(() => {
     if (!canRewindNextMonth(year, month, max)) return;
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   }, [year, month, max]);
 
   const setPrevMonth = useCallback(() => {
     if (!canRewindPrevMonth(year, month, min)) return;
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   }, [year, month, min]);
 
   const setNextYear = useCallback(() => {
     if (!canRewindNextYear(year, month, max)) return;
-    setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() + 1)));
+    setCurrentDate(new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), 1));
   }, [year, month, max]);
 
   const setPrevYear = useCallback(() => {
     if (!canRewindPrevYear(year, month, min)) return;
-    setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)));
+    setCurrentDate(new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1));
   }, [year, month, min]);
 
   useEffect(() => {
