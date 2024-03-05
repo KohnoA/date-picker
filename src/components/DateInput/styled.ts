@@ -12,16 +12,16 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.general.margin.sm};
+  gap: ${({ theme }) => theme.general.margin.sm}px;
 
-  margin-bottom: ${({ theme }) => theme.general.margin.sm};
+  margin-bottom: ${({ theme }) => theme.general.margin.sm}px;
   box-sizing: border-box;
 
   color: ${({ theme }) => theme.input.text};
 `;
 
 export const Label = styled.label`
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
   color: ${({ theme }) => theme.input.label};
 `;
 
@@ -40,11 +40,11 @@ export const Input = styled.input<InputProps>`
   color: ${({ theme }) => theme.input.text};
   font: inherit;
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   border: 1px solid;
   border-color: ${({ theme, $isInvalid }) => ($isInvalid ? theme.input.error : theme.input.border)};
   outline: none;
-  transition: border ${({ theme }) => theme.general.duration};
+  transition: border ${({ theme }) => theme.general.duration}ms;
   background-color: ${({ theme }) => theme.input.background};
 
   &::placeholder {
@@ -64,9 +64,9 @@ export const Button = styled.button`
   padding: 6px 7px;
 
   border: none;
-  border-radius: ${({ theme }) => theme.general.borderRadius.low};
+  border-radius: ${({ theme }) => theme.general.borderRadius.low}px;
   background-color: transparent;
-  transition: opacity ${({ theme }) => theme.general.duration};
+  transition: opacity ${({ theme }) => theme.general.duration}ms;
   cursor: pointer;
 
   &:hover {
@@ -92,7 +92,7 @@ export const Error = styled.p`
 
   text-align: center;
   color: ${({ theme }) => theme.input.error};
-  font-size: ${({ theme }) => theme.general.fontSizes.sm};
+  font-size: ${({ theme }) => theme.general.fontSizes.sm}px;
 `;
 
 export const CalendarIconStyled = styled(CalendarIcon)`

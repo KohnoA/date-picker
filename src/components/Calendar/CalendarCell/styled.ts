@@ -17,9 +17,9 @@ export const TodosClue = styled.p`
   color: ${({ theme }) => theme.calendar.text};
   font-size: 12px;
 
-  transition: ${({ theme }) => theme.general.duration};
+  transition: ${({ theme }) => theme.general.duration}ms;
   background-color: ${({ theme }) => theme.calendar.hover};
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
 
   opacity: 0;
   visibility: hidden;
@@ -43,11 +43,11 @@ export const TodosIndicator = styled.span<TodosIndicatorProps>`
 export const CalendarCellContainer = styled.li<CalendarCellContainerProps>`
   position: relative;
 
-  font-size: ${({ theme }) => theme.general.fontSizes.sm};
-  font-weight: 600;
+  font-size: ${({ theme }) => theme.general.fontSizes.sm}px;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
-  transition: all ${({ theme }) => theme.general.duration};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
+  transition: all ${({ theme }) => theme.general.duration}ms;
   user-select: none;
   cursor: pointer;
 

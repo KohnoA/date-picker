@@ -22,10 +22,10 @@ export const RewindButtonsContainer = styled.div`
 export const RewindButton = styled.button`
   ${flex()}
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   border: none;
   background-color: transparent;
-  transition: opacity ${({ theme }) => theme.general.duration};
+  transition: opacity ${({ theme }) => theme.general.duration}ms;
   cursor: pointer;
 
   &:hover {
@@ -47,9 +47,9 @@ export const YearAndMonth = styled.p<YearAndMonthProps>`
   margin: 0;
 
   text-align: center;
-  font-weight: 700;
+  font-weight: ${({ theme }) => theme.general.fontWeight.bl};
   font-size: ${({ $showWeek, theme }) =>
-    $showWeek ? theme.general.fontSizes.sm : theme.general.fontSizes.md};
+    $showWeek ? theme.general.fontSizes.sm : theme.general.fontSizes.md}px;
 `;
 
 export const PrevIconStyled = styled(PrevIcon)`

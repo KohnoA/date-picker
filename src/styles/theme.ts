@@ -39,19 +39,25 @@ export const theme: Required<ThemeType> = {
   },
 
   general: {
-    maxWidth: '250px',
+    maxWidth: 250,
 
     fontFamily: `'Open-Sans', sans-serif`,
 
+    fontWeight: {
+      lg: 400,
+      md: 600,
+      bl: 700,
+    },
+
     fontSizes: {
-      lg: '15px',
-      md: '14px',
-      sm: '13px',
+      lg: 15,
+      md: 14,
+      sm: 13,
     },
 
     borderRadius: {
-      high: '8px',
-      low: '4px',
+      high: 8,
+      low: 4,
     },
 
     opacity: {
@@ -60,10 +66,10 @@ export const theme: Required<ThemeType> = {
     },
 
     margin: {
-      lg: '25px',
-      sm: '8px',
+      lg: 25,
+      sm: 8,
     },
 
-    duration: '200ms',
+    duration: 200,
   },
 };

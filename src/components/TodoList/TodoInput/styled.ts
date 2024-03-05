@@ -14,7 +14,7 @@ export const NewTodoInput = styled.input`
 
   padding: 8px 10px;
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   border: 1px solid ${({ theme }) => theme.todos.border};
   background-color: ${({ theme }) => theme.todos.background};
   outline: none;
@@ -24,12 +24,12 @@ export const AddTodoButton = styled.button`
   padding: 8px 10px;
 
   color: ${({ theme }) => theme.todos.addButton.text};
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
 
   background-color: ${({ theme }) => theme.todos.addButton.background};
   border: none;
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
-  transition: opacity ${({ theme }) => theme.general.duration};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
+  transition: opacity ${({ theme }) => theme.general.duration}ms;
   cursor: pointer;
 
   &:hover {

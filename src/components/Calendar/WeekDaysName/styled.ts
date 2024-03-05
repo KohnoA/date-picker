@@ -14,6 +14,6 @@ export const DaysNameList = styled.ul<DaysNameListProps>`
 export const DayNameItem = styled.li`
   ${flex()}
 
-  font-weight: 700;
-  font-size: ${({ theme }) => theme.general.fontSizes.md};
+  font-weight: ${({ theme }) => theme.general.fontWeight.bl};
+  font-size: ${({ theme }) => theme.general.fontSizes.md}px;
 `;

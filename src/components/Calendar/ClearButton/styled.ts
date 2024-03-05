@@ -8,8 +8,8 @@ export const ClearButtonContainer = styled.div`
   width: 100%;
 
   border: 1px solid ${({ theme }) => theme.calendar.border};
-  border-bottom-left-radius: ${({ theme }) => theme.general.borderRadius.high};
-  border-bottom-right-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-bottom-left-radius: ${({ theme }) => theme.general.borderRadius.high}px;
+  border-bottom-right-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   overflow: hidden;
   box-sizing: content-box;
 `;
@@ -18,14 +18,14 @@ export const ClearButtonOwnButton = styled.button`
   width: 100%;
   padding: 10px 0;
 
-  font-weight: 600;
-  font-size: ${({ theme }) => theme.general.fontSizes.sm};
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
+  font-size: ${({ theme }) => theme.general.fontSizes.sm}px;
   color: ${({ theme }) => theme.calendar.text};
 
   border: none;
   outline: none;
   background-color: ${({ theme }) => theme.calendar.background};
-  transition: background ${({ theme }) => theme.general.duration};
+  transition: background ${({ theme }) => theme.general.duration}ms;
   cursor: pointer;
 
   &:hover {

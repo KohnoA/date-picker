@@ -34,14 +34,14 @@ export const TodoItemContainer = styled.li`
 export const TodoItemDescription = styled.span<TodoItemDescriptionProps>`
   flex-grow: 1;
 
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
   word-break: break-all;
   text-decoration: ${({ $completed }) => ($completed ? 'line-through' : 'none')};
 `;
 
 export const TodoItemWrapper = styled.div`
   ${flex()}
-  display: flex;
+
   gap: 5px;
 `;
 
@@ -54,7 +54,7 @@ export const TodoItemRemoveButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity ${({ theme }) => theme.general.duration};
+  transition: opacity ${({ theme }) => theme.general.duration}ms;
   cursor: pointer;
 
   &:hover {

@@ -29,7 +29,7 @@ export const TodoListContent = styled.div`
   padding: 20px;
 
   background-color: ${({ theme }) => theme.todos.background};
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
 `;
 
 export const TodoListCloseButton = styled.button`
@@ -42,7 +42,7 @@ export const TodoListCloseButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity ${({ theme }) => theme.duration};
+  transition: opacity ${({ theme }) => theme.duration}ms;
   cursor: pointer;
 
   &:hover {
@@ -57,7 +57,7 @@ export const TodoListCloseButton = styled.button`
 export const TodoListDayDescription = styled.p`
   margin-bottom: 15px;
 
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
 `;
 
 export const TodoListOwn = styled.ul`

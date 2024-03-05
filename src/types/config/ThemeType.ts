@@ -36,19 +36,25 @@ interface TodosThemeType {
 }
 
 interface GeneralThemeType {
-  maxWidth: string;
+  maxWidth: number;
 
   fontFamily: string;
 
+  fontWeight: {
+    lg: number;
+    md: number;
+    bl: number;
+  };
+
   fontSizes: {
-    lg: string;
-    md: string;
-    sm: string;
+    lg: number;
+    md: number;
+    sm: number;
   };
 
   borderRadius: {
-    high: string;
-    low: string;
+    high: number;
+    low: number;
   };
 
   opacity: {
@@ -57,11 +63,11 @@ interface GeneralThemeType {
   };
 
   margin: {
-    lg: string;
-    sm: string;
+    lg: number;
+    sm: number;
   };
 
-  duration: string;
+  duration: number;
 }
 
 export type ThemeType = Partial<{
