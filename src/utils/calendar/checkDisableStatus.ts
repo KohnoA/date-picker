@@ -1,13 +1,13 @@
 import { CalendarWeekStart } from '@/constants';
 
 import {
-  canRewindNextMonth,
-  canRewindNextWeek,
-  canRewindNextYear,
-  canRewindPrevMonth,
-  canRewindPrevWeek,
-  canRewindPrevYear,
-} from './canRewind';
+  canGoNextMonth,
+  canGoNextWeek,
+  canGoNextYear,
+  canGoPrevMonth,
+  canGoPrevWeek,
+  canGoPrevYear,
+} from './canGo';
 
 export function checkDisableStatus(
   isWeekView: boolean,
@@ -19,16 +19,16 @@ export function checkDisableStatus(
   min?: Date,
 ) {
   const disablePrevButton = isWeekView
-    ? !canRewindPrevWeek(year, month, week, weekStart, min)
-    : !canRewindPrevMonth(year, month, min);
+    ? !canGoPrevWeek(year, month, week, weekStart, min)
+    : !canGoPrevMonth(year, month, min);
 
-  const disablePrevYearButton = !canRewindPrevYear(year, month, min);
+  const disablePrevYearButton = !canGoPrevYear(year, month, min);
 
   const disableNextButton = isWeekView
-    ? !canRewindNextWeek(year, month, week, weekStart, max)
-    : !canRewindNextMonth(year, month, max);
+    ? !canGoNextWeek(year, month, week, weekStart, max)
+    : !canGoNextMonth(year, month, max);
 
-  const disableNextYearButton = !canRewindNextYear(year, month, max);
+  const disableNextYearButton = !canGoNextYear(year, month, max);
 
   return { disablePrevButton, disablePrevYearButton, disableNextButton, disableNextYearButton };
 }

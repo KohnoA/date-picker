@@ -2,7 +2,7 @@ import { CalendarWeekStart } from '@/constants';
 
 const NUMBER_OF_DAYS_IN_WEEK = 7;
 
-export function canRewindPrevMonth(year: number, month: number, min?: Date) {
+export function canGoPrevMonth(year: number, month: number, min?: Date) {
   if (!min) return true;
 
   const firstDayOfMonthDate = new Date(year, month, 1);
@@ -10,7 +10,7 @@ export function canRewindPrevMonth(year: number, month: number, min?: Date) {
   return firstDayOfMonthDate.getTime() > min.getTime();
 }
 
-export function canRewindNextMonth(year: number, month: number, max?: Date) {
+export function canGoNextMonth(year: number, month: number, max?: Date) {
   if (!max) return true;
 
   const lastDayOfMonthDate = new Date(year, month + 1, 0);
@@ -18,7 +18,7 @@ export function canRewindNextMonth(year: number, month: number, max?: Date) {
   return lastDayOfMonthDate.getTime() < max.getTime();
 }
 
-export function canRewindPrevYear(year: number, month: number, min?: Date) {
+export function canGoPrevYear(year: number, month: number, min?: Date) {
   if (!min) return true;
 
   const prevYear = new Date(year - 1, month, 1);
@@ -26,7 +26,7 @@ export function canRewindPrevYear(year: number, month: number, min?: Date) {
   return prevYear.getTime() > min.getTime();
 }
 
-export function canRewindNextYear(year: number, month: number, max?: Date) {
+export function canGoNextYear(year: number, month: number, max?: Date) {
   if (!max) return true;
 
   const nextYear = new Date(year + 1, month, 1);
@@ -34,7 +34,7 @@ export function canRewindNextYear(year: number, month: number, max?: Date) {
   return nextYear.getTime() < max.getTime();
 }
 
-export function canRewindNextWeek(
+export function canGoNextWeek(
   year: number,
   month: number,
   week: number,
@@ -62,7 +62,7 @@ export function canRewindNextWeek(
   return dateWithLastNumberOfWeek.getTime() < max.getTime();
 }
 
-export function canRewindPrevWeek(
+export function canGoPrevWeek(
   year: number,
   month: number,
   week: number,
