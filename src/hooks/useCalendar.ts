@@ -48,16 +48,14 @@ export function useCalendar(options: UseCalendarOptionsType) {
   const setPrevWeek = useCallback(() => {
     if (!canGoPrevWeek(year, month, week, weekStart, min)) return;
 
-    const maxWeeksInMonth = countWeeksInMonth(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1),
-      weekStart,
-    );
-    const newWeekValue = week === INITIAL_WEEK_VALUE ? maxWeeksInMonth : week - 1;
+    if (week === INITIAL_WEEK_VALUE) {
+      const newCurrentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
 
-    setWeek(newWeekValue);
-
-    if (newWeekValue !== maxWeeksInMonth) return;
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+      setWeek(countWeeksInMonth(newCurrentDate, weekStart));
+      setCurrentDate(newCurrentDate);
+    } else {
+      setWeek(week - 1);
+    }
   }, [year, month, week, weekStart, min]);
 
   const setNextMonth = useCallback(() => {

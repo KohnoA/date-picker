@@ -11,7 +11,7 @@ export const TodosClue = styled.p`
   left: 100%;
 
   width: min-content;
-  padding: 5px;
+  padding: 5px 7px;
 
   white-space: nowrap;
   color: ${({ theme }) => theme.calendar.text};

@@ -1,5 +1,7 @@
 import { CalendarWeekStart } from '@/constants';
 
+import { getWeekDay } from './getWeekDay';
+
 const NUMBER_OF_DAYS_IN_WEEK = 7;
 
 export function canGoPrevMonth(year: number, month: number, min?: Date) {
@@ -43,18 +45,15 @@ export function canGoNextWeek(
 ) {
   if (!max || !weekStart) return true;
 
-  const weekStartWithMonday = weekStart === CalendarWeekStart.MONDAY;
-  const startMonth = new Date(year, month, 1);
   const endMonth = new Date(year, month + 1, 0);
   const countDaysInMonth = endMonth.getDate();
-  const endMonthWeekDay =
-    NUMBER_OF_DAYS_IN_WEEK - endMonth.getDay() - (weekStartWithMonday ? 2 : 1);
-  const startMontWeekDay = weekStartWithMonday ? startMonth.getDay() - 1 : startMonth.getDay();
+  const startMonthWeekDay = getWeekDay(new Date(year, month, 1), weekStart);
+  const endMonthWeekDay = getWeekDay(endMonth, weekStart);
 
-  let lastNumberOfWeek = week * NUMBER_OF_DAYS_IN_WEEK - startMontWeekDay;
+  let lastNumberOfWeek = week * NUMBER_OF_DAYS_IN_WEEK - startMonthWeekDay;
 
   if (lastNumberOfWeek > countDaysInMonth) {
-    lastNumberOfWeek -= endMonthWeekDay;
+    lastNumberOfWeek -= NUMBER_OF_DAYS_IN_WEEK - endMonthWeekDay + 1;
   }
 
   const dateWithLastNumberOfWeek = new Date(year, month, lastNumberOfWeek);
@@ -71,9 +70,8 @@ export function canGoPrevWeek(
 ) {
   if (!min || !weekStart) return true;
 
-  const weekStartWithMonday = weekStart === CalendarWeekStart.MONDAY;
   const currentDate = new Date(year, month, 1);
-  const weekDay = weekStartWithMonday ? currentDate.getDay() - 1 : currentDate.getDay();
+  const weekDay = getWeekDay(currentDate, weekStart);
 
   let firstNumberOfWeek = week * NUMBER_OF_DAYS_IN_WEEK - (NUMBER_OF_DAYS_IN_WEEK - 1) - weekDay;
 

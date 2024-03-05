@@ -1,6 +1,7 @@
 import { CalendarWeekStart } from '@/constants';
 
 import { generateDaysData } from './generateDaysData';
+import { getWeekDay } from './getWeekDay';
 
 export function generateEndOfPrevMonth(currentDate: Date, weekStart?: CalendarWeekStart) {
   const countDaysInPrevMonth = new Date(
@@ -9,14 +10,7 @@ export function generateEndOfPrevMonth(currentDate: Date, weekStart?: CalendarWe
     0,
   ).getDate();
 
-  let firstDayInCurrentMonth: number;
-
-  if (weekStart === CalendarWeekStart.MONDAY) {
-    firstDayInCurrentMonth = currentDate.getDay() !== 0 ? currentDate.getDay() - 1 : 6;
-  } else {
-    firstDayInCurrentMonth = currentDate.getDay();
-  }
-
+  const firstDayInCurrentMonth = getWeekDay(currentDate, weekStart);
   const showPrevMonthDays = firstDayInCurrentMonth !== 0;
   const startOfVisiblePrevMonth = countDaysInPrevMonth - firstDayInCurrentMonth + 1;
 
