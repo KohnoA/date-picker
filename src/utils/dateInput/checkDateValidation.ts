@@ -15,7 +15,6 @@ export function checkDateValidation(
   max?: Date,
   format = DateFormats.PRIMARY,
 ): CheckDateValidationReturnType {
-  const dateObj = stringToDate(value, format);
   const status: CheckDateValidationReturnType = {
     canSetValue: false,
     errorMessage: null,
@@ -29,11 +28,11 @@ export function checkDateValidation(
       status.errorMessage = DateErrors.INVALID + format;
       return status;
 
-    case checkMinDate(dateObj, min):
+    case checkMinDate(stringToDate(value, format), min):
       status.errorMessage = DateErrors.VALUE_LESS_MIN;
       return status;
 
-    case checkMaxDate(dateObj, max):
+    case checkMaxDate(stringToDate(value, format), max):
       status.errorMessage = DateErrors.VALUE_MORE_MAX;
       return status;
 
