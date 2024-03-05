@@ -9,6 +9,11 @@ import {
   canGoPrevYear,
 } from './canGo';
 
+type CheckDisableStatusReturnType = Record<
+  'disablePrevButton' | 'disableNextButton' | 'disablePrevYearButton' | 'disableNextYearButton',
+  boolean
+>;
+
 export function checkDisableStatus(
   isWeekView: boolean,
   year: number,
@@ -17,18 +22,24 @@ export function checkDisableStatus(
   weekStart?: CalendarWeekStart,
   max?: Date,
   min?: Date,
-) {
-  const disablePrevButton = isWeekView
-    ? !canGoPrevWeek(year, month, week, weekStart, min)
-    : !canGoPrevMonth(year, month, min);
+): CheckDisableStatusReturnType {
+  const result: CheckDisableStatusReturnType = {
+    disablePrevButton: false,
+    disableNextButton: false,
+    disablePrevYearButton: !canGoPrevYear(year, month, min),
+    disableNextYearButton: !canGoNextYear(year, month, max),
+  };
 
-  const disablePrevYearButton = !canGoPrevYear(year, month, min);
+  switch (true) {
+    case isWeekView:
+      result.disablePrevButton = !canGoPrevWeek(year, month, week, weekStart, min);
+      result.disableNextButton = !canGoNextWeek(year, month, week, weekStart, max);
+      break;
+    default:
+      result.disablePrevButton = !canGoPrevMonth(year, month, min);
+      result.disableNextButton = !canGoNextMonth(year, month, max);
+      break;
+  }
 
-  const disableNextButton = isWeekView
-    ? !canGoNextWeek(year, month, week, weekStart, max)
-    : !canGoNextMonth(year, month, max);
-
-  const disableNextYearButton = !canGoNextYear(year, month, max);
-
-  return { disablePrevButton, disablePrevYearButton, disableNextButton, disableNextYearButton };
+  return result;
 }
