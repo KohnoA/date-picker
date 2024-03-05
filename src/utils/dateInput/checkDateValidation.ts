@@ -4,32 +4,41 @@ import { checkMaxDate, checkMinDate, stringToDate } from '../helpers';
 
 import { isInvalidDate } from './isInvalidDate';
 
+type CheckDateValidationReturnType = {
+  canSetValue: boolean;
+  errorMessage: string | null;
+};
+
 export function checkDateValidation(
   value: string,
   min?: Date,
   max?: Date,
   format = DateFormats.PRIMARY,
-) {
-  let canSetValue: boolean = false;
-  let errorMessage: string | null = null;
-
-  if (!value.length) {
-    return { canSetValue, errorMessage };
-  }
-
-  const isIncorrectDate = isInvalidDate(value, format);
+): CheckDateValidationReturnType {
   const dateObj = stringToDate(value, format);
-  const isLessMinDate = !isIncorrectDate && checkMinDate(dateObj, min);
-  const isMoreMaxDate = !isIncorrectDate && checkMaxDate(dateObj, max);
-  canSetValue = !isIncorrectDate && !isLessMinDate && !isMoreMaxDate;
+  const status: CheckDateValidationReturnType = {
+    canSetValue: false,
+    errorMessage: null,
+  };
 
-  if (isIncorrectDate) {
-    errorMessage = DateErrors.INVALID + format;
-  } else if (isMoreMaxDate) {
-    errorMessage = DateErrors.VALUE_MORE_MAX;
-  } else if (isLessMinDate) {
-    errorMessage = DateErrors.VALUE_LESS_MIN;
+  switch (true) {
+    case !value.length:
+      return status;
+
+    case isInvalidDate(value, format):
+      status.errorMessage = DateErrors.INVALID + format;
+      return status;
+
+    case checkMinDate(dateObj, min):
+      status.errorMessage = DateErrors.VALUE_LESS_MIN;
+      return status;
+
+    case checkMaxDate(dateObj, max):
+      status.errorMessage = DateErrors.VALUE_MORE_MAX;
+      return status;
+
+    default:
+      status.canSetValue = true;
+      return status;
   }
-
-  return { canSetValue, errorMessage };
 }
