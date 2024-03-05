@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { ICONS } from '@/constants';
-import { flex } from '@/styles';
+import { flex, interactive } from '@/styles';
 
 import { InputProps } from './types';
 
@@ -66,16 +66,8 @@ export const Button = styled.button`
   border: none;
   border-radius: ${({ theme }) => theme.general.borderRadius.low}px;
   background-color: transparent;
-  transition: opacity ${({ theme }) => theme.general.duration}ms;
-  cursor: pointer;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
-
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+  ${interactive()}
 `;
 
 export const CalendarButton = styled(Button)`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { ICONS } from '@/constants';
-import { flex } from '@/styles';
+import { flex, interactive } from '@/styles';
 
 import { CalendarHeaderContainerProps, YearAndMonthProps } from './types';
 
@@ -25,16 +25,8 @@ export const RewindButton = styled.button`
   border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   border: none;
   background-color: transparent;
-  transition: opacity ${({ theme }) => theme.general.duration}ms;
-  cursor: pointer;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
-
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+  ${interactive()}
 
   &:disabled {
     opacity: ${({ theme }) => theme.general.opacity.high};
@@ -55,7 +47,6 @@ export const YearAndMonth = styled.p<YearAndMonthProps>`
 export const PrevIconStyled = styled(PrevIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;
-
 export const NextIconStyled = styled(NextIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;
@@ -63,7 +54,6 @@ export const NextIconStyled = styled(NextIcon)`
 export const OneArrowPrevIconStyled = styled(OneArrowPrevIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;
-
 export const OneArrowNextIconStyled = styled(OneArrowNextIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;

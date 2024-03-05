@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { interactive } from '@/styles';
+
 export const ClearButtonContainer = styled.div`
   position: absolute;
   left: -1px;
@@ -25,14 +27,6 @@ export const ClearButtonOwnButton = styled.button`
   border: none;
   outline: none;
   background-color: ${({ theme }) => theme.calendar.background};
-  transition: background ${({ theme }) => theme.general.duration}ms;
-  cursor: pointer;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.calendar.hover};
-  }
-
-  &:active {
-    background-color: ${({ theme }) => theme.calendar.border};
-  }
+  ${interactive()}
 `;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { flex } from '@/styles';
+import { flex, interactive } from '@/styles';
 
 export const TodoInputContainer = styled.div`
   ${flex('space-between', 'stretch')}
@@ -29,14 +29,6 @@ export const AddTodoButton = styled.button`
   background-color: ${({ theme }) => theme.todos.addButton.background};
   border: none;
   border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
-  transition: opacity ${({ theme }) => theme.general.duration}ms;
-  cursor: pointer;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
-
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+  ${interactive()}
 `;

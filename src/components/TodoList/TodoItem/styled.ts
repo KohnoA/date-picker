@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
-import { flex } from '@/styles';
+import { ICONS } from '@/constants';
+import { flex, interactive } from '@/styles';
 
 import { TodoItemDescriptionProps } from './types';
+
+const { CrossIcon } = ICONS;
 
 export const TodoItemContainer = styled.li`
   ${flex('flex-start')}
@@ -54,14 +57,10 @@ export const TodoItemRemoveButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity ${({ theme }) => theme.general.duration}ms;
-  cursor: pointer;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
+  ${interactive()}
+`;
 
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+export const CrossIconStyled = styled(CrossIcon)`
+  ${({ theme }) => `& path { fill: ${theme.todos.icons}; }`}
 `;

@@ -1,8 +1,7 @@
 import { memo } from 'react';
 
-import { ICONS } from '@/constants';
-
 import {
+  CrossIconStyled,
   TodoItemCheckbox,
   TodoItemContainer,
   TodoItemDescription,
@@ -10,8 +9,6 @@ import {
   TodoItemWrapper,
 } from './styled';
 import { TodoItemProps } from './types';
-
-const { CrossIcon } = ICONS;
 
 export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: TodoItemProps) => {
   const handleRemove = () => onRemove(id);
@@ -37,7 +34,7 @@ export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: T
           aria-label="Remove todo item"
           onClick={handleRemove}
         >
-          <CrossIcon width={18} height={18} />
+          <CrossIconStyled width={18} height={18} />
         </TodoItemRemoveButton>
       </TodoItemWrapper>
     </TodoItemContainer>
