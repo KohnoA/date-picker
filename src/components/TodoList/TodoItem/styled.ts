@@ -7,21 +7,23 @@ import { TodoItemDescriptionProps } from './types';
 
 const { CrossIcon } = ICONS;
 
+const TODOS_MARGIN = 10;
+
 export const TodoItemContainer = styled.li`
   ${flex('flex-start')}
 
-  gap: 10px;
+  gap: ${TODOS_MARGIN}px;
 
   width: 100%;
 
-  padding-bottom: 10px;
+  padding-bottom: ${TODOS_MARGIN}px;
   padding-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: ${TODOS_MARGIN}px;
 
   border-bottom: 1px solid ${({ theme }) => theme.todos.border};
 
   &:first-child {
-    padding-top: 10px;
+    padding-top: ${TODOS_MARGIN}px;
 
     border-top: 1px solid ${({ theme }) => theme.todos.border};
   }
