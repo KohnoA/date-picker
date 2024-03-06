@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { CalendarView, CalendarWeekStart } from '@/constants';
+import { CalendarView, CalendarWeekStart, DateFormats } from '@/constants';
 import { theme } from '@/styles';
 
 import { DatePicker } from './index';
@@ -10,6 +10,11 @@ const meta: Meta<typeof DatePicker> = {
   argTypes: {
     label: {
       control: { type: 'text' },
+    },
+    format: {
+      options: [DateFormats.PRIMARY, DateFormats.SECONDARY],
+      control: 'select',
+      defaultValue: DateFormats.PRIMARY,
     },
     view: {
       options: [CalendarView.MONTH, CalendarView.WEEK, CalendarView.YEAR],
@@ -71,6 +76,8 @@ export const Simple: Story = {
     showWeekends: true,
     showHolidays: true,
     weekStart: CalendarWeekStart.SUNDAY,
+    view: CalendarView.MONTH,
+    format: DateFormats.PRIMARY,
     min: new Date(2024, 0, 31),
     max: new Date(2024, 3, 1),
     customTheme: theme,
@@ -89,10 +96,12 @@ export const Range: Story = {
     return <DatePicker {...args} />;
   },
   args: {
-    label: 'Date',
+    label: 'Date range',
     showWeekends: true,
     showHolidays: true,
     weekStart: CalendarWeekStart.SUNDAY,
+    view: CalendarView.MONTH,
+    format: DateFormats.PRIMARY,
     min: new Date(2024, 0, 31),
     max: new Date(2024, 3, 1),
     customTheme: theme,

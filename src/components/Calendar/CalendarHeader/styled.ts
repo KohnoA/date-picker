@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 import { ICONS } from '@/constants';
-import { flex } from '@/styles';
+import { flex, interactive } from '@/styles';
+
+import { CalendarHeaderContainerProps, YearAndMonthProps } from './types';
 
 const { PrevIcon, NextIcon, OneArrowNextIcon, OneArrowPrevIcon } = ICONS;
 
-export const CalendarHeaderContainer = styled.div<{ $smallButtonPadding: boolean }>`
+export const CalendarHeaderContainer = styled.div<CalendarHeaderContainerProps>`
   ${flex('space-between')}
 
   & button {
@@ -20,19 +22,11 @@ export const RewindButtonsContainer = styled.div`
 export const RewindButton = styled.button`
   ${flex()}
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   border: none;
   background-color: transparent;
-  transition: opacity ${({ theme }) => theme.general.duration};
-  cursor: pointer;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
-
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+  ${interactive()}
 
   &:disabled {
     opacity: ${({ theme }) => theme.general.opacity.high};
@@ -40,20 +34,19 @@ export const RewindButton = styled.button`
   }
 `;
 
-export const YearAndMonth = styled.p<{ $showWeek: boolean }>`
+export const YearAndMonth = styled.p<YearAndMonthProps>`
   flex-grow: 1;
   margin: 0;
 
   text-align: center;
-  font-weight: 700;
+  font-weight: ${({ theme }) => theme.general.fontWeight.bl};
   font-size: ${({ $showWeek, theme }) =>
-    $showWeek ? theme.general.fontSizes.sm : theme.general.fontSizes.md};
+    $showWeek ? theme.general.fontSizes.sm : theme.general.fontSizes.md}px;
 `;
 
 export const PrevIconStyled = styled(PrevIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;
-
 export const NextIconStyled = styled(NextIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;
@@ -61,7 +54,6 @@ export const NextIconStyled = styled(NextIcon)`
 export const OneArrowPrevIconStyled = styled(OneArrowPrevIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;
-
 export const OneArrowNextIconStyled = styled(OneArrowNextIcon)`
   ${({ theme }) => `& path { fill: ${theme.calendar.icons}; }`}
 `;

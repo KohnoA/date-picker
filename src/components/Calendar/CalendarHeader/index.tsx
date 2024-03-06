@@ -14,19 +14,20 @@ import {
   RewindButtonsContainer,
   YearAndMonth,
 } from './styled';
-
-interface CalendarHeaderProps {
-  year: number;
-  month: number;
-  week: number;
-  setNext: () => void;
-  setPrev: () => void;
-  setNextYear: () => void;
-  setPrevYear: () => void;
-}
+import { CalendarHeaderProps } from './types';
 
 export const CalendarHeader = memo((props: CalendarHeaderProps) => {
-  const { year, month, week, setNext, setPrev, setNextYear, setPrevYear } = props;
+  const {
+    year,
+    month,
+    week,
+    setNextWeek,
+    setPrevWeek,
+    setNextMonth,
+    setPrevMonth,
+    setNextYear,
+    setPrevYear,
+  } = props;
 
   const { min, max, view, weekStart } = useContext(ConfigContext);
   const showRewindYearButtons = view === CalendarView.YEAR;
@@ -43,7 +44,7 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
       <RewindButtonsContainer>
         <RewindButton
           data-testid="rewind-week-month-button"
-          onClick={setPrev}
+          onClick={isWeekView ? setPrevWeek : setPrevMonth}
           disabled={disablePrevButton}
         >
           <PrevIconStyled />
@@ -78,7 +79,7 @@ export const CalendarHeader = memo((props: CalendarHeaderProps) => {
 
         <RewindButton
           data-testid="rewind-week-month-button"
-          onClick={setNext}
+          onClick={isWeekView ? setNextWeek : setNextMonth}
           disabled={disableNextButton}
         >
           <NextIconStyled />

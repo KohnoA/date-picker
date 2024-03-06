@@ -1,8 +1,7 @@
 import { HOLIDAYS } from '@/constants/holidays';
-import { DayType } from '@/types';
 
 class HolidayDataBase {
-  private holidays: number[];
+  private holidays: typeof HOLIDAYS;
   private static instance: HolidayDataBase | null = null;
 
   private constructor() {
@@ -17,10 +16,8 @@ class HolidayDataBase {
     return HolidayDataBase.instance;
   }
 
-  public checkDay(day: DayType) {
-    day.isHoliday = this.holidays.includes(day.timestamp);
-
-    return day;
+  public checkDay(day: number, month: number) {
+    return this.holidays.some((holiday) => holiday.day === day && holiday.month === month);
   }
 }
 

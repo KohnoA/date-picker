@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 import { calendarGrid } from '@/styles';
 
-export const CalendarContainer = styled.section<{
-  $showClearButton: boolean;
-  $showCalendar: boolean;
-}>`
+import { CalendarContainerProps, DaysListProps } from './types';
+
+export const CalendarContainer = styled.section<CalendarContainerProps>`
   position: absolute;
   z-index: 999;
 
@@ -17,18 +16,18 @@ export const CalendarContainer = styled.section<{
 
   border: 1px solid ${({ theme }) => theme.calendar.border};
   background-color: ${({ theme }) => theme.calendar.background};
-  transition: all ${({ theme }) => theme.general.duration};
+  transition: all ${({ theme }) => theme.general.duration}ms;
 
   ${({ $showClearButton, theme }) =>
     $showClearButton
       ? `
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius: ${theme.general.borderRadius.high};
-    border-top-left-radius: ${theme.general.borderRadius.high};
+    border-top-right-radius: ${theme.general.borderRadius.high}px;
+    border-top-left-radius: ${theme.general.borderRadius.high}px;
   `
       : `
-    border-radius: ${theme.general.borderRadius.high};
+    border-radius: ${theme.general.borderRadius.high}px;
   `}
 
   ${({ $showCalendar }) =>
@@ -47,7 +46,7 @@ export const CalendarContainer = styled.section<{
   `}
 `;
 
-export const DaysList = styled.ul<{ $showWeekends: boolean }>`
+export const DaysList = styled.ul<DaysListProps>`
   ${({ $showWeekends }) => ($showWeekends ? calendarGrid(7) : calendarGrid(5, '44px'))}
 
   padding: 0;

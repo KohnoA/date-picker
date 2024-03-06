@@ -3,27 +3,26 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CalendarView } from '@/constants';
 import { UseCalendarOptionsType } from '@/types';
 import {
-  canRewindNextMonth,
-  canRewindNextYear,
-  canRewindPrevMonth,
-  canRewindPrevYear,
+  canGoNextMonth,
+  canGoNextWeek,
+  canGoNextYear,
+  canGoPrevMonth,
+  canGoPrevWeek,
+  canGoPrevYear,
   countWeeksInMonth,
   generateCalendarData,
+  getInitialState,
   sliceOnWeeks,
 } from '@/utils';
-import { canRewindNextWeek, canRewindPrevWeek } from '@/utils/calendar/canRewind';
 
-const INITIAL_DATE = new Date(Date.now());
 const INITIAL_WEEK_VALUE = 1;
 
 export function useCalendar(options: UseCalendarOptionsType) {
   const { activeDay, view, weekStart, min, max } = options;
 
   const prevActiveDayRef = useRef<number | null>(null);
-  const [week, setWeek] = useState<number>(INITIAL_WEEK_VALUE);
-  const [currentDate, setCurrentDate] = useState<Date>(
-    activeDay ? new Date(activeDay) : INITIAL_DATE,
-  );
+  const [week, setWeek] = useState(INITIAL_WEEK_VALUE);
+  const [currentDate, setCurrentDate] = useState(getInitialState(activeDay, min, max));
 
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
@@ -34,48 +33,50 @@ export function useCalendar(options: UseCalendarOptionsType) {
     [month, year, weekStart],
   );
 
-  const next = useCallback(() => {
-    if (viewOnWeeks) {
-      if (!canRewindNextWeek(year, month, week, weekStart, max)) return;
+  const setNextWeek = useCallback(() => {
+    if (!canGoNextWeek(year, month, week, weekStart, max)) return;
 
-      const maxWeeksInMonth = countWeeksInMonth(currentDate, weekStart);
-      const newWeekValue = week === maxWeeksInMonth ? INITIAL_WEEK_VALUE : week + 1;
+    const maxWeeksInMonth = countWeeksInMonth(currentDate, weekStart);
+    const newWeekValue = week === maxWeeksInMonth ? INITIAL_WEEK_VALUE : week + 1;
 
-      setWeek(newWeekValue);
+    setWeek(newWeekValue);
 
-      if (newWeekValue !== INITIAL_WEEK_VALUE) return;
-    } else if (!canRewindNextMonth(year, month, max)) return;
+    if (newWeekValue !== INITIAL_WEEK_VALUE) return;
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+  }, [year, month, week, weekStart, max]);
 
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  }, [viewOnWeeks, year, month, week, weekStart, max]);
+  const setPrevWeek = useCallback(() => {
+    if (!canGoPrevWeek(year, month, week, weekStart, min)) return;
 
-  const prev = useCallback(() => {
-    if (viewOnWeeks) {
-      if (!canRewindPrevWeek(year, month, week, weekStart, min)) return;
+    if (week === INITIAL_WEEK_VALUE) {
+      const newCurrentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
 
-      const maxWeeksInMonth = countWeeksInMonth(
-        new Date(currentDate.getFullYear(), currentDate.getMonth() - 1),
-        weekStart,
-      );
-      const newWeekValue = week === INITIAL_WEEK_VALUE ? maxWeeksInMonth : week - 1;
+      setWeek(countWeeksInMonth(newCurrentDate, weekStart));
+      setCurrentDate(newCurrentDate);
+    } else {
+      setWeek(week - 1);
+    }
+  }, [year, month, week, weekStart, min]);
 
-      setWeek(newWeekValue);
-
-      if (newWeekValue !== maxWeeksInMonth) return;
-    } else if (!canRewindPrevMonth(year, month, min)) return;
-
-    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-  }, [viewOnWeeks, year, month, week, weekStart, min]);
-
-  const nextYear = useCallback(() => {
-    if (!canRewindNextYear(year, month, max)) return;
-    setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() + 1)));
+  const setNextMonth = useCallback(() => {
+    if (!canGoNextMonth(year, month, max)) return;
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   }, [year, month, max]);
 
-  const prevYear = useCallback(() => {
-    if (!canRewindPrevYear(year, month, min)) return;
-    setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)));
+  const setPrevMonth = useCallback(() => {
+    if (!canGoPrevMonth(year, month, min)) return;
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+  }, [year, month, min]);
+
+  const setNextYear = useCallback(() => {
+    if (!canGoNextYear(year, month, max)) return;
+    setCurrentDate(new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), 1));
   }, [year, month, max]);
+
+  const setPrevYear = useCallback(() => {
+    if (!canGoPrevYear(year, month, min)) return;
+    setCurrentDate(new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1));
+  }, [year, month, min]);
 
   useEffect(() => {
     if (prevActiveDayRef.current === activeDay) return;
@@ -89,9 +90,11 @@ export function useCalendar(options: UseCalendarOptionsType) {
     year,
     month,
     week,
-    next,
-    prev,
-    nextYear,
-    prevYear,
+    setNextWeek,
+    setPrevWeek,
+    setNextMonth,
+    setPrevMonth,
+    setNextYear,
+    setPrevYear,
   };
 }

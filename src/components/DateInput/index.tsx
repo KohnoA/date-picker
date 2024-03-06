@@ -1,7 +1,8 @@
-import { ChangeEvent, memo, useContext, useId } from 'react';
+import { memo, useContext, useId, useMemo } from 'react';
 
 import { ConfigContext } from '@/context';
 
+import { DEFAULT_LABEL } from './constants';
 import {
   CalendarButton,
   CalendarIconStyled,
@@ -13,23 +14,18 @@ import {
   InputWrapper,
   Label,
 } from './styled';
-
-const DEFAULT_LABEL = 'Date';
-
-interface DateInputProps {
-  value: string;
-  error?: string | null;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
-  toggleCalendar: () => void;
-}
+import { DateInputProps } from './types';
 
 export const DateInput = memo((props: DateInputProps) => {
   const { value, error, onChange, onClear, toggleCalendar } = props;
-  const { label } = useContext(ConfigContext);
+  const { label, range, format } = useContext(ConfigContext);
   const dateInputId = useId();
 
   const showClearButton = !!value.length;
+  const inputPlaceholder = useMemo(
+    () => (range ? `${format} - ${format}` : format),
+    [range, format],
+  );
 
   return (
     <Container data-testid="date-input">
@@ -42,10 +38,11 @@ export const DateInput = memo((props: DateInputProps) => {
           data-testid="date-input-field"
           id={dateInputId}
           type="text"
-          placeholder="Choose Date"
+          placeholder={inputPlaceholder}
           value={value}
           onChange={onChange}
           $isInvalid={!!error}
+          $showClearButton={showClearButton}
         />
 
         <CalendarButton data-testid="toggle-calendar-button" type="button" onClick={toggleCalendar}>

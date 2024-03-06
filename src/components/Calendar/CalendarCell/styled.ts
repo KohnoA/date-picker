@@ -2,22 +2,52 @@ import styled from 'styled-components';
 
 import { flex } from '@/styles';
 
-export const CalendarCellContainer = styled.li<{
-  $canSelect: boolean;
-  $isActive: boolean;
-  $isHoliday: boolean;
-  $hidden: boolean;
-  $isRangeStart: boolean;
-  $isRangeMiddle: boolean;
-  $isRangeEnd: boolean;
-}>`
+import { CalendarCellContainerProps, TodosIndicatorProps } from './types';
+
+export const TodosClue = styled.p`
+  position: absolute;
+  z-index: 999;
+  top: -35px;
+  left: 100%;
+
+  width: min-content;
+  padding: 5px 7px;
+
+  white-space: nowrap;
+  color: ${({ theme }) => theme.calendar.text};
+  font-size: 12px;
+
+  transition: ${({ theme }) => theme.general.duration}ms;
+  background-color: ${({ theme }) => theme.calendar.hover};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+`;
+
+export const TodosIndicator = styled.span<TodosIndicatorProps>`
+  display: ${({ $hasTodos }) => ($hasTodos ? 'block' : 'none')};
+
+  position: absolute;
+  top: 4px;
+  right: 4px;
+
+  width: 5px;
+  height: 5px;
+
+  background-color: ${({ theme }) => theme.calendar.cell.indicator};
+  border-radius: 100%;
+`;
+
+export const CalendarCellContainer = styled.li<CalendarCellContainerProps>`
   position: relative;
 
-  font-size: ${({ theme }) => theme.general.fontSizes.sm};
-  font-weight: 600;
+  font-size: ${({ theme }) => theme.general.fontSizes.sm}px;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
-  transition: all ${({ theme }) => theme.general.duration};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
+  transition: all ${({ theme }) => theme.general.duration}ms;
   user-select: none;
   cursor: pointer;
 
@@ -85,18 +115,11 @@ export const CalendarCellContainer = styled.li<{
       background-color: ${theme.calendar.hover};
     }
   `}
-`;
 
-export const TodosIndicator = styled.span<{ $hasTodos: boolean }>`
-  display: ${({ $hasTodos }) => ($hasTodos ? 'block' : 'none')};
-
-  position: absolute;
-  top: 4px;
-  right: 4px;
-
-  width: 5px;
-  height: 5px;
-
-  background-color: ${({ theme }) => theme.calendar.cell.indicator};
-  border-radius: 100%;
+  &:hover {
+    ${TodosClue} {
+      opacity: 0.9;
+      visibility: visible;
+    }
+  }
 `;

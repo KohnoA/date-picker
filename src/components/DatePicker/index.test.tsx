@@ -1,15 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import {
-  CalendarView,
-  CalendarWeekStart,
-  ERROR_INCORRECT_RANGE,
-  ERROR_INVALID_RANGE_DATE,
-  ERROR_INVALID_SIMPLE_DATE,
-  ERROR_VALUE_LESS_MIN,
-  ERROR_VALUE_MORE_MAX,
-  MONTH_NAMES,
-} from '@/constants';
+import { CalendarView, CalendarWeekStart, DateErrors, MONTH_NAMES } from '@/constants';
 import { theme } from '@/styles';
 
 import '@testing-library/jest-dom';
@@ -70,7 +61,7 @@ describe('Testing the DatePicker Component Configuration', () => {
 
     render(<DatePicker range initialStartDate={activeStartDay} initialEndDate={activeEndDay} />);
 
-    expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024 - 01/03/2024');
+    expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024 - 03/01/2024');
     fireEvent.click(screen.getByTestId('toggle-calendar-button'));
 
     expect(screen.getByTestId(`calendar-cell-${activeStartDay.getTime()}`)).toHaveStyle(
@@ -176,7 +167,7 @@ describe('General tests for DatePicker component', () => {
 
     const errorMessage = screen.getByTestId('date-input-error');
     expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(ERROR_VALUE_MORE_MAX);
+    expect(errorMessage).toHaveTextContent(DateErrors.VALUE_MORE_MAX);
   });
 
   it('An error message should be displayed if the value is less than the minimum date', () => {
@@ -189,7 +180,7 @@ describe('General tests for DatePicker component', () => {
 
     const errorMessage = screen.getByTestId('date-input-error');
     expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(ERROR_VALUE_LESS_MIN);
+    expect(errorMessage).toHaveTextContent(DateErrors.VALUE_LESS_MIN);
   });
 
   it('The calendar should open and close when clicked toggle calendar button', () => {
@@ -337,13 +328,14 @@ describe('Testing SimpleDatePicker component', () => {
     render(<DatePicker />);
 
     const invalidDate = '45/45/3481';
+    const errorMessage = `${DateErrors.INVALID.trim()} DD/MM/YYYY`;
 
     const dateInput = screen.getByTestId('date-input-field');
     fireEvent.change(dateInput, { target: { value: invalidDate } });
 
-    const errorMessage = screen.getByTestId('date-input-error');
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(ERROR_INVALID_SIMPLE_DATE);
+    const errorNode = screen.getByTestId('date-input-error');
+    expect(errorNode).toBeInTheDocument();
+    expect(errorNode).toHaveTextContent(errorMessage);
   });
 
   it('The selected day should clear when you click on the clear button', () => {
@@ -390,26 +382,27 @@ describe('Testing RangeDatePicker component', () => {
     render(<DatePicker range />);
 
     const invalidDate = '45/45/3481';
+    const errorMessage = `${DateErrors.INVALID.trim()} DD/MM/YYYY - DD/MM/YYYY`;
 
     const dateInput = screen.getByTestId('date-input-field');
     fireEvent.change(dateInput, { target: { value: invalidDate } });
 
-    const errorMessage = screen.getByTestId('date-input-error');
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(ERROR_INVALID_RANGE_DATE);
+    const errorNode = screen.getByTestId('date-input-error');
+    expect(errorNode).toBeInTheDocument();
+    expect(errorNode).toHaveTextContent(errorMessage);
   });
 
   it('An error message should be displayed if the start date value is greater than the end date', () => {
     render(<DatePicker range />);
 
-    const dateMoreThanMax = '02/02/2023 - 01/02/2023';
+    const dateMoreThanMax = '02/02/2023 - 02/01/2023';
 
     const dateInput = screen.getByTestId('date-input-field');
     fireEvent.change(dateInput, { target: { value: dateMoreThanMax } });
 
     const errorMessage = screen.getByTestId('date-input-error');
     expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(ERROR_INCORRECT_RANGE);
+    expect(errorMessage).toHaveTextContent(DateErrors.INCORRECT_RANGE);
   });
 
   it('The selected range should clear when you click on the clear button', () => {
@@ -452,7 +445,7 @@ describe('Testing RangeDatePicker component', () => {
 
     fireEvent.click(screen.getByTestId('toggle-calendar-button'));
     fireEvent.change(screen.getByTestId('date-input-field'), {
-      target: { value: '01/01/2024 - 01/03/2024' },
+      target: { value: '01/01/2024 - 03/01/2024' },
     });
 
     const activeStartCalendarCell = screen.getByTestId(`calendar-cell-${activeStartDay.getTime()}`);
@@ -488,6 +481,6 @@ describe('Testing RangeDatePicker component', () => {
     fireEvent.click(activeStartCalendarCell);
     fireEvent.click(activeEndCalendarCell);
 
-    expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024 - 01/03/2024');
+    expect(screen.getByTestId('date-input-field')).toHaveValue('01/01/2024 - 03/01/2024');
   });
 });

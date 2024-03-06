@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 import { ICONS } from '@/constants';
-import { flex } from '@/styles';
+import { flex, interactive } from '@/styles';
 
 const { CrossIcon } = ICONS;
 
 export const TodoListBackdrop = styled.div`
   position: fixed;
+  z-index: 1000;
 
   top: 0;
   left: 0;
@@ -28,7 +29,7 @@ export const TodoListContent = styled.div`
   padding: 20px;
 
   background-color: ${({ theme }) => theme.todos.background};
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
 `;
 
 export const TodoListCloseButton = styled.button`
@@ -41,22 +42,14 @@ export const TodoListCloseButton = styled.button`
 
   background-color: transparent;
   border: none;
-  transition: opacity ${({ theme }) => theme.duration};
-  cursor: pointer;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
-
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+  ${interactive()}
 `;
 
 export const TodoListDayDescription = styled.p`
   margin-bottom: 15px;
 
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
 `;
 
 export const TodoListOwn = styled.ul`
@@ -70,5 +63,5 @@ export const TodoListOwn = styled.ul`
 `;
 
 export const CrossIconStyled = styled(CrossIcon)`
-  ${({ theme }) => `& path { fill: ${theme.input.icons}; }`}
+  ${({ theme }) => `& path { fill: ${theme.todos.icons}; }`}
 `;

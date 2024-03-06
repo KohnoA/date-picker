@@ -1,24 +1,14 @@
-import { memo, ReactNode } from 'react';
-
-import { ICONS } from '@/constants';
+import { memo } from 'react';
 
 import {
+  CrossIconStyled,
   TodoItemCheckbox,
   TodoItemContainer,
   TodoItemDescription,
   TodoItemRemoveButton,
   TodoItemWrapper,
 } from './styled';
-
-const { CrossIcon } = ICONS;
-
-interface TodoItemProps {
-  id: number;
-  completed: boolean;
-  children: ReactNode;
-  onToggle: (id: number) => void;
-  onRemove: (id: number) => void;
-}
+import { TodoItemProps } from './types';
 
 export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: TodoItemProps) => {
   const handleRemove = () => onRemove(id);
@@ -44,7 +34,7 @@ export const TodoItem = memo(({ id, completed, children, onToggle, onRemove }: T
           aria-label="Remove todo item"
           onClick={handleRemove}
         >
-          <CrossIcon width={18} height={18} />
+          <CrossIconStyled width={18} height={18} />
         </TodoItemRemoveButton>
       </TodoItemWrapper>
     </TodoItemContainer>

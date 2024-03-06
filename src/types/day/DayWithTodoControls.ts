@@ -1,5 +1,6 @@
+import { TodoType } from '../TodoType';
+
 import { DayType } from './DayType';
-import { TodoType } from './TodoType';
 
 export interface DayWithTodoControls {
   data: DayType;

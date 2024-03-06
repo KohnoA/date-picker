@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-import { flex } from '@/styles';
+import { flex, interactive } from '@/styles';
+
+const INPUT_PADDING = '8px 10px';
 
 export const TodoInputContainer = styled.div`
   ${flex('space-between', 'stretch')}
@@ -12,31 +14,23 @@ export const TodoInputContainer = styled.div`
 export const NewTodoInput = styled.input`
   width: 100%;
 
-  padding: 8px 10px;
+  padding: ${INPUT_PADDING};
 
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
   border: 1px solid ${({ theme }) => theme.todos.border};
   background-color: ${({ theme }) => theme.todos.background};
   outline: none;
 `;
 
 export const AddTodoButton = styled.button`
-  padding: 8px 10px;
+  padding: ${INPUT_PADDING};
 
   color: ${({ theme }) => theme.todos.addButton.text};
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.general.fontWeight.md};
 
   background-color: ${({ theme }) => theme.todos.addButton.background};
   border: none;
-  border-radius: ${({ theme }) => theme.general.borderRadius.high};
-  transition: opacity ${({ theme }) => theme.general.duration};
-  cursor: pointer;
+  border-radius: ${({ theme }) => theme.general.borderRadius.high}px;
 
-  &:hover {
-    opacity: ${({ theme }) => theme.general.opacity.low};
-  }
-
-  &:active {
-    opacity: ${({ theme }) => theme.general.opacity.high};
-  }
+  ${interactive()}
 `;

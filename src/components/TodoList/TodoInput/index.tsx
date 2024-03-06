@@ -1,15 +1,11 @@
 import { ChangeEvent, memo, useState } from 'react';
 
+import { INITIAL_VALUE } from './constants';
 import { AddTodoButton, NewTodoInput, TodoInputContainer } from './styled';
-
-const INITIAL_VALUE = '';
-
-interface TodoInputProps {
-  onAdd: (value: string) => void;
-}
+import { TodoInputProps } from './types';
 
 export const TodoInput = memo(({ onAdd }: TodoInputProps) => {
-  const [newTodo, setNewTodo] = useState<string>(INITIAL_VALUE);
+  const [newTodo, setNewTodo] = useState(INITIAL_VALUE);
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setNewTodo(event.target.value);

@@ -1,30 +1,43 @@
-import {
-  ERROR_INVALID_SIMPLE_DATE,
-  ERROR_VALUE_LESS_MIN,
-  ERROR_VALUE_MORE_MAX,
-  MAX_DATE_VALUE_LENGTH,
-} from '@/constants';
+import { DateErrors, DateFormats } from '@/constants';
 
-import { dateStringHasError } from './dateStringHasError';
+import { checkMaxDate, checkMinDate, stringToDate } from '../helpers';
 
-export function checkDateValidation(value: string, min?: Date, max?: Date) {
-  let errorMessage: string | null;
+import { isInvalidDate } from './isInvalidDate';
 
-  const isIncorrectDate = dateStringHasError(value);
-  const isFullDateEntered = value.length === MAX_DATE_VALUE_LENGTH;
-  const isLessMinDate = min ? new Date(value).getTime() < min.getTime() : false;
-  const isMoreMaxDate = max ? new Date(value).getTime() > max.getTime() : false;
-  const canSetValue = isFullDateEntered && !isIncorrectDate && !isLessMinDate && !isMoreMaxDate;
+type CheckDateValidationReturnType = {
+  canSetValue: boolean;
+  errorMessage: string | null;
+};
 
-  if (isLessMinDate) {
-    errorMessage = ERROR_VALUE_LESS_MIN;
-  } else if (isMoreMaxDate) {
-    errorMessage = ERROR_VALUE_MORE_MAX;
-  } else if (isIncorrectDate) {
-    errorMessage = ERROR_INVALID_SIMPLE_DATE;
-  } else {
-    errorMessage = null;
+export function checkDateValidation(
+  value: string,
+  min?: Date,
+  max?: Date,
+  format = DateFormats.PRIMARY,
+): CheckDateValidationReturnType {
+  const status: CheckDateValidationReturnType = {
+    canSetValue: false,
+    errorMessage: null,
+  };
+
+  switch (true) {
+    case !value.length:
+      return status;
+
+    case isInvalidDate(value, format):
+      status.errorMessage = DateErrors.INVALID + format;
+      return status;
+
+    case checkMinDate(stringToDate(value, format), min):
+      status.errorMessage = DateErrors.VALUE_LESS_MIN;
+      return status;
+
+    case checkMaxDate(stringToDate(value, format), max):
+      status.errorMessage = DateErrors.VALUE_MORE_MAX;
+      return status;
+
+    default:
+      status.canSetValue = true;
+      return status;
   }
-
-  return { canSetValue, errorMessage };
 }

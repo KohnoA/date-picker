@@ -1,49 +1,54 @@
-import {
-  ERROR_INCORRECT_RANGE,
-  ERROR_INVALID_RANGE_DATE,
-  ERROR_VALUE_LESS_MIN,
-  ERROR_VALUE_MORE_MAX,
-  MAX_RANGE_DATE_VALUE_LENGTH,
-  RANGE_DATE_SEPARATOR,
-} from '@/constants';
+import { DateErrors, DateFormats, RANGE_DATE_SEPARATOR } from '@/constants';
 
-import { dateStringHasError } from './dateStringHasError';
+import { checkMaxDate, checkMinDate, stringToDate } from '../helpers';
 
-export function checkRangeDateValidation(value: string, min?: Date, max?: Date) {
-  let errorMessage: string | null;
+import { isInvalidDate } from './isInvalidDate';
 
+type CheckRangeDateValidationReturnType = {
+  canSetValue: boolean;
+  errorMessage: string | null;
+};
+
+export function checkRangeDateValidation(
+  value: string,
+  min?: Date,
+  max?: Date,
+  format = DateFormats.PRIMARY,
+): CheckRangeDateValidationReturnType {
   const [start, end] = value.split(RANGE_DATE_SEPARATOR);
-  const startDateTimestamp = new Date(start).getTime();
-  const endDateTimestamp = new Date(end).getTime();
+  const invalidError = `${DateErrors.INVALID}${format} - ${format}`;
 
-  const isIncorrectStartDate = start ? dateStringHasError(start) : true;
-  const isIncorrectEndDate = end ? dateStringHasError(end) : true;
+  const status: CheckRangeDateValidationReturnType = {
+    canSetValue: false,
+    errorMessage: null,
+  };
 
-  const startMoreEnd = startDateTimestamp > endDateTimestamp;
+  switch (true) {
+    case !value.length:
+      return status;
 
-  const startDateLessMin = min ? startDateTimestamp < min.getTime() : false;
-  const endDateMoreMax = max ? endDateTimestamp > max.getTime() : false;
-  const isFullRangeDateEntered = value.length === MAX_RANGE_DATE_VALUE_LENGTH;
+    case !start || !end:
+      status.errorMessage = invalidError;
+      return status;
 
-  const canSetValue =
-    isFullRangeDateEntered &&
-    !startMoreEnd &&
-    !startDateLessMin &&
-    !endDateMoreMax &&
-    !isIncorrectStartDate &&
-    !isIncorrectEndDate;
+    case isInvalidDate(start, format) || isInvalidDate(end, format):
+      status.errorMessage = invalidError;
+      return status;
 
-  if (startMoreEnd) {
-    errorMessage = ERROR_INCORRECT_RANGE;
-  } else if (startDateLessMin) {
-    errorMessage = ERROR_VALUE_LESS_MIN;
-  } else if (endDateMoreMax) {
-    errorMessage = ERROR_VALUE_MORE_MAX;
-  } else if (isIncorrectStartDate || isIncorrectEndDate) {
-    errorMessage = ERROR_INVALID_RANGE_DATE;
-  } else {
-    errorMessage = null;
+    case checkMinDate(stringToDate(start, format), min):
+      status.errorMessage = DateErrors.VALUE_LESS_MIN;
+      return status;
+
+    case checkMaxDate(stringToDate(end, format), max):
+      status.errorMessage = DateErrors.VALUE_MORE_MAX;
+      return status;
+
+    case stringToDate(start, format).getTime() > stringToDate(end, format).getTime():
+      status.errorMessage = DateErrors.INCORRECT_RANGE;
+      return status;
+
+    default:
+      status.canSetValue = true;
+      return status;
   }
-
-  return { canSetValue, errorMessage };
 }

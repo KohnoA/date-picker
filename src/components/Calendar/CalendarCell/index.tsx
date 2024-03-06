@@ -2,16 +2,9 @@ import { memo, useContext } from 'react';
 
 import { TodosContext } from '@/context';
 import { useCalendarCell } from '@/hooks';
-import { DayWithTodoControls } from '@/types';
 
-import { CalendarCellContainer, TodosIndicator } from './styled';
-
-interface CalendarCellProps {
-  dayData: DayWithTodoControls;
-  activeDay: number | null;
-  rangeEndDay?: number | null;
-  onClick: (timestamp: number) => void;
-}
+import { CalendarCellContainer, TodosClue, TodosIndicator } from './styled';
+import { CalendarCellProps } from './types';
 
 export const CalendarCell = memo((props: CalendarCellProps) => {
   const { dayData, activeDay, rangeEndDay, onClick } = props;
@@ -47,6 +40,7 @@ export const CalendarCell = memo((props: CalendarCellProps) => {
       $hidden={isHidden}
     >
       <TodosIndicator $hasTodos={hasTodos} />
+      <TodosClue>Dbclick open todos</TodosClue>
       {day}
     </CalendarCellContainer>
   );
