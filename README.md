@@ -1,10 +1,13 @@
 # Date Picker
 
-***DatePicker*** - UI react component for working with various types of calendar.
+**_DatePicker_** - UI react component for working with various types of calendar.
+
+## Demo
 
 [Online demo](https://date-picker-ivory.vercel.app/)
 
 ## Technologies
+
 - [React](https://react.dev/)
 - [Styled components](https://styled-components.com/)
 - [Storybook](https://storybook.js.org/)
@@ -14,12 +17,14 @@
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 ## Installation
+
 ```bash
 $ yarn add kohnoa-date-picker
 $ npm install kohnoa-date-picker
 ```
 
 ## Example
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
@@ -36,27 +41,56 @@ export default function Example() {
 ```
 
 ## Documentation
-### Custom Theme
-You can change the theme of the DatePicker component
+
+### Initial Dates
+
+You can pass initial values.
+
+- ```Simple Date Picker``` - If the start date is less than the minimum, then it will be redefined and will be equal to the minimum date. Same with the maximum date. Also, if initialStartDate or initialEndDate is passed, they will be ignored.
+- ```Range Date Picker``` - If the start date is greater than the end date, then they will swap places. If the start date is less than the minimum, then it will be redefined to the minimum date. Likewise with the end date and maximum value. Also, if initialDate is passed, this value will be ignored.
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
   return (
+    <DayPicker initialDate={new Date(2024, 1, 1)} />
+    {/* or for range date picker */}
     <DatePicker
-      customTheme={{ 
-        fontSizes: { lg: '16px' },
-        borderRadius: { hight: '10px' },
-      }}
+      initialStartDate={new Date(2024, 1, 1)}
+      initialStartDate={new Date(2024, 1, 10)}
     />
   );
+}
+```
+
+### Custom Theme
+
+You can change the theme of the DatePicker component
+
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
+
+const customTheme = {
+  input: {
+    label: '#333333',
+    placeholder: '#BBBBBB',
+  },
+  calendar: {
+    text: '#333333',
+    icons: '#333333',
+  }
+};
+
+export default function Example() {
+  return <DatePicker customTheme={customTheme} />;
 }
 ```
 
 #### Possible theme settings
 
 ```jsx
-export interface ThemeType {
+export interface CustromThemeType {
   input: {
     placeholder: string,
     text: string,
@@ -94,66 +128,87 @@ export interface ThemeType {
   },
 
   general: {
-    maxWidth: string,
+    maxWidth: number,
 
     fontFamily: string,
 
+    fontWeight: {
+      lg: number,
+      md: number,
+      bl: number,
+    }
+
     fontSizes: {
-      lg: string,
-      md: string,
-      sm: string,
+      lg: number,
+      md: number,
+      sm: number,
     },
 
     borderRadius: {
-      high: string,
-      low: string,
+      high: number,
+      low: number,
     },
-  
+
     opacity: {
       low: string,
       high: string,
     },
-  
+
     margin: {
-      lg: string,
-      sm: string,
+      lg: number,
+      sm: number,
     },
-  
-    duration: string,
+
+    duration: number,
   },
 }
 
 ```
 
-### Range
-Get DatePicker with range selection
+### Format
+Supported formats:
+- ```DD/MM/YYYY```
+- ```MM/DD/YYYY```
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
-  return (
-    <DatePicker range />
-  );
+  return <DatePicker format="MM/DD/YYYY" />;
+}
+```
+
+### Range
+
+Get DatePicker with range selection. By default is false.
+
+```jsx
+import { DatePicker } from 'kohnoa-date-picker';
+
+export default function Example() {
+  return <DatePicker range />;
 }
 ```
 
 ### Min and Max
-You can limit the date selection range
+
+You can limit the date selection range. If the minimum value exceeds the maximum, they will swap places.
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
-  return (
-    <DatePicker 
-      min={new Date(2024, 1, 1)}
-      max={new Date(2024, 1, 10)}
-    />
-  );
+  return <DatePicker min={new Date(2024, 1, 1)} max={new Date(2024, 1, 10)} />;
 }
 ```
 
 ### View
+
 You can customize the calendar view. By week, month or with the ability to switch by year.
+
+- ```week``` - Includes weekly view.
+- ```month (default)``` - Includes monthly view.
+- ```year``` - Enables display of additional buttons to navigate by year.
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
@@ -169,7 +224,12 @@ export default function Example() {
 ```
 
 ### Week start
-You can set the start of the week from Monday or Sunday.
+
+You can set the start of the week from Monday or Sunday. Supported options:
+
+- ```monday```
+- ```sunday (default)```
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
@@ -183,42 +243,25 @@ export default function Example() {
 ```
 
 ### Show holidays
-Enable holiday display.
+
+Enable holiday display. By default is disabled.
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
-  return (
-    <DatePicker showHolidays />
-  );
+  return <DatePicker showHolidays />;
 }
 ```
 
 ### Show weekends
-Enable weekends display.
+
+Manage holiday display. By default is true
+
 ```jsx
 import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
-  return (
-    <DatePicker showWeekends />
-  );
-}
-```
-
-### Initial Dates
-You can set the start date
-```jsx
-import { DatePicker } from 'kohnoa-date-picker';
-
-export default function Example() {
-  return (
-    <DayPicker initialDate={new Date(2024, 1, 1)} />
-    {/* or for range date picker */}
-    <DatePicker 
-      initialStartDate={new Date(2024, 1, 1)}
-      initialStartDate={new Date(2024, 1, 10)}
-    />
-  );
+  return <DatePicker showWeekends={false} />;
 }
 ```
