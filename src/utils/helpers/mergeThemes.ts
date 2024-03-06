@@ -1,6 +1,6 @@
 import { ThemeType } from '@/types';
 
-type ThemeObjType = { [key: string]: string | ThemeObjType };
+type ThemeObjType = { [key: string]: string | number | ThemeObjType };
 
 export function mergeThemes(theme: ThemeType, customTheme?: ThemeType): ThemeType {
   if (!customTheme) return theme;

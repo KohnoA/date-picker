@@ -32,7 +32,7 @@ export default [
       tsConfigPaths(),
       peerDepsExternal(),
       svgr(),
-      typescript({ tsconfig: './tsconfig.json' }),
+      typescript({ tsconfig: './tsconfig.json', exclude: ['**/*.test.ts'] }),
       babel({
         babelHelpers: 'bundled',
         extensions: ['.js', '.jsx', '.ts', '.tsx'],

@@ -4,19 +4,19 @@ describe('Testing the mergeThemes function', () => {
   it('Simple cases should work', () => {
     const defaultTheme = {
       general: {
-        duration: '300ms',
+        duration: 300,
       },
     };
 
     const customTheme = {
       general: {
-        duration: '200ms',
+        duration: 200,
       },
     };
 
     const resultTheme = {
       general: {
-        duration: '200ms',
+        duration: 200,
       },
     };
 
@@ -32,14 +32,14 @@ describe('Testing the mergeThemes function', () => {
         text: '#000000',
       },
       general: {
-        maxWidth: '250px',
-        duration: '300ms',
+        maxWidth: 250,
+        duration: 300,
       },
     };
 
     const customTheme = {
       general: {
-        duration: '200ms',
+        duration: 200,
       },
     };
 
@@ -51,8 +51,8 @@ describe('Testing the mergeThemes function', () => {
         text: '#000000',
       },
       general: {
-        maxWidth: '250px',
-        duration: '200ms',
+        maxWidth: 250,
+        duration: 200,
       },
     };
 
