@@ -82,7 +82,7 @@ describe('Testing the DatePicker Component Configuration', () => {
   });
 
   it('Custom styling must be applied', () => {
-    render(<DatePicker customTheme={{ general: { maxWidth: '350px' } }} />);
+    render(<DatePicker customTheme={{ general: { maxWidth: 350 } }} />);
 
     expect(screen.getByTestId('simple-date-picker')).toHaveStyle('max-width: 350px;');
   });
