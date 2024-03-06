@@ -1,11 +1,13 @@
 import { ComponentType, memo, useCallback, useContext } from 'react';
 
-import { ActiveRangeContext } from '@/context';
+import { ActiveRangeContext, ConfigContext } from '@/context';
 import { CalendarProps } from '@/types';
+import { dateRangeToString } from '@/utils';
 
 export const withRangeCalendar = (WrappedCalendar: ComponentType<CalendarProps>) =>
   memo(
     (props: Omit<CalendarProps, 'activeDay' | 'showClearButton' | 'onClear' | 'onClickCell'>) => {
+      const { onChange: outerOnChange, format } = useContext(ConfigContext);
       const { activeStartDay, activeEndDay, setActiveStartDay, setActiveEndDay, resetActiveRange } =
         useContext(ActiveRangeContext);
 
@@ -30,6 +32,7 @@ export const withRangeCalendar = (WrappedCalendar: ComponentType<CalendarProps>)
             setActiveStartDay(timestamp);
           } else if (timestamp > activeStartDay) {
             setActiveEndDay(timestamp);
+            if (outerOnChange) outerOnChange(dateRangeToString(activeStartDay, timestamp, format));
           }
         },
         [activeStartDay, activeEndDay],

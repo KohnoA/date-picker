@@ -42,10 +42,15 @@ export function useRangeDateInput() {
 
     if (canSetValue) {
       const [start, end] = value.split(RANGE_DATE_SEPARATOR);
+      const startDayTimestamp = stringToDate(start, format).getTime();
+      const endDayTimestamp = stringToDate(end, format).getTime();
 
-      setActiveStartDay(stringToDate(start, format).getTime());
-      setActiveEndDay(stringToDate(end, format).getTime());
+      setActiveStartDay(startDayTimestamp);
+      setActiveEndDay(endDayTimestamp);
       prevRangeValueRef.current = value;
+
+      if (outerOnChange)
+        outerOnChange(dateRangeToString(startDayTimestamp, endDayTimestamp, format));
     }
 
     if (!value.length) {
@@ -59,10 +64,7 @@ export function useRangeDateInput() {
 
     if (prevRangeValueRef.current === activeRangeString) return;
 
-    if (activeStartDay && activeEndDay) {
-      setRangeValue(activeRangeString);
-      if (outerOnChange) outerOnChange(activeRangeString);
-    }
+    if (activeStartDay && activeEndDay) setRangeValue(activeRangeString);
 
     setError(INITIAL_ERROR_VALUE);
     prevRangeValueRef.current = activeRangeString;

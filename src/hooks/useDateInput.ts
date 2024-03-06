@@ -41,6 +41,8 @@ export function useDateInput() {
 
       setActiveDay(activeDayTimestamp);
       prevActiveDayRef.current = activeDayTimestamp;
+
+      if (outerOnChange) outerOnChange(timestampToDateFormat(activeDayTimestamp, format));
     }
 
     if (!value.length) {
@@ -52,12 +54,7 @@ export function useDateInput() {
   useEffect(() => {
     if (prevActiveDayRef.current === activeDay) return;
 
-    if (activeDay) {
-      const activeDayDateStr = timestampToDateFormat(activeDay, format);
-
-      setDateValue(activeDayDateStr);
-      if (outerOnChange) outerOnChange(activeDayDateStr);
-    }
+    if (activeDay) setDateValue(timestampToDateFormat(activeDay, format));
 
     setError(INITIAL_ERROR_VALUE);
     prevActiveDayRef.current = activeDay;
