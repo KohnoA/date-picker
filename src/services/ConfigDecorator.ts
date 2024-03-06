@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 
 import { RangeDatePicker } from '@/components/RangeDatePicker';
 import { SimpleDatePicker } from '@/components/SimpleDatePicker';
-import { CalendarView } from '@/constants';
+import { CalendarView, DateFormats } from '@/constants';
 import { withProviders, withRangeLogic, withSimpleLogic } from '@/hocs';
 import { DatePickerConfigType } from '@/types';
 import {
@@ -12,9 +12,10 @@ import {
   revalidateMinMax,
 } from '@/utils';
 
-const defaultConfig: Pick<DatePickerConfigType, 'showWeekends' | 'view'> = {
+const defaultConfig: Pick<DatePickerConfigType, 'showWeekends' | 'view' | 'format'> = {
   showWeekends: true,
   view: CalendarView.MONTH,
+  format: DateFormats.PRIMARY,
 };
 
 export class ConfigDecorator {
