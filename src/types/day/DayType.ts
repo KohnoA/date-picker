@@ -1,6 +1,6 @@
 import { WEEK_DAYS_NAME } from '@/constants';
 
-import { TodoType } from '../TodoType';
+import { TodoType } from '../todos';
 
 export interface DayType {
   day: number;

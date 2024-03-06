@@ -1,4 +1,4 @@
-import { TodoType } from '../TodoType';
+import { TodoType } from '../todos';
 
 import { DayType } from './DayType';
 
