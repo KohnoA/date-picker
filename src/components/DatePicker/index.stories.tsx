@@ -51,10 +51,6 @@ const meta: Meta<typeof DatePicker> = {
       control: 'boolean',
       defaultValue: false,
     },
-    onChange: {
-      description: 'Optional change handler',
-      type: 'function',
-    },
   },
 };
 
@@ -78,9 +74,8 @@ export const Simple: Story = {
     weekStart: CalendarWeekStart.SUNDAY,
     view: CalendarView.MONTH,
     format: DateFormats.PRIMARY,
-    min: new Date(2024, 0, 31),
-    max: new Date(2024, 3, 1),
     customTheme: theme,
+    range: false,
   },
 };
 
@@ -102,8 +97,6 @@ export const Range: Story = {
     weekStart: CalendarWeekStart.SUNDAY,
     view: CalendarView.MONTH,
     format: DateFormats.PRIMARY,
-    min: new Date(2024, 0, 31),
-    max: new Date(2024, 3, 1),
     customTheme: theme,
     range: true,
   },
