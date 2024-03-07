@@ -54,9 +54,10 @@ import { DatePicker } from 'kohnoa-date-picker';
 
 export default function Example() {
   return (
-    <DayPicker initialDate={new Date(2024, 1, 1)} />
+    <DatePicker initialDate={new Date(2024, 1, 1)} />
     {/* or for range date picker */}
     <DatePicker
+      range
       initialStartDate={new Date(2024, 1, 1)}
       initialStartDate={new Date(2024, 1, 10)}
     />
