@@ -7,7 +7,7 @@ const { CrossIcon } = ICONS;
 
 export const TodoListBackdrop = styled.div`
   position: fixed;
-  z-index: 1000;
+  z-index: 3;
 
   top: 0;
   left: 0;

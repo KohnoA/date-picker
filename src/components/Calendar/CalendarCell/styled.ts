@@ -6,7 +6,7 @@ import { CalendarCellContainerProps, TodosIndicatorProps } from './types';
 
 export const TodosClue = styled.p`
   position: absolute;
-  z-index: 999;
+  z-index: 2;
   top: -35px;
   left: 100%;
 

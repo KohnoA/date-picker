@@ -6,7 +6,7 @@ import { CalendarContainerProps, DaysListProps } from './types';
 
 export const CalendarContainer = styled.section<CalendarContainerProps>`
   position: absolute;
-  z-index: 999;
+  z-index: 2;
 
   top: 100%;
 
