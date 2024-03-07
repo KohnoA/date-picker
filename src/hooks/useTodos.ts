@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { DayWithTodoControls, TodoType } from '@/types';
 
@@ -29,12 +29,12 @@ export function useTodos() {
     setTodosState(initialTodosState);
   };
 
-  const addTodo = (value: string) => {
+  const addTodo = useCallback((value: string) => {
     setTodosState(({ day, todos }) => ({
       day,
       todos: [...todos, { id: Date.now(), title: value, completed: false }],
     }));
-  };
+  }, []);
 
   const removeTodo = (id: number) => {
     setTodosState(({ day, todos }) => ({
